@@ -26,6 +26,12 @@
         "behat/behat" : "2.4.*@stable"
     },
 
+    "autoload": {
+        "psr-0": {
+            "Qafoo\\ChangeTrack": "src/main"
+        }
+    },
+
     "config": {
         "bin-dir": "vendor/bin/"
     }
