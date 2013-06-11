@@ -1,0 +1,19 @@
+{
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "manuelpichler/staticReflection",
+                "version": "@dev",
+                "source": {
+                    "url": "https://github.com/manuelpichler/staticReflection.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "manuelpichler/staticReflection": "@dev"
+    }
+}

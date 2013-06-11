@@ -1,0 +1,36 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "34c767b4887140e0b30e5e3d79fd4429",
+    "packages": [
+        {
+            "name": "manuelpichler/staticReflection",
+            "version": "@dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/manuelpichler/staticReflection.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2012-01-30 19:44:51"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "manuelpichler/staticreflection": 20
+    },
+    "platform": [
+
+    ],
+    "platform-dev": [
+
+    ]
+}
