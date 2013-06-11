@@ -30,15 +30,27 @@ class FeatureContext extends BehatContext
         // Initialize your context here
     }
 
-//
-// Place your definition and hook methods here:
-//
-//    /**
-//     * @Given /^I have done something with "([^"]*)"$/
-//     */
-//    public function iHaveDoneSomethingWith($argument)
-//    {
-//        doSomethingWith($argument);
-//    }
-//
+    /**
+     * @Given /^I have the repository "([^"]*)"$/
+     */
+    public function iHaveTheRepository($arg1)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I analyze the changes$/
+     */
+    public function iAnalyzeTheChanges()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I have a count of "([^"]*)" for method "([^"]*)" in class "([^"]*)"$/
+     */
+    public function iHaveACountOfForMethodInClass($arg1, $arg2, $arg3)
+    {
+        throw new PendingException();
+    }
 }
