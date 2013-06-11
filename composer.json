@@ -19,6 +19,7 @@
         }
     ],
     "require": {
-        "manuelpichler/staticReflection": "@dev"
+        "manuelpichler/staticReflection": "@dev",
+        "arbit/vcs-wrapper": "dev-master"
     }
 }

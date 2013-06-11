@@ -3,8 +3,87 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ddfef5be5f52d9c93aba1edae68d0bab",
+    "hash": "c499673b7f702753076c70cf3665a4dd",
     "packages": [
+        {
+            "name": "arbit/system-process",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Arbitracker/system-process.git",
+                "reference": "1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arbitracker/system-process/zipball/1.0",
+                "reference": "1.0",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SystemProcess": "src/main/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "System process execution library",
+            "time": "2013-03-31 12:42:56"
+        },
+        {
+            "name": "arbit/vcs-wrapper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Arbitracker/VCSWrapper.git",
+                "reference": "31d1e7ba22c14b8e9918d563fd69d7c08eefe9fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arbitracker/VCSWrapper/zipball/31d1e7ba22c14b8e9918d563fd69d7c08eefe9fd",
+                "reference": "31d1e7ba22c14b8e9918d563fd69d7c08eefe9fd",
+                "shasum": ""
+            },
+            "require": {
+                "arbit/system-process": "*",
+                "arbit/xml": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Arbit\\VCSWrapper": "src/main/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0+"
+            ],
+            "description": "VCS wrapper is a PHP abstraction layer for version control systems.",
+            "time": "2013-03-31 16:24:19"
+        },
+        {
+            "name": "arbit/xml",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Arbitracker/XML.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arbitracker/XML/zipball/1.0.1",
+                "reference": "1.0.1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Arbit\\Xml": "src/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "XML reader with a SimpleXML like API.",
+            "time": "2013-03-31 10:28:29"
+        },
         {
             "name": "manuelpichler/staticReflection",
             "version": "@dev",
@@ -30,7 +109,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "manuelpichler/staticreflection": 20
+        "manuelpichler/staticreflection": 20,
+        "arbit/vcs-wrapper": 20
     },
     "platform": [
 
