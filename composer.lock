@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "34c767b4887140e0b30e5e3d79fd4429",
+    "hash": "ddfef5be5f52d9c93aba1edae68d0bab",
     "packages": [
         {
             "name": "manuelpichler/staticReflection",
@@ -14,6 +14,11 @@
                 "reference": "master"
             },
             "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "pdepend": "src/main/php"
+                }
+            },
             "time": "2012-01-30 19:44:51"
         }
     ],
