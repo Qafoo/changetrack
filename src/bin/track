@@ -5,13 +5,26 @@ use pdepend\reflection\ReflectionSession;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-define('FILE', '/home/dotxp/mosaic/components/Libri/src/main/Bepado/Libri/ProductMerger.php');
+\Arbit\VCSWrapper\Cache\Manager::initialize(__DIR__ . '/../../src/var/tmp/cache');
+
+$repo = new \Arbit\VCSWrapper\GitCli\Checkout(__DIR__ . '/../../src/var/tmp/checkout');
+
+$repo->initialize('https://github.com/QafooLabs/Daemon.git');
+
+var_dump($repo->getVersions());
+
+/*
 
 $session = new ReflectionSession();
 
 $query = $session->createFileQuery();
 foreach ($query->find(FILE) as $class)
 {
-    echo '- ', $class->getName(), PHP_EOL,
-         ' ', $class->getFileName(), PHP_EOL;
+    echo $class->getName(), PHP_EOL;
+    foreach ($class->getMethods() as $method)
+    {
+        echo "  - " . $method->getName() . "() " . $method->getStartLine() . "-" . $method->getEndLine() . PHP_EOL;
+    }
 }
+
+*/
