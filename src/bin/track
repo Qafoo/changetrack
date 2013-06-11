@@ -1,4 +1,17 @@
 #!/usr/bin/env php
 <?php
 
+use pdepend\reflection\ReflectionSession;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+define('FILE', '/home/dotxp/mosaic/components/Libri/src/main/Bepado/Libri/ProductMerger.php');
+
+$session = new ReflectionSession();
+
+$query = $session->createFileQuery();
+foreach ($query->find(FILE) as $class)
+{
+    echo '- ', $class->getName(), PHP_EOL,
+         ' ', $class->getFileName(), PHP_EOL;
+}
