@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack;
+namespace Qafoo\ChangeTrack\Analyzer;
 
 class ChangeRecorderTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,7 +50,7 @@ class ChangeRecorderTest extends \PHPUnit_Framework_TestCase
         $testClass = new \ReflectionClass(__CLASS__);
         $testMethod = $testClass->getMethod(__FUNCTION__);
 
-        $productionClass = new \ReflectionClass('Qafoo\\ChangeTrack\\ChangeRecorder');
+        $productionClass = new \ReflectionClass('Qafoo\\ChangeTrack\\Analyzer\\ChangeRecorder');
         $productionMethod = $productionClass->getMethod('recordChange');
 
         $changeRecorder->recordChange($testClass, $testMethod);
@@ -61,7 +61,7 @@ class ChangeRecorderTest extends \PHPUnit_Framework_TestCase
                 __CLASS__ => array(
                     __FUNCTION__ => 1
                 ),
-                'Qafoo\\ChangeTrack\\ChangeRecorder' => array(
+                'Qafoo\\ChangeTrack\\Analyzer\\ChangeRecorder' => array(
                     'recordChange' => 1
                 )
             ),

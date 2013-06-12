@@ -5,6 +5,8 @@ namespace Qafoo\ChangeTrack;
 use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
+use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
+
 class Analyzer
 {
     private $checkout;
