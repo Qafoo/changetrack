@@ -36,25 +36,28 @@ class Analyzer
         $query = $session->createFileQuery();
 
         $changes = array();
+
+        $this->checkout->update($initialVersion);
+
+        $localChanges = array();
         foreach ($recursiveIterator as $leaveNode) {
             if ($leaveNode instanceof VCSWrapper\File && substr($leaveNode->getLocalPath(), -3) == 'php') {
                 foreach ($query->find($leaveNode->getLocalPath()) as $class) {
                     foreach ($class->getMethods() as $method) {
-                        if (!isset($changes[$class->getName()])) {
-                            $changes[$class->getName()] = array();
-                        }
-                        if (!isset($changes[$class->getName()][$method->getName()])) {
-                            $changes[$class->getName()][$method->getName()] = 0;
-                        }
-                        $changes[$class->getName()][$method->getName()]++;
+                        $localChanges = $this->recordChange($localChanges, $class, $method);
                     }
                 }
             }
         }
 
+        $changes = $this->mergeChanges($changes, $localChanges);
+
         $previousVersion = $initialVersion;
         foreach ($versions as $currentVersion) {
-            // $diff = $this->checkout->getDiff($currentVersion, $previousVersion);
+            $localChanges = array();
+
+            $this->checkout->update($currentVersion);
+
             $diff = $this->checkout->getDiff($previousVersion, $currentVersion);
             foreach ($diff as $diffCollection) {
                 $affectedFilePath = $this->checkoutPath . substr($diffCollection->to, 1);
@@ -65,7 +68,6 @@ class Analyzer
 
                 $classes = $query->find($affectedFilePath);
 
-                echo "$affectedFilePath ($currentVersion)\n";
                 foreach ($diffCollection->chunks as $chunk) {
                     $hunkStart = $chunk->end;
                     $hunkLength = $chunk->endRange;
@@ -77,26 +79,18 @@ class Analyzer
 
                         switch ($line->type) {
                             case VCSWrapper\Diff\Line::ADDED:
+                            case VCSWrapper\Diff\Line::UNCHANGED:
                                 $lineIndex++;
                                 break;
                             case VCSWrapper\Diff\Line::REMOVED:
-                                $lineIndex--;
-                                break;
-                            case VCSWrapper\Diff\Line::UNCHANGED:
-                                $lineIndex++;
+                                // No forward
                                 break;
                         }
 
                         foreach ($classes as $class) {
                             foreach ($class->getMethods() as $method) {
                                 if ($lineIndex >= $method->getStartLine() && $lineIndex <= $method->getEndLine()) {
-                                    if (!isset($changes[$class->getName()])) {
-                                        $changes[$class->getName()] = array();
-                                    }
-                                    if (!isset($changes[$class->getName()][$method->getName()])) {
-                                        $changes[$class->getName()][$method->getName()] = 0;
-                                    }
-                                    $changes[$class->getName()][$method->getName()]++;
+                                    $localChanges = $this->recordChange($localChanges, $class, $method);
                                 }
                             }
                         }
@@ -104,8 +98,35 @@ class Analyzer
                 }
             }
 
+            $changes = $this->mergeChanges($changes, $localChanges);
             $previousVersion = $currentVersion;
         }
+        return $changes;
+    }
+
+    protected function mergeChanges($previousChanges, $currentChanges)
+    {
+        foreach ($currentChanges as $className => $methodChanges) {
+            foreach ($methodChanges as $methodName => $changeCount) {
+                if (!isset($previousChanges[$className])) {
+                    $previousChanges[$className] = array();
+                }
+                if (!isset($previousChanges[$className][$methodName])) {
+                    $previousChanges[$className][$methodName] = 0;
+                }
+                $previousChanges[$className][$methodName] += $changeCount;
+            }
+        }
+        return $previousChanges;
+    }
+
+    protected function recordChange($changes, $class, $method)
+    {
+        if (!isset($changes[$class->getName()])) {
+            $changes[$class->getName()] = array();
+        }
+        $changes[$class->getName()][$method->getName()] = 1;
+
         return $changes;
     }
 }
