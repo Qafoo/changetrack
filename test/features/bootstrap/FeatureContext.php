@@ -44,7 +44,17 @@ class FeatureContext extends BehatContext
      */
     public function iHaveTheRepository($repositoryUrl)
     {
-        $this->analyzer = new Analyzer($repositoryUrl);
+        $checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
+        $cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
+
+        $this->cleanupDirectory($checkoutDir);
+        $this->cleanupDirectory($cacheDir);
+
+        $this->analyzer = new Analyzer(
+            $repositoryUrl,
+            $checkoutDir,
+            $cacheDir
+        );
     }
 
     /**
@@ -70,6 +80,29 @@ class FeatureContext extends BehatContext
         $actualChangeCount = $this->analyzesChanges[$className][$methodName];
         if ($actualChangeCount != $expectedChangeCount) {
             throw new \RuntimeException("Count for method $methodName in class $className is $actualChangeCount, expected $expectedChangeCount.");
+        }
+    }
+
+    protected function cleanupDirectory($directory)
+    {
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator(
+                $directory,
+                \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS
+            ),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $path => $fileSystemNode) {
+            if ($fileSystemNode->isDir()) {
+                rmdir($path);
+            } else {
+                unlink($path);
+            }
+        }
+
+        if (!is_dir($directory)) {
+            mkdir($directory);
         }
     }
 }

@@ -11,11 +11,11 @@ class Analyzer
 
     private $checkoutPath;
 
-    public function __construct($repositoryUrl)
+    public function __construct($repositoryUrl, $checkoutPath, $cachePath)
     {
-        VCSWrapper\Cache\Manager::initialize(__DIR__ . '/../../../var/tmp/cache');
+        VCSWrapper\Cache\Manager::initialize($cachePath);
 
-        $this->checkoutPath = __DIR__ . '/../../../var/tmp/checkout';
+        $this->checkoutPath = $checkoutPath;
 
         $this->checkout = new VCSWrapper\GitCli\Checkout($this->checkoutPath);
         $this->checkout->initialize($repositoryUrl);
