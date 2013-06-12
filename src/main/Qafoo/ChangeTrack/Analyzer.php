@@ -39,24 +39,26 @@ class Analyzer
 
         $this->checkout->update($initialVersion);
 
-        $localChanges = array();
+        $changeRecorder = new ChangeRecorder($initialVersion, $this->checkout->getLogEntry($initialVersion)->message);
+
         foreach ($recursiveIterator as $leaveNode) {
             if ($leaveNode instanceof VCSWrapper\File && substr($leaveNode->getLocalPath(), -3) == 'php') {
                 foreach ($query->find($leaveNode->getLocalPath()) as $class) {
                     foreach ($class->getMethods() as $method) {
-                        $localChanges = $this->recordChange($localChanges, $class, $method);
+                        $changeRecorder->recordChange($localChanges, $class, $method);
                     }
                 }
             }
         }
-
-        $changes = $this->mergeChanges($changes, $localChanges);
+        $changes[] = $changeRecorder;
 
         $previousVersion = $initialVersion;
         foreach ($versions as $currentVersion) {
             $localChanges = array();
 
             $this->checkout->update($currentVersion);
+
+            $changeRecorder = new ChangeRecorder($currentVersion, $this->checkout->getLogEntry($currentVersion)->message);
 
             $diff = $this->checkout->getDiff($previousVersion, $currentVersion);
             foreach ($diff as $diffCollection) {
@@ -90,7 +92,7 @@ class Analyzer
                         foreach ($classes as $class) {
                             foreach ($class->getMethods() as $method) {
                                 if ($lineIndex >= $method->getStartLine() && $lineIndex <= $method->getEndLine()) {
-                                    $localChanges = $this->recordChange($localChanges, $class, $method);
+                                    $changeRecorder->recordChange($class, $method);
                                 }
                             }
                         }
@@ -98,35 +100,28 @@ class Analyzer
                 }
             }
 
-            $changes = $this->mergeChanges($changes, $localChanges);
+            $changes[] = $changeRecorder;
             $previousVersion = $currentVersion;
         }
-        return $changes;
+        return $this->mergeChanges($changes);
     }
 
-    protected function mergeChanges($previousChanges, $currentChanges)
+    protected function mergeChanges(array $changeRecorders)
     {
-        foreach ($currentChanges as $className => $methodChanges) {
-            foreach ($methodChanges as $methodName => $changeCount) {
-                if (!isset($previousChanges[$className])) {
-                    $previousChanges[$className] = array();
-                }
-                if (!isset($previousChanges[$className][$methodName])) {
-                    $previousChanges[$className][$methodName] = 0;
-                }
-                $previousChanges[$className][$methodName] += $changeCount;
-            }
-        }
-        return $previousChanges;
-    }
+        $mergedChanges = array();
 
-    protected function recordChange($changes, $class, $method)
-    {
-        if (!isset($changes[$class->getName()])) {
-            $changes[$class->getName()] = array();
+        foreach ($changeRecorders as $changeRecorder) {
+            foreach ($changeRecorder->getChanges() as $className => $methodChanges)
+                foreach ($methodChanges as $methodName => $changeCount) {
+                    if (!isset($mergedChanges[$className])) {
+                        $mergedChanges[$className] = array();
+                    }
+                    if (!isset($mergedChanges[$className][$methodName])) {
+                        $mergedChanges[$className][$methodName] = 0;
+                    }
+                    $mergedChanges[$className][$methodName] += $changeCount;
+                }
         }
-        $changes[$class->getName()][$method->getName()] = 1;
-
-        return $changes;
+        return $mergedChanges;
     }
 }
