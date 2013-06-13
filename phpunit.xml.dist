@@ -5,6 +5,9 @@
         <testsuite name="Unit">
             <directory>./test/units</directory>
         </testsuite>
+        <testsuite name="Integration">
+            <directory>./test/integration</directory>
+        </testsuite>
     </testsuites>
 
 </phpunit>
