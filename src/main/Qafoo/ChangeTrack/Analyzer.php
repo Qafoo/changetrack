@@ -6,6 +6,7 @@ use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
+use Qafoo\ChangeTrack\Analyzer\DiffIterator;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
 class Analyzer
@@ -63,13 +64,16 @@ class Analyzer
 
             $changeRecorder = new ChangeRecorder($currentVersion, $this->checkout->getLogEntry($currentVersion)->message);
 
-            $diff = $this->checkout->getDiff($previousVersion, $currentVersion);
+            $diff = new \CallbackFilterIterator(
+                new DiffIterator(
+                    $this->checkout->getDiff($previousVersion, $currentVersion)
+                ),
+                function ($diffCollection) {
+                    return substr($diffCollection->to, -3) == 'php';
+                }
+            );
             foreach ($diff as $diffCollection) {
                 $affectedFilePath = $this->checkoutPath . substr($diffCollection->to, 1);
-
-                if (substr($affectedFilePath, -3) !== 'php') {
-                    continue;
-                }
 
                 $classes = $query->find($affectedFilePath);
 
