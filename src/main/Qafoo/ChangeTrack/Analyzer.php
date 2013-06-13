@@ -6,7 +6,7 @@ use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunkLineFeedGenerator;
+use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
 class Analyzer
 {
@@ -73,15 +73,13 @@ class Analyzer
 
                 $classes = $query->find($affectedFilePath);
 
-                foreach ($diffCollection->chunks as $chunk) {
-                    $lineFeedGenerator = new ChunkLineFeedGenerator($chunk);
+                $chunksIterator = new ChunksLineFeedIterator($diffCollection->chunks);
 
-                    foreach ($lineFeedGenerator as $lineNumber) {
-                        foreach ($classes as $class) {
-                            foreach ($class->getMethods() as $method) {
-                                if ($lineNumber >= $method->getStartLine() && $lineNumber <= $method->getEndLine()) {
-                                    $changeRecorder->recordChange($class, $method);
-                                }
+                foreach ($chunksIterator as $lineNumber) {
+                    foreach ($classes as $class) {
+                        foreach ($class->getMethods() as $method) {
+                            if ($lineNumber >= $method->getStartLine() && $lineNumber <= $method->getEndLine()) {
+                                $changeRecorder->recordChange($class, $method);
                             }
                         }
                     }
