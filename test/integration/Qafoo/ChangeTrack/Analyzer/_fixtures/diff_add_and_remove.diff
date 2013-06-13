@@ -1,0 +1,13 @@
+diff --git a/src/main/Qafoo/ChangeTrack/Analyzer/ChangeRecorder.php b/src/main/Qafoo/ChangeTrack/Analyzer/ChangeRecorder.php
+index 717b40e..9401dff 100644
+--- a/src/main/Qafoo/ChangeTrack/Analyzer/ChangeRecorder.php
++++ b/src/main/Qafoo/ChangeTrack/Analyzer/ChangeRecorder.php
+@@ -19,7 +19,7 @@ class ChangeRecorder
+     public function recordChange(\ReflectionClass $class, \ReflectionMethod $method)
+     {
+         if (!isset($this->changes[$class->getName()])) {
+-            $this->changes[$class->getName()] = array();
++            $someThing = new AnyThing();
+         }
+         $this->changes[$class->getName()][$method->getName()] = 1;
+     }
