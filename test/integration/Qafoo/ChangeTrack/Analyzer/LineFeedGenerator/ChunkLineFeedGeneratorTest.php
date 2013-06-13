@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer;
+namespace Qafoo\ChangeTrack\Analyzer\LineFeedGenerator;
 
 use Arbit\VCSWrapper\Diff;
 
