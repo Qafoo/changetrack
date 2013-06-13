@@ -1,12 +1,12 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\LineFeedGenerator;
+namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
-use Qafoo\ChangeTrack\Analyzer\LineFeedGenerator;
+use Qafoo\ChangeTrack\Analyzer\LineFeed;
 
 use Arbit\VCSWrapper\Diff;
 
-class ChunkLineFeedGenerator extends LineFeedGenerator
+class ChunkLineFeedGenerator extends LineFeed
 {
     private $chunk;
 
@@ -15,7 +15,7 @@ class ChunkLineFeedGenerator extends LineFeedGenerator
         $this->chunk = $chunk;
     }
 
-    public function feedLines()
+    public function getIterator()
     {
         $lineCount = count($this->chunk->lines);
         $lineNumber = $this->chunk->end;
@@ -36,6 +36,5 @@ class ChunkLineFeedGenerator extends LineFeedGenerator
                     break;
             }
         }
-
     }
 }

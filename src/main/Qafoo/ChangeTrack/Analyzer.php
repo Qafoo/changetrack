@@ -6,7 +6,7 @@ use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\LineFeedGenerator\ChunkLineFeedGenerator;
+use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunkLineFeedGenerator;
 
 class Analyzer
 {
@@ -76,7 +76,7 @@ class Analyzer
                 foreach ($diffCollection->chunks as $chunk) {
                     $lineFeedGenerator = new ChunkLineFeedGenerator($chunk);
 
-                    foreach ($lineFeedGenerator->feedLines() as $lineNumber) {
+                    foreach ($lineFeedGenerator as $lineNumber) {
                         foreach ($classes as $class) {
                             foreach ($class->getMethods() as $method) {
                                 if ($lineNumber >= $method->getStartLine() && $lineNumber <= $method->getEndLine()) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\LineFeedGenerator;
+namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
 use Arbit\VCSWrapper\Diff;
 
@@ -82,7 +82,7 @@ class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
     private function assertLinesFed($expectedLines, ChunkLineFeedGenerator $lineFeedGenerator)
     {
         $fedLines = array();
-        foreach ($lineFeedGenerator->feedLines() as $lineOffset => $lineNumber) {
+        foreach ($lineFeedGenerator as $lineOffset => $lineNumber) {
             $fedLines[$lineOffset] = $lineNumber;
         }
 
