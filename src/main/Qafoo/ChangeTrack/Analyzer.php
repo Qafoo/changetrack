@@ -37,19 +37,17 @@ class Analyzer
         );
 
         $session = new ReflectionSession();
-        $query = $session->createFileQuery();
+        $query = new CheckoutQuery($session->createFileQuery(), $this->checkout);
 
         $changes = array();
-
-        $this->checkout->update($initialVersion);
 
         $changeRecorder = new ChangeRecorder($initialVersion, $this->checkout->getLogEntry($initialVersion)->message);
 
         foreach ($recursiveIterator as $leaveNode) {
             if ($leaveNode instanceof VCSWrapper\File && substr($leaveNode->getLocalPath(), -3) == 'php') {
-                foreach ($query->find($leaveNode->getLocalPath()) as $class) {
+                foreach ($query->find($initialVersion, $leaveNode->getLocalPath()) as $class) {
                     foreach ($class->getMethods() as $method) {
-                        $changeRecorder->recordChange($localChanges, $class, $method);
+                        $changeRecorder->recordChange($class, $method);
                     }
                 }
             }
@@ -59,8 +57,6 @@ class Analyzer
         $previousVersion = $initialVersion;
         foreach ($versions as $currentVersion) {
             $localChanges = array();
-
-            $this->checkout->update($currentVersion);
 
             $changeRecorder = new ChangeRecorder($currentVersion, $this->checkout->getLogEntry($currentVersion)->message);
 
@@ -75,7 +71,7 @@ class Analyzer
             foreach ($diff as $diffCollection) {
                 $affectedFilePath = $this->checkoutPath . substr($diffCollection->to, 1);
 
-                $classes = $query->find($affectedFilePath);
+                $classes = $query->find($currentVersion, $affectedFilePath);
 
                 $chunksIterator = new ChunksLineFeedIterator($diffCollection->chunks);
 
