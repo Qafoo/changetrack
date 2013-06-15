@@ -82,8 +82,8 @@ class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
     private function assertLinesFed($expectedLines, ChunkLineFeedGenerator $lineFeedGenerator)
     {
         $fedLines = array();
-        foreach ($lineFeedGenerator as $lineOffset => $lineNumber) {
-            $fedLines[$lineOffset] = $lineNumber;
+        foreach ($lineFeedGenerator as $change) {
+            $fedLines[] = $change->affectedLine;
         }
 
         $this->assertEquals(
