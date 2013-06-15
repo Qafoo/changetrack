@@ -27,81 +27,24 @@ class Analyzer
 
     public function analyze()
     {
-        $versions = $this->checkout->getVersions();
-
-        $initialVersion = array_shift($versions);
-
-        $recursiveIterator = new \RecursiveIteratorIterator(
-            $this->checkout,
-            \RecursiveIteratorIterator::LEAVES_ONLY
-        );
-
         $session = new ReflectionSession();
         $query = $session->createFileQuery();
 
-        $changes = array();
+        $changeFeed = new ChangeFeed($this->checkout);
+        $changeRecorder = new ChangeRecorder($query);
 
-        $this->checkout->update($initialVersion);
-
-        $changeRecorder = new ChangeRecorder($initialVersion, $this->checkout->getLogEntry($initialVersion)->message);
-
-        foreach ($recursiveIterator as $leaveNode) {
-            if ($leaveNode instanceof VCSWrapper\File && substr($leaveNode->getLocalPath(), -3) == 'php') {
-                foreach ($query->find($leaveNode->getLocalPath()) as $class) {
-                    foreach ($class->getMethods() as $method) {
-                        $changeRecorder->recordChange($localChanges, $class, $method);
-                    }
-                }
-            }
+        foreach ($changeFeed as $changeSet) {
+            $changeSet->recordChanges($changeRecorder);
         }
-        $changes[] = $changeRecorder;
-
-        $previousVersion = $initialVersion;
-        foreach ($versions as $currentVersion) {
-            $localChanges = array();
-
-            $this->checkout->update($currentVersion);
-
-            $changeRecorder = new ChangeRecorder($currentVersion, $this->checkout->getLogEntry($currentVersion)->message);
-
-            $diff = new \CallbackFilterIterator(
-                new DiffIterator(
-                    $this->checkout->getDiff($previousVersion, $currentVersion)
-                ),
-                function ($diffCollection) {
-                    return substr($diffCollection->to, -3) == 'php';
-                }
-            );
-            foreach ($diff as $diffCollection) {
-                $affectedFilePath = $this->checkoutPath . substr($diffCollection->to, 1);
-
-                $classes = $query->find($affectedFilePath);
-
-                $chunksIterator = new ChunksLineFeedIterator($diffCollection->chunks);
-
-                foreach ($chunksIterator as $lineNumber) {
-                    foreach ($classes as $class) {
-                        foreach ($class->getMethods() as $method) {
-                            if ($lineNumber >= $method->getStartLine() && $lineNumber <= $method->getEndLine()) {
-                                $changeRecorder->recordChange($class, $method);
-                            }
-                        }
-                    }
-                }
-            }
-
-            $changes[] = $changeRecorder;
-            $previousVersion = $currentVersion;
-        }
-        return $this->mergeChanges($changes);
+        return $this->mergeChanges($changeRecorder->getChanges());
     }
 
-    protected function mergeChanges(array $changeRecorders)
+    protected function mergeChanges(array $changes)
     {
         $mergedChanges = array();
 
-        foreach ($changeRecorders as $changeRecorder) {
-            foreach ($changeRecorder->getChanges() as $className => $methodChanges)
+        foreach ($changes as $revision => $revisionChanges) {
+            foreach ($revisionChanges as $className => $methodChanges) {
                 foreach ($methodChanges as $methodName => $changeCount) {
                     if (!isset($mergedChanges[$className])) {
                         $mergedChanges[$className] = array();
@@ -111,6 +54,7 @@ class Analyzer
                     }
                     $mergedChanges[$className][$methodName] += $changeCount;
                 }
+            }
         }
         return $mergedChanges;
     }

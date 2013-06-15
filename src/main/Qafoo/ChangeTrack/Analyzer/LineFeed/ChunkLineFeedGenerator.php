@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
 use Qafoo\ChangeTrack\Analyzer\LineFeed;
+use Qafoo\ChangeTrack\Change;
 
 use Arbit\VCSWrapper\Diff;
 
@@ -25,14 +26,14 @@ class ChunkLineFeedGenerator extends LineFeed
 
             switch ($line->type) {
                 case Diff\Line::ADDED:
-                    yield $lineNumber;
+                    yield new Change(null, $lineNumber, Change::ADDED, null, null);
                     $lineNumber++;
                     break;
                 case Diff\Line::UNCHANGED:
                     $lineNumber++;
                     break;
                 case Diff\Line::REMOVED:
-                    yield $lineNumber;
+                    yield new Change(null, $lineNumber, Change::REMOVED, null, null);
                     break;
             }
         }
