@@ -4,7 +4,6 @@ namespace Qafoo\ChangeTrack\ChangeSet;
 
 use Qafoo\ChangeTrack\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\DiffIterator;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
 use Arbit\VCSWrapper;
@@ -31,7 +30,7 @@ class DiffChangeSet extends ChangeSet
     {
         $this->checkout->update($this->revision);
 
-        $diffIterator = new DiffIterator(
+        $diffIterator = new Diff\DiffIterator(
             $this->checkout->getDiff(
                 $this->previousRevision,
                 $this->revision
@@ -39,7 +38,7 @@ class DiffChangeSet extends ChangeSet
         );
 
         foreach ($diffIterator as $diffCollection) {
-            $chunksIterator = new ChunksLineFeedIterator($diffCollection->chunks);
+            $chunksIterator = new Diff\LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
 
             foreach ($chunksIterator as $change) {
                 $change->localFile = $this->checkout->getLocalPath() . substr($diffCollection->to, 1);

@@ -1,10 +1,10 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
+namespace Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
 
-use Qafoo\ChangeTrack\Analyzer\LineFeed;
+use Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
 
-class ChunksLineFeedIterator extends LineFeed
+class ChunksLineFeedIterator extends LineChangeFeed
 {
     private $chunks;
 

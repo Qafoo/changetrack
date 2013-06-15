@@ -1,13 +1,13 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
+namespace Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
 
-use Qafoo\ChangeTrack\Analyzer\LineFeed;
+use Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
 use Qafoo\ChangeTrack\Change;
 
 use Arbit\VCSWrapper\Diff;
 
-class ChunkLineFeedGenerator extends LineFeed
+class ChunkLineFeedGenerator extends LineChangeFeed
 {
     private $chunk;
 
