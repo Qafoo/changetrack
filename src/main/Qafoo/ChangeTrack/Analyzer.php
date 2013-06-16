@@ -36,26 +36,6 @@ class Analyzer
         foreach ($changeFeed as $changeSet) {
             $changeSet->recordChanges($changeRecorder);
         }
-        return $this->mergeChanges($changeRecorder->getChanges());
-    }
-
-    protected function mergeChanges(array $changes)
-    {
-        $mergedChanges = array();
-
-        foreach ($changes as $revision => $revisionChanges) {
-            foreach ($revisionChanges as $className => $methodChanges) {
-                foreach ($methodChanges as $methodName => $changeCount) {
-                    if (!isset($mergedChanges[$className])) {
-                        $mergedChanges[$className] = array();
-                    }
-                    if (!isset($mergedChanges[$className][$methodName])) {
-                        $mergedChanges[$className][$methodName] = 0;
-                    }
-                    $mergedChanges[$className][$methodName] += $changeCount;
-                }
-            }
-        }
-        return $mergedChanges;
+        return $changeRecorder->getChanges();
     }
 }
