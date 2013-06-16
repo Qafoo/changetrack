@@ -8,6 +8,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use Qafoo\ChangeTrack\Analyzer;
+use Qafoo\ChangeTrack\Change;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -70,6 +71,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveACountOfForMethodInClass($expectedChangeCount, $methodName, $className)
     {
+        var_dump($this->analyzesChanges);
         if (!isset($this->analyzesChanges[$className])) {
             throw new \RuntimeException("Class $className not found.");
         }
@@ -80,6 +82,71 @@ class FeatureContext extends BehatContext
         $actualChangeCount = $this->analyzesChanges[$className][$methodName];
         if ($actualChangeCount != $expectedChangeCount) {
             throw new \RuntimeException("Count for method $methodName in class $className is $actualChangeCount, expected $expectedChangeCount.");
+        }
+    }
+
+    /**
+     * @Then /^there are the following stats in revision "([^"]*)"$/
+     */
+    public function thereAreTheFollowingStatsInRevision($revision, TableNode $table)
+    {
+        foreach ($table->getHash() as $rows) {
+            $class = $rows['Class'];
+            $method = $rows['Method'];
+            $added = $rows['Added'];
+            $removed = $rows['Removed'];
+
+            if (!isset($this->analyzesChanges[$revision])) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Revision %s not found in stats.',
+                        $revision
+                    )
+                );
+            }
+            if (!isset($this->analyzesChanges[$revision][$class])) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Class %s not found in stats for revision %s.',
+                        $class,
+                        $revision
+                    )
+                );
+            }
+            if (!isset($this->analyzesChanges[$revision][$class][$method])) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Method %s::%s() not found in stats for revision %s.',
+                        $class,
+                        $method,
+                        $revision
+                    )
+                );
+            }
+            if ($this->analyzesChanges[$revision][$class][$method][Change::ADDED] != $added) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Added stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        $class,
+                        $method,
+                        $revision,
+                        $added,
+                        $this->analyzesChanges[$revision][$class][$method][Change::ADDED]
+                    )
+                );
+            }
+            if ($this->analyzesChanges[$revision][$class][$method][Change::REMOVED] != $removed) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Removed stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        $class,
+                        $method,
+                        $revision,
+                        $added,
+                        $this->analyzesChanges[$revision][$class][$method][Change::ADDED]
+                    )
+                );
+            }
         }
     }
 
