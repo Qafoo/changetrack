@@ -67,25 +67,6 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^I have a count of "([^"]*)" for method "([^"]*)" in class "([^"]*)"$/
-     */
-    public function iHaveACountOfForMethodInClass($expectedChangeCount, $methodName, $className)
-    {
-        var_dump($this->analyzesChanges);
-        if (!isset($this->analyzesChanges[$className])) {
-            throw new \RuntimeException("Class $className not found.");
-        }
-        if (!isset($this->analyzesChanges[$className][$methodName])) {
-            throw new \RuntimeException("Method $methodName in class $className not found.");
-        }
-
-        $actualChangeCount = $this->analyzesChanges[$className][$methodName];
-        if ($actualChangeCount != $expectedChangeCount) {
-            throw new \RuntimeException("Count for method $methodName in class $className is $actualChangeCount, expected $expectedChangeCount.");
-        }
-    }
-
-    /**
      * @Then /^there are the following stats in revision "([^"]*)"$/
      */
     public function thereAreTheFollowingStatsInRevision($revision, TableNode $table)
