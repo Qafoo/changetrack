@@ -1,30 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use pdepend\reflection\ReflectionSession;
-
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-\Arbit\VCSWrapper\Cache\Manager::initialize(__DIR__ . '/../../src/var/tmp/cache');
+$analyzer = new Qafoo\ChangeTrack\Analyzer(
+    'https://github.com/QafooLabs/Daemon.git',
+    'src/var/tmp/checkout',
+    'src/var/tmp/cache'
+);
 
-$repo = new \Arbit\VCSWrapper\GitCli\Checkout(__DIR__ . '/../../src/var/tmp/checkout');
+$changes = $analyzer->analyze();
 
-$repo->initialize('https://github.com/QafooLabs/Daemon.git');
-
-var_dump($repo->getVersions());
-
-/*
-
-$session = new ReflectionSession();
-
-$query = $session->createFileQuery();
-foreach ($query->find(FILE) as $class)
-{
-    echo $class->getName(), PHP_EOL;
-    foreach ($class->getMethods() as $method)
-    {
-        echo "  - " . $method->getName() . "() " . $method->getStartLine() . "-" . $method->getEndLine() . PHP_EOL;
-    }
-}
-
-*/
+$renderer = new Qafoo\ChangeTrack\Renderer\XmlRenderer();
+echo $renderer->renderOutput($changes);
