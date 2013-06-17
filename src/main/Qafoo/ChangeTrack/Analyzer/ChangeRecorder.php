@@ -6,22 +6,20 @@ use Qafoo\ChangeTrack\Change;
 
 class ChangeRecorder
 {
-    private $changes = array();
-
     private $reflectionQuery;
 
-    public function __construct($reflectionQuery)
+    public function __construct($reflectionQuery, Result $result)
     {
         $this->reflectionQuery = $reflectionQuery;
+        $this->result = $result;
     }
 
     public function recordChange(Change $change)
     {
-        $revision = $change->revision;
-
-        if (!isset($this->changes[$revision])) {
-            $this->changes[$revision] = array();
-        }
+        $revisionChange = $this->result->createRevisionChanges(
+            $change->revision,
+            'TODO: Add commit message.'
+        );
 
         $affectedMethod = $this->determineAffectedMethod($change);
 
@@ -29,16 +27,17 @@ class ChangeRecorder
             $className = $affectedMethod->getDeclaringClass()->getName();
             $methodName = $affectedMethod->getName();
 
-            if (!isset($this->changes[$change->revision][$className])) {
-                $this->changes[$revision][$className] = array();
+            $classChange = $revisionChange->createClassChanges($className);
+            $methodChange = $classChange->createMethodChanges($methodName);
+
+            switch ($change->changeType) {
+                case Change::REMOVED:
+                    $methodChange->numLinesRemoved++;
+                    break;
+                case Change::ADDED:
+                    $methodChange->numLinesAdded++;
+                    break;
             }
-            if (!isset($this->changes[$change->revision][$className][$methodName])) {
-                $this->changes[$revision][$className][$methodName] = array(
-                    Change::ADDED => 0,
-                    Change::REMOVED => 0
-                );
-            }
-            $this->changes[$revision][$className][$methodName][$change->changeType]++;
         }
     }
 

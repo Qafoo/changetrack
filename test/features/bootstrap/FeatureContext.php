@@ -104,7 +104,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$class][$method][Change::ADDED] != $added) {
+            if ($this->analyzesChanges[$revision][$class][$method]->numLinesAdded != $added) {
                 throw new \RuntimeException(
                     sprintf(
                         'Added stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
@@ -112,11 +112,11 @@ class FeatureContext extends BehatContext
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$class][$method][Change::ADDED]
+                        $this->analyzesChanges[$revision][$class][$method]->numLinesAdded
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$class][$method][Change::REMOVED] != $removed) {
+            if ($this->analyzesChanges[$revision][$class][$method]->numLinesRemoved != $removed) {
                 throw new \RuntimeException(
                     sprintf(
                         'Removed stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
@@ -124,7 +124,7 @@ class FeatureContext extends BehatContext
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$class][$method][Change::ADDED]
+                        $this->analyzesChanges[$revision][$class][$method]->numLinesRemoved
                     )
                 );
             }
