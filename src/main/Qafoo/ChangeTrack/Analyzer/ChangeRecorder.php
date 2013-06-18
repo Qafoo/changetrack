@@ -18,7 +18,7 @@ class ChangeRecorder
     {
         $revisionChange = $this->result->createRevisionChanges(
             $change->revision,
-            'TODO: Add commit message.'
+            $change->message
         );
 
         $affectedMethod = $this->determineAffectedMethod($change);
