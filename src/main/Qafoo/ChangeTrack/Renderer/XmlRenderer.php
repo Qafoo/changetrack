@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Renderer;
 
 use Qafoo\ChangeTrack\Renderer;
 use Qafoo\ChangeTrack\Change;
+use Qafoo\ChangeTrack\Analyzer\Result;
 
 class XmlRenderer extends Renderer
 {
@@ -14,39 +15,40 @@ class XmlRenderer extends Renderer
     /**
      * Render the output of $analysisResult into a string and return it.
      *
-     * @param array $analysisResult
+     * @param \Qafoo\ChangeTrack\Analyzer\Result $analysisResult
      * @return string
      */
-    public function renderOutput(array $analysisResult)
+    public function renderOutput(Result $analysisResult)
     {
         $domDocument = new \DOMDocument();
         $domDocument->formatOutput = true;
 
         $rootElement = $this->createElement($domDocument, 'changes');
 
-        foreach ($analysisResult as $revision => $classChanges) {
+        foreach ($analysisResult as $revisionChanges) {
             $changeSetElement = $rootElement->appendChild(
                 $domDocument->createElementNS(self::URN, 'changeSet')
             );
-            $changeSetElement->setAttributeNS(self::URN, 'revision', $revision);
+            $changeSetElement->setAttributeNS(self::URN, 'revision', $revisionChanges->revision);
+            $changeSetElement->setAttributeNS(self::URN, 'message', $revisionChanges->commitMessage);
 
-            foreach ($classChanges as $className => $methodChanges) {
+            foreach ($revisionChanges as $classChanges) {
                 $classElement = $changeSetElement->appendChild(
                     $domDocument->createElementNS(self::URN, 'class')
                 );
-                $classElement->setAttributeNS(self::URN, 'name', $className);
+                $classElement->setAttributeNS(self::URN, 'name', $classChanges->className);
 
-                foreach ($methodChanges as $methodName => $actionStats) {
+                foreach ($classChanges as $methodChange) {
                     $methodElement = $classElement->appendChild(
                         $domDocument->createElementNS(self::URN, 'method')
                     );
-                    $methodElement->setAttributeNS(self::URN, 'name', $methodName);
+                    $methodElement->setAttributeNS(self::URN, 'name', $methodChange->methodName);
 
                     $methodElement->appendChild(
-                        $domDocument->createElementNS(self::URN, 'added', $actionStats[Change::ADDED])
+                        $domDocument->createElementNS(self::URN, 'added', $methodChange->numLinesAdded)
                     );
                     $methodElement->appendChild(
-                        $domDocument->createElementNS(self::URN, 'removed', $actionStats[Change::REMOVED])
+                        $domDocument->createElementNS(self::URN, 'removed', $methodChange->numLinesRemoved)
                     );
                 }
             }

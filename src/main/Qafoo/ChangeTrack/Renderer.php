@@ -2,6 +2,8 @@
 
 namespace Qafoo\ChangeTrack;
 
+use Qafoo\ChangeTrack\Analyzer\Result;
+
 abstract class Renderer
 {
     /**
@@ -10,5 +12,5 @@ abstract class Renderer
      * @param array $analysisResult
      * @return string
      */
-    abstract public function renderOutput(array $analysisResult);
+    abstract public function renderOutput(Result $analysisResult);
 }
