@@ -8,6 +8,7 @@ use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
 use Qafoo\ChangeTrack\Analyzer;
+use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Change;
 
 require __DIR__ . '/../../../vendor/autoload.php';
@@ -28,6 +29,8 @@ class FeatureContext extends BehatContext
      * @var Qafoo\ChangeTrack\Analyzes
      */
     private $analyzer;
+
+    private $calculatedStats;
 
     /**
      * Initializes context.
@@ -125,6 +128,51 @@ class FeatureContext extends BehatContext
                         $revision,
                         $added,
                         $this->analyzesChanges[$revision][$class][$method]->numLinesRemoved
+                    )
+                );
+            }
+        }
+    }
+
+    /**
+     * @When /^I calculate the stats$/
+     */
+    public function iCalculateTheStats()
+    {
+        $calculator = new Calculator($this->analyzesChanges);
+        $this->calculatedStats = $calculator->calculateStats();
+    }
+
+    /**
+     * @Then /^I have the following stats$/
+     */
+    public function iHaveTheFollowingStats(TableNode $table)
+    {
+        foreach ($table->getHash() as $row) {
+            $class = $row['Class'];
+            $method = $row['Method'];
+            $changeType = $row['Change Type'];
+            $value = (int) $row['Value'];
+
+            if (!isset($this->calculateStats[$changeType][$class][$method])) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'No stats found for change type "%s", class "%s" and method "%s"',
+                        $changeType,
+                        $class,
+                        $method
+                    )
+                );
+            }
+            if ($this->calculateStats[$changeType][$class][$method] != $value) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Stats value for change type "%s", class "%s" and method "%s" is %s, expected %s',
+                        $changeType,
+                        $class,
+                        $method,
+                        $this->calculateStats[$changeType][$class][$method],
+                        $value
                     )
                 );
             }
