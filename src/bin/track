@@ -3,8 +3,13 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+if (!isset($argv[1])) {
+    echo "Usage: $ src/bin/track <git-repo-url>\n";
+    exit(-1);
+}
+
 $analyzer = new Qafoo\ChangeTrack\Analyzer(
-    'https://github.com/QafooLabs/Daemon.git',
+    $argv[1],
     'src/var/tmp/checkout',
     'src/var/tmp/cache'
 );
