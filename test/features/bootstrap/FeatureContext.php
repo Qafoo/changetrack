@@ -163,12 +163,13 @@ class FeatureContext extends BehatContext
     public function iHaveTheFollowingStats(TableNode $table)
     {
         foreach ($table->getHash() as $row) {
+            $package = $row['Package'];
             $class = $row['Class'];
             $method = $row['Method'];
             $changeType = $row['Change Type'];
             $value = (int) $row['Value'];
 
-            if (!isset($this->calculatedStats[$changeType][$class][$method])) {
+            if (!isset($this->calculatedStats[$changeType][$package][$class][$method])) {
                 throw new \RuntimeException(
                     sprintf(
                         'No stats found for change type "%s", class "%s" and method "%s"',
@@ -178,7 +179,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->calculatedStats[$changeType][$class][$method] != $value) {
+            if ($this->calculatedStats[$changeType][$package][$class][$method] != $value) {
                 throw new \RuntimeException(
                     sprintf(
                         'Stats value for change type "%s", class "%s" and method "%s" is %s, expected %s',

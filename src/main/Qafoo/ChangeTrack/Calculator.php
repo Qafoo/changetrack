@@ -27,18 +27,23 @@ class Calculator
                     break;
             }
 
-            foreach ($revisionChanges as $classChanges) {
-                foreach ($classChanges as $methodChanges) {
-                    if (!isset($stats[$changeType])) {
-                        $stats[$changeType] = array();
+            foreach ($revisionChanges as $packageChanges) {
+                foreach ($packageChanges as $classChanges) {
+                    foreach ($classChanges as $methodChanges) {
+                        if (!isset($stats[$changeType])) {
+                            $stats[$changeType] = array();
+                        }
+                        if (!isset($stats[$changeType][$packageChanges->packageName])) {
+                            $stats[$changeType][$packageChanges->packageName] = array();
+                        }
+                        if (!isset($stats[$changeType][$packageChanges->packageName][$classChanges->className])) {
+                            $stats[$changeType][$packageChanges->packageName][$classChanges->className] = array();
+                        }
+                        if (!isset($stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName])) {
+                            $stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName] = 0;
+                        }
+                        $stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName]++;
                     }
-                    if (!isset($stats[$changeType][$classChanges->className])) {
-                        $stats[$changeType][$classChanges->className] = array();
-                    }
-                    if (!isset($stats[$changeType][$classChanges->className][$methodChanges->methodName])) {
-                        $stats[$changeType][$classChanges->className][$methodChanges->methodName] = 0;
-                    }
-                    $stats[$changeType][$classChanges->className][$methodChanges->methodName]++;
                 }
             }
         }

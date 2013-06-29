@@ -7,7 +7,7 @@ Feature: The Calculator calculates which methods are most affected by bugs.
          When I analyze the changes
           And I calculate the stats
          Then I have the following stats
-            | Class                   | Method | Change Type | Value |
-            | QafooLabs\Daemon\Daemon | start  | fix         | 1     |
-            | QafooLabs\Daemon\Daemon | start  | implement   | 1     |
-            | QafooLabs\Daemon\Daemon | start  | misc        | 2     |
+            | Package          | Class  | Method | Change Type | Value |
+            | QafooLabs\Daemon | Daemon | start  | fix         | 1     |
+            | QafooLabs\Daemon | Daemon | start  | implement   | 1     |
+            | QafooLabs\Daemon | Daemon | start  | misc        | 2     |
