@@ -75,6 +75,7 @@ class FeatureContext extends BehatContext
     public function thereAreTheFollowingStatsInRevision($revision, TableNode $table)
     {
         foreach ($table->getHash() as $rows) {
+            $package = $rows['Package'];
             $class = $rows['Class'];
             $method = $rows['Method'];
             $added = $rows['Added'];
@@ -88,46 +89,59 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzesChanges[$revision][$class])) {
+            if (!isset($this->analyzesChanges[$revision][$package])) {
                 throw new \RuntimeException(
                     sprintf(
-                        'Class %s not found in stats for revision %s.',
-                        $class,
+                        'Package %s not found in stats for revision %s.',
+                        $package,
                         $revision
                     )
                 );
             }
-            if (!isset($this->analyzesChanges[$revision][$class][$method])) {
+            if (!isset($this->analyzesChanges[$revision][$package][$class])) {
                 throw new \RuntimeException(
                     sprintf(
-                        'Method %s::%s() not found in stats for revision %s.',
+                        'Class %s from package %s not found in stats for revision %s.',
+                        $class,
+                        $package,
+                        $revision
+                    )
+                );
+            }
+            if (!isset($this->analyzesChanges[$revision][$package][$class][$method])) {
+                throw new \RuntimeException(
+                    sprintf(
+                        'Method %s\%s::%s() not found in stats for revision %s.',
+                        $package,
                         $class,
                         $method,
                         $revision
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$class][$method]->numLinesAdded != $added) {
+            if ($this->analyzesChanges[$revision][$package][$class][$method]->numLinesAdded != $added) {
                 throw new \RuntimeException(
                     sprintf(
-                        'Added stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        'Added stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        $package,
                         $class,
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$class][$method]->numLinesAdded
+                        $this->analyzesChanges[$revision][$package][$class][$method]->numLinesAdded
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$class][$method]->numLinesRemoved != $removed) {
+            if ($this->analyzesChanges[$revision][$package][$class][$method]->numLinesRemoved != $removed) {
                 throw new \RuntimeException(
                     sprintf(
-                        'Removed stats for %s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        'Removed stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
+                        $package,
                         $class,
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$class][$method]->numLinesRemoved
+                        $this->analyzesChanges[$revision][$package][$class][$method]->numLinesRemoved
                     )
                 );
             }

@@ -24,10 +24,15 @@ class ChangeRecorder
         $affectedMethod = $this->determineAffectedMethod($change);
 
         if ($affectedMethod !== null) {
-            $className = $affectedMethod->getDeclaringClass()->getName();
+
+            $affectedClass = $affectedMethod->getDeclaringClass();
+
+            $packageName = $affectedClass->getNamespaceName();
+            $className = $affectedClass->getShortName();
             $methodName = $affectedMethod->getName();
 
-            $classChange = $revisionChange->createClassChanges($className);
+            $packageChanges = $revisionChange->createPackageChanges($packageName);
+            $classChange = $packageChanges->createClassChanges($className);
             $methodChange = $classChange->createMethodChanges($methodName);
 
             switch ($change->changeType) {

@@ -17,7 +17,7 @@ class RevisionChanges extends \ArrayObject
     /**
      * @param string $revision
      * @param string $commitMessage
-     * @param array(ClassChanges) $revisionChanges
+     * @param array(PackageChanges) $revisionChanges
      */
     public function __construct($revision, $commitMessage, array $revisionChanges = array())
     {
@@ -27,11 +27,11 @@ class RevisionChanges extends \ArrayObject
         $this->commitMessage = $commitMessage;
     }
 
-    public function createClassChanges($className)
+    public function createPackageChanges($packageName)
     {
-        if (!isset($this[$className])) {
-            $this[$className] = new ClassChanges($className);
+        if (!isset($this[$packageName])) {
+            $this[$packageName] = new PackageChanges($packageName);
         }
-        return $this[$className];
+        return $this[$packageName];
     }
 }
