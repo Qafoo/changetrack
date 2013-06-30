@@ -13,18 +13,10 @@ class PackageChanges extends \ArrayObject
      * @param string $packageName
      * @param array(ClassChanges) $classChanges
      */
-    public function __construct($packageName, array $classChanges = array())
+    public function __construct($packageName, array $classChanges)
     {
         parent::__construct($classChanges);
 
         $this->packageName = $packageName;
-    }
-
-    public function createClassChanges($className)
-    {
-        if (!isset($this[$className])) {
-            $this[$className] = new ClassChanges($className);
-        }
-        return $this[$className];
     }
 }

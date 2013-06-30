@@ -6,7 +6,7 @@ use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\Result;
+use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 use Qafoo\ChangeTrack\Analyzer\DiffIterator;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
@@ -35,12 +35,12 @@ class Analyzer
         $query = $session->createFileQuery();
 
         $changeFeed = new ChangeFeed($this->checkout);
-        $result = new Result($this->repositoryUrl);
-        $changeRecorder = new ChangeRecorder($query, $result);
+        $resultBuilder = new ResultBuilder($this->repositoryUrl);
+        $changeRecorder = new ChangeRecorder($query, $resultBuilder);
 
         foreach ($changeFeed as $changeSet) {
-            $changeSet->recordChanges($changeRecorder, $result);
+            $changeSet->recordChanges($changeRecorder);
         }
-        return $result;
+        return $resultBuilder->buildResult();
     }
 }

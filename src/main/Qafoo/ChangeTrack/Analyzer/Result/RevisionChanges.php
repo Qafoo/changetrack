@@ -17,21 +17,13 @@ class RevisionChanges extends \ArrayObject
     /**
      * @param string $revision
      * @param string $commitMessage
-     * @param array(PackageChanges) $revisionChanges
+     * @param \Qafoo\ChangeTrack\Analyzer\Result\PackageChanges[] $packageChanges
      */
-    public function __construct($revision, $commitMessage, array $revisionChanges = array())
+    public function __construct($revision, $commitMessage, array $packageChanges)
     {
-        parent::__construct($revisionChanges);
+        parent::__construct($packageChanges);
 
         $this->revision = $revision;
         $this->commitMessage = $commitMessage;
-    }
-
-    public function createPackageChanges($packageName)
-    {
-        if (!isset($this[$packageName])) {
-            $this[$packageName] = new PackageChanges($packageName);
-        }
-        return $this[$packageName];
     }
 }

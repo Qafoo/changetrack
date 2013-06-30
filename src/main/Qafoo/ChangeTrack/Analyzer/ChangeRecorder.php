@@ -8,39 +8,33 @@ class ChangeRecorder
 {
     private $reflectionQuery;
 
-    public function __construct($reflectionQuery, Result $result)
+    private $resultBuilder;
+
+    public function __construct($reflectionQuery, ResultBuilder $resultBuilder)
     {
         $this->reflectionQuery = $reflectionQuery;
-        $this->result = $result;
+        $this->resultBuilder = $resultBuilder;
     }
 
     public function recordChange(Change $change)
     {
-        $revisionChange = $this->result->createRevisionChanges(
-            $change->revision,
-            $change->message
-        );
-
         $affectedMethod = $this->determineAffectedMethod($change);
 
         if ($affectedMethod !== null) {
-
             $affectedClass = $affectedMethod->getDeclaringClass();
 
-            $packageName = $affectedClass->getNamespaceName();
-            $className = $affectedClass->getShortName();
-            $methodName = $affectedMethod->getName();
-
-            $packageChanges = $revisionChange->createPackageChanges($packageName);
-            $classChange = $packageChanges->createClassChanges($className);
-            $methodChange = $classChange->createMethodChanges($methodName);
+            $methodChangesBuilder = $this->resultBuilder->revisionChanges($change->revision)
+                ->commitMessage($change->message)
+                ->packageChanges($affectedClass->getNamespaceName())
+                ->classChanges($affectedClass->getShortName())
+                ->methodChanges($affectedMethod->getName());
 
             switch ($change->changeType) {
                 case Change::REMOVED:
-                    $methodChange->numLinesRemoved++;
+                    $methodChangesBuilder->lineRemoved();
                     break;
                 case Change::ADDED:
-                    $methodChange->numLinesAdded++;
+                    $methodChangesBuilder->lineAdded();
                     break;
             }
         }
@@ -63,10 +57,5 @@ class ChangeRecorder
             }
         }
         return null;
-    }
-
-    public function getChanges()
-    {
-        return $this->changes;
     }
 }

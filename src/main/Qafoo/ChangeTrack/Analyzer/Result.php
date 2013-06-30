@@ -21,19 +21,4 @@ class Result extends \ArrayObject
 
         $this->repositoryUrl = $repositoryUrl;
     }
-
-    /**
-     * @param string $revision
-     * @param string $commitMessage
-     */
-    public function createRevisionChanges($revision, $commitMessage)
-    {
-        if (!isset($this[$revision])) {
-            $this[$revision] = new RevisionChanges(
-                $revision,
-                $commitMessage
-            );
-        }
-        return $this[$revision];
-    }
 }

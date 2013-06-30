@@ -11,20 +11,12 @@ class ClassChanges extends \ArrayObject
 
     /**
      * @param string $className
-     * @param array(MethodChanges) $methodChanges
+     * @param \Qafoo\ChangeTrack\Analyzer\Result\MethodChanges $methodChanges
      */
-    public function __construct($className, array $methodChanges = array())
+    public function __construct($className, array $methodChanges)
     {
         parent::__construct($methodChanges);
 
         $this->className = $className;
-    }
-
-    public function createMethodChanges($methodName)
-    {
-        if (!isset($this[$methodName])) {
-            $this[$methodName] = new MethodChanges($methodName);
-        }
-        return $this[$methodName];
     }
 }

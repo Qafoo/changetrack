@@ -24,7 +24,7 @@ class MethodChanges
      * @param int $numLinesAdded
      * @param int $numLinesRemoved
      */
-    public function __construct($methodName, $numLinesAdded = 0, $numLinesRemoved = 0)
+    public function __construct($methodName, $numLinesAdded, $numLinesRemoved)
     {
         $this->methodName = $methodName;
         $this->numLinesAdded = $numLinesAdded;
