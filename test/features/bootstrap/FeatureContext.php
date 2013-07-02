@@ -66,7 +66,7 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChanges()
     {
-        $this->analyzesChanges = $this->analyzer->analyze();
+        $this->analyzedChanges = $this->analyzer->analyze();
     }
 
     /**
@@ -81,7 +81,7 @@ class FeatureContext extends BehatContext
             $added = $rows['Added'];
             $removed = $rows['Removed'];
 
-            if (!isset($this->analyzesChanges[$revision])) {
+            if (!isset($this->analyzedChanges[$revision])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Revision %s not found in stats.',
@@ -89,7 +89,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzesChanges[$revision][$package])) {
+            if (!isset($this->analyzedChanges[$revision][$package])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Package %s not found in stats for revision %s.',
@@ -98,7 +98,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzesChanges[$revision][$package][$class])) {
+            if (!isset($this->analyzedChanges[$revision][$package][$class])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Class %s from package %s not found in stats for revision %s.',
@@ -108,7 +108,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzesChanges[$revision][$package][$class][$method])) {
+            if (!isset($this->analyzedChanges[$revision][$package][$class][$method])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Method %s\%s::%s() not found in stats for revision %s.',
@@ -119,7 +119,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$package][$class][$method]->numLinesAdded != $added) {
+            if ($this->analyzedChanges[$revision][$package][$class][$method]->numLinesAdded != $added) {
                 throw new \RuntimeException(
                     sprintf(
                         'Added stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
@@ -128,11 +128,11 @@ class FeatureContext extends BehatContext
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$package][$class][$method]->numLinesAdded
+                        $this->analyzedChanges[$revision][$package][$class][$method]->numLinesAdded
                     )
                 );
             }
-            if ($this->analyzesChanges[$revision][$package][$class][$method]->numLinesRemoved != $removed) {
+            if ($this->analyzedChanges[$revision][$package][$class][$method]->numLinesRemoved != $removed) {
                 throw new \RuntimeException(
                     sprintf(
                         'Removed stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
@@ -141,7 +141,7 @@ class FeatureContext extends BehatContext
                         $method,
                         $revision,
                         $added,
-                        $this->analyzesChanges[$revision][$package][$class][$method]->numLinesRemoved
+                        $this->analyzedChanges[$revision][$package][$class][$method]->numLinesRemoved
                     )
                 );
             }
@@ -153,7 +153,7 @@ class FeatureContext extends BehatContext
      */
     public function iCalculateTheStats()
     {
-        $calculator = new Calculator($this->analyzesChanges);
+        $calculator = new Calculator($this->analyzedChanges);
         $this->calculatedStats = $calculator->calculateStats();
     }
 
