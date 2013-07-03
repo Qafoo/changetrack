@@ -4,6 +4,11 @@ namespace Qafoo\ChangeTrack;
 
 use Qafoo\ChangeTrack\Analyzer\Result;
 
+use Qafoo\ChangeTrack\Calculator\StatsCollector;
+use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\ChainSelectionLabelProvider;
+use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider;
+use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider;
+
 class Calculator
 {
     private $analysisResult;
@@ -15,38 +20,20 @@ class Calculator
 
     public function calculateStats()
     {
-        $stats = array();
-        foreach ($this->analysisResult as $revisionChanges) {
-            $changeType = 'misc';
-            switch (true) {
-                case (preg_match('(fix)i', $revisionChanges->commitMessage) > 0):
-                    $changeType = 'fix';
-                    break;
-                case (preg_match('(implemented)i', $revisionChanges->commitMessage) > 0):
-                    $changeType = 'implement';
-                    break;
-            }
+        $statsCollector = new StatsCollector(
+            new ChainSelectionLabelProvider(
+                array(
+                    new RegexLabelProvider('(fixed)i', 'fix'),
+                    new RegexLabelProvider('(implemented)i', 'implement'),
+                    new DefaultLabelProvider('misc')
+                )
+            )
+        );
 
-            foreach ($revisionChanges as $packageChanges) {
-                foreach ($packageChanges as $classChanges) {
-                    foreach ($classChanges as $methodChanges) {
-                        if (!isset($stats[$changeType])) {
-                            $stats[$changeType] = array();
-                        }
-                        if (!isset($stats[$changeType][$packageChanges->packageName])) {
-                            $stats[$changeType][$packageChanges->packageName] = array();
-                        }
-                        if (!isset($stats[$changeType][$packageChanges->packageName][$classChanges->className])) {
-                            $stats[$changeType][$packageChanges->packageName][$classChanges->className] = array();
-                        }
-                        if (!isset($stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName])) {
-                            $stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName] = 0;
-                        }
-                        $stats[$changeType][$packageChanges->packageName][$classChanges->className][$methodChanges->methodName]++;
-                    }
-                }
-            }
+        foreach ($this->analysisResult as $revisionChanges) {
+            $statsCollector->recordRevision($revisionChanges);
         }
-        return $stats;
+
+        return $statsCollector->getStats();
     }
 }
