@@ -15,7 +15,7 @@ class ResultBuilder
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\ResultBuilder\RevisionChangesBuilder[]
      */
-    private $revisionChangesBuilders;
+    private $revisionChangesBuilders = array();
 
     public function __construct($repositoryUrl)
     {
