@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\ChangeSet;
 
+use Qafoo\ChangeTrack\Change;
 use Qafoo\ChangeTrack\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 
@@ -35,7 +36,7 @@ class InitialChangeSet extends ChangeSet
             // TODO: Move filtering to change recorder
             if ($leaveNode instanceof VCSWrapper\File && substr($leaveNode->getLocalPath(), -3) == 'php') {
                 foreach (file($leaveNode->getLocalPath()) as $lineIndex => $lineContent) {
-                    $lineChangeRecorder->recordChange(
+                    $changeRecorder->recordChange(
                         new Change(
                             $leaveNode->getLocalPath(),
                             $lineIndex + 1,
