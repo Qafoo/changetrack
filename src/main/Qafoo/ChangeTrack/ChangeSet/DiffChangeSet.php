@@ -40,6 +40,11 @@ class DiffChangeSet extends ChangeSet
         foreach ($diffIterator as $diffCollection) {
             $chunksIterator = new Diff\LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
 
+            if ($diffCollection->to === '/dev/null') {
+                // File has been deleted.
+                continue;
+            }
+
             foreach ($chunksIterator as $change) {
                 $change->localFile = $this->checkout->getLocalPath() . substr($diffCollection->to, 1);
                 $change->revision = $this->revision;
