@@ -20,7 +20,8 @@
     ],
     "require": {
         "manuelpichler/staticReflection": "@dev",
-        "arbit/vcs-wrapper": "dev-master"
+        "arbit/vcs-wrapper": "dev-master",
+        "jms/serializer": "@stable"
     },
     "require-dev": {
         "behat/behat" : "2.4.*@stable",
