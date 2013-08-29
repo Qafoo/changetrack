@@ -32,24 +32,32 @@ class XmlRenderer extends Renderer
             $changeSetElement->setAttributeNS(self::URN, 'revision', $revisionChanges->revision);
             $changeSetElement->setAttributeNS(self::URN, 'message', $revisionChanges->commitMessage);
 
-            foreach ($revisionChanges as $classChanges) {
-                $classElement = $changeSetElement->appendChild(
-                    $domDocument->createElementNS(self::URN, 'class')
+            foreach ($revisionChanges as $packageChanges) {
+
+                $packageElement = $changeSetElement->appendChild(
+                    $domDocument->createElementNS(self::URN, 'package')
                 );
-                $classElement->setAttributeNS(self::URN, 'name', $classChanges->className);
+                $packageElement->setAttributeNS(self::URN, 'name', $packageChanges->packageName);
 
-                foreach ($classChanges as $methodChange) {
-                    $methodElement = $classElement->appendChild(
-                        $domDocument->createElementNS(self::URN, 'method')
+                foreach ($packageChanges as $classChanges) {
+                    $classElement = $packageElement->appendChild(
+                        $domDocument->createElementNS(self::URN, 'class')
                     );
-                    $methodElement->setAttributeNS(self::URN, 'name', $methodChange->methodName);
+                    $classElement->setAttributeNS(self::URN, 'name', $classChanges->className);
 
-                    $methodElement->appendChild(
-                        $domDocument->createElementNS(self::URN, 'added', $methodChange->numLinesAdded)
-                    );
-                    $methodElement->appendChild(
-                        $domDocument->createElementNS(self::URN, 'removed', $methodChange->numLinesRemoved)
-                    );
+                    foreach ($classChanges as $methodChange) {
+                        $methodElement = $classElement->appendChild(
+                            $domDocument->createElementNS(self::URN, 'method')
+                        );
+                        $methodElement->setAttributeNS(self::URN, 'name', $methodChange->methodName);
+
+                        $methodElement->appendChild(
+                            $domDocument->createElementNS(self::URN, 'added', $methodChange->numLinesAdded)
+                        );
+                        $methodElement->appendChild(
+                            $domDocument->createElementNS(self::URN, 'removed', $methodChange->numLinesRemoved)
+                        );
+                    }
                 }
             }
         }
