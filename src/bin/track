@@ -16,5 +16,6 @@ $analyzer = new Qafoo\ChangeTrack\Analyzer(
 
 $changes = $analyzer->analyze();
 
-$renderer = new Qafoo\ChangeTrack\Renderer\XmlRenderer();
+// $renderer = new Qafoo\ChangeTrack\Renderer\XmlRenderer();
+$renderer = new Qafoo\ChangeTrack\Renderer\JmsSerializerRenderer();
 echo $renderer->renderOutput($changes);

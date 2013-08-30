@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges" xml-root-name="changeSet" exclusion-policy="NONE">
+        <property name="revision" xml-attribute="true" type="string" />
+        <property name="commitMessage" xml-attribute="true" type="string" />
+        <property name="packageChanges" accessor-getter="getArrayCopy" accessor-setter="exchangeArray" type="array">
+            <xml-list inline="true" entry-name="package" />
+        </property>
+    </class>
+</serializer>
