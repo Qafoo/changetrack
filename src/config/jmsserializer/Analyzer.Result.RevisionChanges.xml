@@ -3,8 +3,9 @@
     <class name="Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges" xml-root-name="changeSet" exclusion-policy="NONE">
         <property name="revision" xml-attribute="true" type="string" />
         <property name="commitMessage" xml-attribute="true" type="string" />
-        <property name="packageChanges" accessor-getter="getArrayCopy" accessor-setter="exchangeArray" type="array">
-            <xml-list inline="true" entry-name="package" />
+        <property name="packageChanges">
+            <type><![CDATA[array<Qafoo\ChangeTrack\Analyzer\Result\PackageChanges>]]></type>
+            <xml-list inline="true" entry-name="changeSet" />
         </property>
     </class>
 </serializer>

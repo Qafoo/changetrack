@@ -2,11 +2,7 @@
 <serializer>
     <class name="Qafoo\ChangeTrack\Analyzer\Result" xml-root-name="changes" exclusion-policy="NONE" access-type="property">
         <property name="repositoryUrl" xml-attribute="true" type="string" />
-        <property
-            method="getArrayCopy"
-            access-type="public_method"
-            accessor-getter="getArrayCopy"
-            accessor-setter="exchangeArray">
+        <property name="revisionChanges">
             <type><![CDATA[array<Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges>]]></type>
             <xml-list inline="true" entry-name="changeSet" />
         </property>
