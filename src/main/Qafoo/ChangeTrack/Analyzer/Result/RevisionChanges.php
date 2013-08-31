@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Result;
 
-class RevisionChanges extends \ArrayObject
+class RevisionChanges
 {
     /**
      * @var string
@@ -15,15 +15,19 @@ class RevisionChanges extends \ArrayObject
     public $commitMessage;
 
     /**
+     * @var Qafoo\ChangeTrack\Analyzer\Result\PackageChanges[]
+     */
+    public $packageChanges;
+
+    /**
      * @param string $revision
      * @param string $commitMessage
      * @param \Qafoo\ChangeTrack\Analyzer\Result\PackageChanges[] $packageChanges
      */
     public function __construct($revision, $commitMessage, array $packageChanges)
     {
-        parent::__construct($packageChanges);
-
         $this->revision = $revision;
         $this->commitMessage = $commitMessage;
+        $this->packageChanges = $packageChanges;
     }
 }

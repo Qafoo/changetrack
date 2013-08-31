@@ -48,21 +48,21 @@ class StatsCollector
      */
     private function recordChangesFromRevision(RevisionChanges $revisionChanges, $label)
     {
-        foreach ($revisionChanges as $packageChanges) {
-            $packageName = $packageChanges->packageName;
+        foreach ($revisionChanges->packageChanges as $packageChange) {
+            $packageName = $packageChange->packageName;
 
             if (!isset($this->stats[$packageName])) {
                 $this->stats[$packageName] = array();
             }
 
-            foreach ($packageChanges as $classChanges) {
-                $className = $classChanges->className;
+            foreach ($packageChange->classChanges as $classChange) {
+                $className = $classChange->className;
                 if (!isset($this->stats[$packageName][$className])) {
                     $this->stats[$packageName][$className] = array();
                 }
 
-                foreach ($classChanges as $methodChanges) {
-                    $methodName = $methodChanges->methodName;
+                foreach ($classChange->methodChanges as $methodChange) {
+                    $methodName = $methodChange->methodName;
 
                     if (!isset($this->stats[$packageName][$className][$methodName])) {
                         $this->stats[$packageName][$className][$methodName] = array();

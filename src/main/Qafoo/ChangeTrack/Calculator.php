@@ -30,8 +30,8 @@ class Calculator
             )
         );
 
-        foreach ($this->analysisResult as $revisionChanges) {
-            $statsCollector->recordRevision($revisionChanges);
+        foreach ($this->analysisResult->revisionChanges as $revisionChange) {
+            $statsCollector->recordRevision($revisionChange);
         }
 
         return $statsCollector->getStats();

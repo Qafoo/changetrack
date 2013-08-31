@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Result;
 
-class ClassChanges extends \ArrayObject
+class ClassChanges
 {
     /**
      * @var string
@@ -10,13 +10,17 @@ class ClassChanges extends \ArrayObject
     public $className;
 
     /**
+     * @var Qafoo\ChangeTrack\Analyzer\Result\MethodChanges[]
+     */
+    public $methodChanges;
+
+    /**
      * @param string $className
      * @param \Qafoo\ChangeTrack\Analyzer\Result\MethodChanges $methodChanges
      */
     public function __construct($className, array $methodChanges)
     {
-        parent::__construct($methodChanges);
-
         $this->className = $className;
+        $this->methodChanges = $methodChanges;
     }
 }

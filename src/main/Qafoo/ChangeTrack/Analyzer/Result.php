@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 
-class Result extends \ArrayObject
+class Result
 {
     /**
      * @var string
@@ -12,13 +12,17 @@ class Result extends \ArrayObject
     public $repositoryUrl;
 
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges[]
+     */
+    public $revisionChanges;
+
+    /**
      * @param string $repositoryUrl
      * @param array(RevisionChanges) $revisionChanges
      */
     public function __construct($repositoryUrl, array $revisionChanges = array())
     {
-        parent::__construct($revisionChanges);
-
         $this->repositoryUrl = $repositoryUrl;
+        $this->revisionChanges = $revisionChanges;
     }
 }
