@@ -81,7 +81,7 @@ class FeatureContext extends BehatContext
             $added = $rows['Added'];
             $removed = $rows['Removed'];
 
-            if (!isset($this->analyzedChanges[$revision])) {
+            if (!isset($this->analyzedChanges->revisionChanges[$revision])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Revision %s not found in stats.',
@@ -89,7 +89,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzedChanges[$revision][$package])) {
+            if (!isset($this->analyzedChanges->revisionChanges[$revision]->packageChanges[$package])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Package %s not found in stats for revision %s.',
@@ -98,7 +98,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzedChanges[$revision][$package][$class])) {
+            if (!isset($this->analyzedChanges->revisionChanges[$revision]->packageChanges[$package]->classChanges[$class])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Class %s from package %s not found in stats for revision %s.',
@@ -108,7 +108,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if (!isset($this->analyzedChanges[$revision][$package][$class][$method])) {
+            if (!isset($this->analyzedChanges->revisionChanges[$revision]->packageChanges[$package]->classChanges[$class]->methodChanges[$method])) {
                 throw new \RuntimeException(
                     sprintf(
                         'Method %s\%s::%s() not found in stats for revision %s.',
@@ -119,7 +119,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->analyzedChanges[$revision][$package][$class][$method]->numLinesAdded != $added) {
+            if ($this->analyzedChanges->revisionChanges[$revision]->packageChanges[$package]->classChanges[$class]->methodChanges[$method]->numLinesAdded != $added) {
                 throw new \RuntimeException(
                     sprintf(
                         'Added stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
@@ -132,7 +132,7 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->analyzedChanges[$revision][$package][$class][$method]->numLinesRemoved != $removed) {
+            if ($this->analyzedChanges->revisionChanges[$revision]->packageChanges[$package]->classChanges[$class]->methodChanges[$method]->numLinesRemoved != $removed) {
                 throw new \RuntimeException(
                     sprintf(
                         'Removed stats for %s\%s::%s() incorrect for revision %s. Expected: %s. Actual: %s',
