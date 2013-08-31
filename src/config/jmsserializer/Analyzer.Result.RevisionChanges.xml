@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <serializer>
-    <class name="Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges" xml-root-name="changeSet" exclusion-policy="NONE">
+    <class name="Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges" exclusion-policy="NONE">
         <property name="revision" xml-attribute="true" type="string" />
-        <property name="commitMessage" xml-attribute="true" type="string" />
+        <property name="commitMessage" xml-attribute="true" serialized-name="message" type="string" />
         <property name="packageChanges">
             <type><![CDATA[array<Qafoo\ChangeTrack\Analyzer\Result\PackageChanges>]]></type>
-            <xml-list inline="true" entry-name="changeSet" />
+            <xml-list inline="true" entry-name="package" />
         </property>
     </class>
 </serializer>

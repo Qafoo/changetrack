@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\Analyzer\Result\MethodChanges" exclusion-policy="NONE">
+        <property name="methodName" xml-attribute="true" serialized-name="name" type="string" />
+        <property name="numLinesAdded" serialized-name="added" type="integer" />
+        <property name="numLinesRemoved" serialized-name="removed" type="integer" />
+    </class>
+</serializer>
