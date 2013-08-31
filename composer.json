@@ -22,7 +22,8 @@
         "manuelpichler/staticReflection": "@dev",
         "arbit/vcs-wrapper": "dev-master",
         "jms/serializer": "@stable",
-        "symfony/dependency-injection": "@stable"
+        "symfony/dependency-injection": "@stable",
+        "symfony/console": "@stable"
     },
     "require-dev": {
         "behat/behat" : "2.4.*@stable",
