@@ -1,21 +1,12 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Console\Application;
+use Qafoo\ChangeTrack\Commands;
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-if (!isset($argv[1])) {
-    echo "Usage: $ src/bin/track <git-repo-url>\n";
-    exit(-1);
-}
+$application = new Application();
+$application->add(new Commands\Track());
 
-$analyzer = new Qafoo\ChangeTrack\Analyzer(
-    $argv[1],
-    'src/var/tmp/checkout',
-    'src/var/tmp/cache'
-);
-
-$changes = $analyzer->analyze();
-
-// $renderer = new Qafoo\ChangeTrack\Renderer\XmlRenderer();
-$renderer = new Qafoo\ChangeTrack\Renderer\JmsSerializerRenderer();
-echo $renderer->renderOutput($changes);
+$application->run();
