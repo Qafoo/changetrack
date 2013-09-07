@@ -1,12 +1,22 @@
 #!/usr/bin/env php
 <?php
 
-use Symfony\Component\Console\Application;
-use Qafoo\ChangeTrack\Commands;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-$application = new Application();
-$application->add(new Commands\Track());
+$container = new ContainerBuilder();
+
+$loader = new XmlFileLoader(
+    $container,
+    new FileLocator(
+        __DIR__  . '/../config'
+    )
+);
+$loader->load( 'services.xml' );
+
+$application = $container->get('Qafoo.ChangeTrack.Application');
 
 $application->run();
