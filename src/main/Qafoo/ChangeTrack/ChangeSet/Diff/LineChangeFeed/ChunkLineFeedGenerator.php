@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
 
 use Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
-use Qafoo\ChangeTrack\Change;
+use Qafoo\ChangeTrack\Analyzer\Change;
 
 use Arbit\VCSWrapper\Diff;
 

@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\ChangeSet;
 
-use Qafoo\ChangeTrack\Change;
+use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 

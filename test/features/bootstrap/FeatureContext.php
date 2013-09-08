@@ -9,7 +9,7 @@ use Behat\Gherkin\Node\PyStringNode,
 
 use Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Calculator;
-use Qafoo\ChangeTrack\Change;
+use Qafoo\ChangeTrack\Analyzer\Change;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 

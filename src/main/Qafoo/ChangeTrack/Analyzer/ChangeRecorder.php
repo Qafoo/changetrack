@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer;
 
-use Qafoo\ChangeTrack\Change;
+use Qafoo\ChangeTrack\Analyzer\Change;
 
 class ChangeRecorder
 {
