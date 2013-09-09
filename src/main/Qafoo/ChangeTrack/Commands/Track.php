@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Analyzer;
-use Qafoo\ChangeTrack\Renderer\JmsSerializerRenderer;
+use Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

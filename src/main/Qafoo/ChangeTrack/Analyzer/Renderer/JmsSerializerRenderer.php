@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Renderer;
+namespace Qafoo\ChangeTrack\Analyzer\Renderer;
 
-use Qafoo\ChangeTrack\Renderer;
+use Qafoo\ChangeTrack\Analyzer\Renderer;
 use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\Result;
 

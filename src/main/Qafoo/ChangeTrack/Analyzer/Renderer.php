@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack;
+namespace Qafoo\ChangeTrack\Analyzer;
 
 use Qafoo\ChangeTrack\Analyzer\Result;
 
