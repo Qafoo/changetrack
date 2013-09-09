@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\ChangeSet;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
-use Qafoo\ChangeTrack\ChangeSet;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 

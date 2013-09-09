@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\ChangeSet\Diff;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
 abstract class LineChangeFeed implements \IteratorAggregate
 {

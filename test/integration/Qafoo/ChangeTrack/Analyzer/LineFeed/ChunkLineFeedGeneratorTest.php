@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
 // FIXME: Should be moved!
-use Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed\ChunkLineFeedGenerator;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed\ChunkLineFeedGenerator;
 use Arbit\VCSWrapper\Diff;
 
 class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase

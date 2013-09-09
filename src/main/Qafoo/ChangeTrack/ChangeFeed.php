@@ -2,8 +2,8 @@
 
 namespace Qafoo\ChangeTrack;
 
-use Qafoo\ChangeTrack\ChangeSet\InitialChangeSet;
-use Qafoo\ChangeTrack\ChangeSet\DiffChangeSet;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffChangeSet;
 
 class ChangeFeed implements \Iterator
 {

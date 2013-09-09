@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
 
-use Qafoo\ChangeTrack\ChangeSet\Diff\LineChangeFeed;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\Change;
 
 use Arbit\VCSWrapper\Diff;

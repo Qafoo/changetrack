@@ -1,9 +1,9 @@
 <?php
 
-namespace Qafoo\ChangeTrack\ChangeSet;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
 use Qafoo\ChangeTrack\Analyzer\Change;
-use Qafoo\ChangeTrack\ChangeSet;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 
 use Arbit\VCSWrapper;
