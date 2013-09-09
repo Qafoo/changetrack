@@ -6,6 +6,7 @@ use pdepend\reflection\ReflectionSession;
 use Arbit\VCSWrapper;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 use Qafoo\ChangeTrack\Analyzer\DiffIterator;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
