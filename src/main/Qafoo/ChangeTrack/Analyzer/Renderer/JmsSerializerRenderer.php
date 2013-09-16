@@ -17,7 +17,7 @@ class JmsSerializerRenderer extends Renderer
     public function renderOutput(Result $analysisResult)
     {
         $serializer = \JMS\Serializer\SerializerBuilder::create()
-            ->addMetadataDir(__DIR__ . '/../../../../config/jmsserializer', 'Qafoo\\ChangeTrack')
+            ->addMetadataDir(__DIR__ . '/../../../../../config/jmsserializer', 'Qafoo\\ChangeTrack')
             ->build();
         return $serializer->serialize($analysisResult, 'xml');
     }
