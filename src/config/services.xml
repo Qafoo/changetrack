@@ -13,9 +13,14 @@
             <call method="add">
                 <argument type="service" id="Qafoo.ChangeTrack.Command.Track" />
             </call>
+            <call method="add">
+                <argument type="service" id="Qafoo.ChangeTrack.Command.Calculate" />
+            </call>
         </service>
 
         <service id="Qafoo.ChangeTrack.Command.Track" class="Qafoo\ChangeTrack\Commands\Track">
+        </service>
+        <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
         </service>
     </services>
 </container>
