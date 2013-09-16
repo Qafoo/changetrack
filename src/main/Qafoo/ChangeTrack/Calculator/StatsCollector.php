@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Calculator;
 
 use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider;
+use Qafoo\ChangeTrack\Calculator\StatsCollector\PackageStatsCollector;
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 
 class StatsCollector
@@ -15,7 +16,7 @@ class StatsCollector
     /**
      * @var array
      */
-    private $stats = array();
+    private $packageStatsCollectors = array();
 
     /**
      * @param \Qafoo\ChangeTrack\Calculator\RevisionLabelProvider $labelProvider
@@ -31,7 +32,7 @@ class StatsCollector
     public function recordRevision(RevisionChanges $revisionChanges)
     {
         $revisionLabel = $this->labelProvider->provideLabel($revisionChanges);
-        $this->recordChangesFromRevision($revisionChanges, $revisionLabel);
+        $this->recordChangesForRevision($revisionChanges, $revisionLabel);
     }
 
     /**
@@ -39,42 +40,47 @@ class StatsCollector
      */
     public function getStats()
     {
-        return $this->stats;
+        return new Stats(
+            '@TODO: Repo URL here.',
+            array_map(
+                function ($packageStatsCollector) {
+                    return $packageStatsCollector->buildPackageStats();
+                },
+                $this->packageStatsCollectors
+            )
+        );
     }
 
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges $revisionChanges
      * @param string $label
      */
-    private function recordChangesFromRevision(RevisionChanges $revisionChanges, $label)
+    private function recordChangesForRevision(RevisionChanges $revisionChanges, $label)
     {
         foreach ($revisionChanges->packageChanges as $packageChange) {
             $packageName = $packageChange->packageName;
 
-            if (!isset($this->stats[$packageName])) {
-                $this->stats[$packageName] = array();
+            if (!isset($this->packageStatsCollectors[$packageName])) {
+                $this->packageStatsCollectors[$packageName] = new PackageStatsCollector($packageName);
             }
 
             foreach ($packageChange->classChanges as $classChange) {
-                $className = $classChange->className;
-                if (!isset($this->stats[$packageName][$className])) {
-                    $this->stats[$packageName][$className] = array();
-                }
-
                 foreach ($classChange->methodChanges as $methodChange) {
-                    $methodName = $methodChange->methodName;
-
-                    if (!isset($this->stats[$packageName][$className][$methodName])) {
-                        $this->stats[$packageName][$className][$methodName] = array();
-                    }
-
-                    if (!isset($this->stats[$packageName][$className][$methodName][$label])) {
-                        $this->stats[$packageName][$className][$methodName][$label] = 0;
-                    }
-
-                    $this->stats[$packageName][$className][$methodName][$label]++;
+                    $this->packageStatsCollectors[$packageName]
+                        ->classStatsCollector($classChange->className)
+                        ->methodStatsCollector($methodChange->methodName)
+                        ->count($label);
                 }
             }
         }
+    }
+
+    private function recordChangesForMethod($packageName, $className, $methodName, $label)
+    {
+        if (!isset($this->stats[$packageName][$className][$methodName][$label])) {
+            $this->stats[$packageName][$className][$methodName][$label] = 0;
+        }
+
+        $this->stats[$packageName][$className][$methodName][$label]++;
     }
 }

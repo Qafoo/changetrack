@@ -169,7 +169,7 @@ class FeatureContext extends BehatContext
             $changeType = $row['Change Type'];
             $value = (int) $row['Value'];
 
-            if (!isset($this->calculatedStats[$package][$class][$method][$changeType])) {
+            if (!isset($this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType])) {
                 throw new \RuntimeException(
                     sprintf(
                         'No stats found for change type "%s", class "%s" and method "%s"',
@@ -179,14 +179,14 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-            if ($this->calculatedStats[$package][$class][$method][$changeType] != $value) {
+            if ($this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType] != $value) {
                 throw new \RuntimeException(
                     sprintf(
                         'Stats value for change type "%s", class "%s" and method "%s" is %s, expected %s',
                         $changeType,
                         $class,
                         $method,
-                        $this->calculatedStats[$package][$class][$method][$changeType],
+                        $this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType],
                         $value
                     )
                 );
