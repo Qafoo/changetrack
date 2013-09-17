@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\Calculator\Stats" xml-root-name="stats" exclusion-policy="NONE" access-type="property">
+        <property name="repositoryUrl" xml-attribute="true" serialized-name="repository" type="string" />
+        <property name="packageStats">
+            <type><![CDATA[array<Qafoo\ChangeTrack\Calculator\Stats\PackageStats>]]></type>
+            <xml-list inline="true" entry-name="package" />
+        </property>
+    </class>
+</serializer>

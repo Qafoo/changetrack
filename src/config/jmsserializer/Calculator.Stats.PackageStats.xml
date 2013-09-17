@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\Calculator\Stats\PackageStats" exclusion-policy="NONE">
+        <property name="packageName" xml-attribute="true" serialized-name="name" type="string" />
+        <property name="classStats">
+            <type><![CDATA[array<Qafoo\ChangeTrack\Calculator\Stats\ClassStats>]]></type>
+            <xml-list inline="true" entry-name="class" />
+        </property>
+    </class>
+</serializer>

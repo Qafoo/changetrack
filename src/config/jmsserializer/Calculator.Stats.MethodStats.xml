@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\Calculator\Stats\MethodStats" exclusion-policy="NONE">
+        <property name="methodName" xml-attribute="true" serialized-name="name" type="string" />
+        <property name="labelStats" serialized-name="stats">
+            <type>array</type>
+            <xml-map inline="false" entry-name="count" key-attribute-name="label" />
+        </property>
+    </class>
+</serializer>

@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Calculator\Parser\JmsSerializerParser;
+use Qafoo\ChangeTrack\Calculator\Renderer\JmsSerializerRenderer;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,7 +41,10 @@ class Calculate extends Command
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
         $calculator = new Calculator($analysisResult);
+        $stats = $calculator->calculateStats();
 
-        var_dump($calculator->calculateStats());
+        $renderer = new JmsSerializerRenderer();
+
+        $output->write($renderer->renderOutput($stats));
     }
 }
