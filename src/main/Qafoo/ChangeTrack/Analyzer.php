@@ -3,8 +3,8 @@
 namespace Qafoo\ChangeTrack;
 
 use pdepend\reflection\ReflectionSession;
-use Arbit\VCSWrapper;
 
+use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
@@ -21,13 +21,11 @@ class Analyzer
 
     public function __construct($repositoryUrl, $checkoutPath, $cachePath)
     {
-        VCSWrapper\Cache\Manager::initialize($cachePath);
-
         $this->repositoryUrl = $repositoryUrl;
         $this->checkoutPath = $checkoutPath;
 
-        $this->checkout = new VCSWrapper\GitCli\Checkout($this->checkoutPath);
-        $this->checkout->initialize($repositoryUrl);
+        $checkoutFactory = new CheckoutFactory();
+        $this->checkout = $checkoutFactory->createCheckout($repositoryUrl, $checkoutPath, $cachePath);
     }
 
     public function analyze()
