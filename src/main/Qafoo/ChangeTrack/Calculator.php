@@ -21,6 +21,7 @@ class Calculator
     public function calculateStats()
     {
         $statsCollector = new StatsCollector(
+            $this->analysisResult->repositoryUrl,
             new ChainSelectionLabelProvider(
                 array(
                     new RegexLabelProvider('(fixed)i', 'fix'),

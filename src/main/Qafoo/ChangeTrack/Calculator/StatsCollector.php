@@ -9,6 +9,11 @@ use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 class StatsCollector
 {
     /**
+     * @var string
+     */
+    private $repositoryUrl;
+
+    /**
      * @var \Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider
      */
     private $labelProvider;
@@ -19,10 +24,12 @@ class StatsCollector
     private $packageStatsCollectors = array();
 
     /**
+     * @param string $repositoryUrl
      * @param \Qafoo\ChangeTrack\Calculator\RevisionLabelProvider $labelProvider
      */
-    public function __construct(RevisionLabelProvider $labelProvider)
+    public function __construct($repositoryUrl, RevisionLabelProvider $labelProvider)
     {
+        $this->repositoryUrl = $repositoryUrl;
         $this->labelProvider = $labelProvider;
     }
 
@@ -40,8 +47,8 @@ class StatsCollector
      */
     public function getStats()
     {
-        return new Stats(
-            '@TODO: Repo URL here.',
+        $stats = new Stats(
+            $this->repositoryUrl,
             array_map(
                 function ($packageStatsCollector) {
                     return $packageStatsCollector->buildPackageStats();
@@ -49,6 +56,7 @@ class StatsCollector
                 $this->packageStatsCollectors
             )
         );
+        return $stats;
     }
 
     /**
