@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Analyzer;
-use Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer;
+use Qafoo\ChangeTrack\Analyzer\Renderer;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -19,13 +19,20 @@ class Analyze extends Command
     private $analyzer;
 
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Renderer
+     */
+    private $renderer;
+
+    /**
      * @param \Qafoo\ChangeTrack\Analyzer $analyzer
+     * @param \Qafoo\ChangeTrack\Analyzer\Renderer $renderer
      * @param string $name
      */
-    public function __construct(Analyzer $analyzer, $name = null)
+    public function __construct(Analyzer $analyzer, Renderer $renderer, $name = null)
     {
         parent::__construct($name);
         $this->analyzer = $analyzer;
+        $this->renderer = $renderer;
     }
 
 
@@ -61,8 +68,6 @@ class Analyze extends Command
 
         $changes = $this->analyzer->analyze($url, $checkoutPath, $cachePath);
 
-        $renderer = new JmsSerializerRenderer();
-
-        $output->write($renderer->renderOutput($changes));
+        $output->write($this->renderer->renderOutput($changes));
     }
 }
