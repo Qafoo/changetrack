@@ -11,14 +11,14 @@
         <service id="Qafoo.ChangeTrack.Application" class="Symfony\Component\Console\Application">
             <argument>%Qafoo.ChangeTrack.ApplicationName%</argument>
             <call method="add">
-                <argument type="service" id="Qafoo.ChangeTrack.Command.Track" />
+                <argument type="service" id="Qafoo.ChangeTrack.Command.Analyze" />
             </call>
             <call method="add">
                 <argument type="service" id="Qafoo.ChangeTrack.Command.Calculate" />
             </call>
         </service>
 
-        <service id="Qafoo.ChangeTrack.Command.Track" class="Qafoo\ChangeTrack\Commands\Track">
+        <service id="Qafoo.ChangeTrack.Command.Analyze" class="Qafoo\ChangeTrack\Commands\Analyze">
         </service>
         <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
         </service>
