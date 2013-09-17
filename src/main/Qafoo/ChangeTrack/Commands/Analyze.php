@@ -13,6 +13,22 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Analyze extends Command
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer
+     */
+    private $analyzer;
+
+    /**
+     * @param \Qafoo\ChangeTrack\Analyzer $analyzer
+     * @param string $name
+     */
+    public function __construct(Analyzer $analyzer, $name = null)
+    {
+        parent::__construct($name);
+        $this->analyzer = $analyzer;
+    }
+
+
     protected function configure()
     {
         $this->setName('analyze')
@@ -43,8 +59,7 @@ class Analyze extends Command
         $checkoutPath = $input->getOption('checkout-path');
         $cachePath = $input->getOption('cache-path');
 
-        $analyzer = new Analyzer($url, $checkoutPath, $cachePath);
-        $changes = $analyzer->analyze();
+        $changes = $this->analyzer->analyze($url, $checkoutPath, $cachePath);
 
         $renderer = new JmsSerializerRenderer();
 

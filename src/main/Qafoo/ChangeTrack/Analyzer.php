@@ -13,28 +13,28 @@ use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
 class Analyzer
 {
-    private $checkout;
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\CheckoutFactory
+     */
+    private $checkoutFactory;
 
-    private $checkoutPath;
-
-    private $repositoryUrl;
-
-    public function __construct($repositoryUrl, $checkoutPath, $cachePath)
+    /**
+     * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
+     */
+    public function __construct(CheckoutFactory $checkoutFactory)
     {
-        $this->repositoryUrl = $repositoryUrl;
-        $this->checkoutPath = $checkoutPath;
-
-        $checkoutFactory = new CheckoutFactory();
-        $this->checkout = $checkoutFactory->createCheckout($repositoryUrl, $checkoutPath, $cachePath);
+        $this->checkoutFactory = $checkoutFactory;
     }
 
-    public function analyze()
+    public function analyze($repositoryUrl, $checkoutPath, $cachePath)
     {
+        $checkout = $this->checkoutFactory->createCheckout($repositoryUrl, $checkoutPath, $cachePath);
+
         $session = new ReflectionSession();
         $query = $session->createFileQuery();
 
-        $changeFeed = new ChangeFeed($this->checkout);
-        $resultBuilder = new ResultBuilder($this->repositoryUrl);
+        $changeFeed = new ChangeFeed($checkout);
+        $resultBuilder = new ResultBuilder($repositoryUrl);
         $changeRecorder = new ChangeRecorder($query, $resultBuilder);
 
         foreach ($changeFeed as $changeSet) {
