@@ -16,6 +16,10 @@ class Stats
      */
     public $packageStats;
 
+    /**
+     * @param string $repositoryUrl
+     * @param \Qafoo\ChangeTrack\Calculator\Stats\PackageStats[] $packageStats
+     */
     public function __construct($repositoryUrl, array $packageStats)
     {
         $this->repositoryUrl = $repositoryUrl;
