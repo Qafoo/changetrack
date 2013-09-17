@@ -11,6 +11,10 @@ use Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Analyzer\Change;
 
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+
 require __DIR__ . '/../../../vendor/autoload.php';
 
 //
@@ -33,6 +37,16 @@ class FeatureContext extends BehatContext
     private $calculatedStats;
 
     /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var string
+     */
+    private $repositoryUrl;
+
+    /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
@@ -40,7 +54,15 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-        // Initialize your context here
+        $this->container = new ContainerBuilder();
+
+        $loader = new XmlFileLoader(
+            $this->container,
+            new FileLocator(
+                __DIR__  . '/../../../src/config'
+            )
+        );
+        $loader->load( 'services.xml' );
     }
 
     /**
@@ -48,17 +70,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveTheRepository($repositoryUrl)
     {
-        $checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
-        $cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
-
-        $this->cleanupDirectory($checkoutDir);
-        $this->cleanupDirectory($cacheDir);
-
-        $this->analyzer = new Analyzer(
-            $repositoryUrl,
-            $checkoutDir,
-            $cacheDir
-        );
+        $this->repositoryUrl = $repositoryUrl;
     }
 
     /**
@@ -66,7 +78,19 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChanges()
     {
-        $this->analyzedChanges = $this->analyzer->analyze();
+        $checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
+        $cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
+
+        $this->cleanupDirectory($checkoutDir);
+        $this->cleanupDirectory($cacheDir);
+
+        $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
+
+        $this->analyzedChanges = $analyzer->analyze(
+            $this->repositoryUrl,
+            $checkoutDir,
+            $cacheDir
+        );
     }
 
     /**
