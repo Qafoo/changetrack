@@ -4,6 +4,8 @@
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Console\Input\ArgvInput;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -16,7 +18,23 @@ $loader = new XmlFileLoader(
         __DIR__  . '/../config'
     )
 );
-$loader->load( 'services.xml' );
+$loader->load('services.xml');
+
+// Pre-load configuration to allow service injection to depend on it
+$input = new ArgvInput();
+if ($input->hasParameterOption(array('--config', '-c'))) {
+    $configFile = $input->getParameterOption(array('--config', '-c'));
+
+    $loader = new YamlFileLoader(
+        $container,
+        new FileLocator(
+            getcwd()
+        )
+    );
+    $loader->load($configFile);
+}
+
+$container->compile();
 
 $application = $container->get('Qafoo.ChangeTrack.Application');
 

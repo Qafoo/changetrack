@@ -9,7 +9,7 @@
         <parameter key="Qafoo.ChangeTrack.JmsSerializer.MetaDataDir">%Qafoo.ChangeTrack.BaseDir%/src/config/jmsserializer</parameter>
     </parameters>
     <services>
-        <service id="Qafoo.ChangeTrack.Application" class="Symfony\Component\Console\Application">
+        <service id="Qafoo.ChangeTrack.Application" class="Qafoo\ChangeTrack\Application">
             <argument>%Qafoo.ChangeTrack.ApplicationName%</argument>
             <call method="add">
                 <argument type="service" id="Qafoo.ChangeTrack.Command.Analyze" />
