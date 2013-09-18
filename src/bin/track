@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $container = new ContainerBuilder();
+$container->setParameter('Qafoo.ChangeTrack.BaseDir', __DIR__ . '/../../');
 
 $loader = new XmlFileLoader(
     $container,

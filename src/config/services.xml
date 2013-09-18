@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="Qafoo.ChangeTrack.ApplicationName">Qafoo ChangeTrack</parameter>
+        <parameter key="Qafoo.ChangeTrack.JmsSerializer.MetaDataDir">%Qafoo.ChangeTrack.BaseDir%/src/config/jmsserializer</parameter>
     </parameters>
     <services>
         <service id="Qafoo.ChangeTrack.Application" class="Symfony\Component\Console\Application">
@@ -35,16 +36,29 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.Renderer" class="Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer">
+            <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
         </service>
+
+        <service id="Qafoo.ChangeTrack.JmsSerializer"
+            class="\JMS\Serializer\Serializer"
+            factory-service="Qafoo.ChangeTrack.JmsSerializerFactory"
+            factory-method="createSerializer"
+        />
+        <service id="Qafoo.ChangeTrack.JmsSerializerFactory" class="Qafoo\ChangeTrack\JmsSerializerFactory">
+            <argument>%Qafoo.ChangeTrack.JmsSerializer.MetaDataDir%</argument>
+        </service>
+
 
         <service id="Qafoo.ChangeTrack.Calculator" class="Qafoo\ChangeTrack\Calculator">
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" />
         </service>
 
         <service id="Qafoo.ChangeTrack.Calculator.Parser" class="Qafoo\ChangeTrack\Calculator\Parser\JmsSerializerParser">
+            <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
         </service>
 
         <service id="Qafoo.ChangeTrack.Calculator.Renderer" class="Qafoo\ChangeTrack\Calculator\Renderer\JmsSerializerRenderer">
+            <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
         </service>
 
         <service id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" class="Qafoo\ChangeTrack\Calculator\StatsCollectorFactory">
