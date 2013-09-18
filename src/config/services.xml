@@ -25,6 +25,7 @@
         <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
             <argument type="service" id="Qafoo.ChangeTrack.Calculator" />
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.Parser" />
+            <argument type="service" id="Qafoo.ChangeTrack.Calculator.Renderer" />
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer" class="Qafoo\ChangeTrack\Analyzer">
@@ -41,6 +42,9 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.Calculator.Parser" class="Qafoo\ChangeTrack\Calculator\Parser\JmsSerializerParser">
+        </service>
+
+        <service id="Qafoo.ChangeTrack.Calculator.Renderer" class="Qafoo\ChangeTrack\Calculator\Renderer\JmsSerializerRenderer">
         </service>
 
         <service id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" class="Qafoo\ChangeTrack\Calculator\StatsCollectorFactory">
