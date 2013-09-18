@@ -177,8 +177,8 @@ class FeatureContext extends BehatContext
      */
     public function iCalculateTheStats()
     {
-        $calculator = new Calculator($this->analyzedChanges);
-        $this->calculatedStats = $calculator->calculateStats();
+        $calculator = $this->container->get('Qafoo.ChangeTrack.Calculator');
+        $this->calculatedStats = $calculator->calculateStats($this->analyzedChanges);
     }
 
     /**
