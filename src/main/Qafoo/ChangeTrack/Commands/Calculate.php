@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Calculator;
-use Qafoo\ChangeTrack\Calculator\Parser\JmsSerializerParser;
+use Qafoo\ChangeTrack\Calculator\Parser;
 use Qafoo\ChangeTrack\Calculator\Renderer\JmsSerializerRenderer;
 
 use Symfony\Component\Console\Command\Command;
@@ -19,10 +19,11 @@ class Calculate extends Command
      * @param \Qafoo\ChangeTrack\Calculator\Renderer $renderer
      * @param string $name
      */
-    public function __construct(Calculator $calculator, $name = null)
+    public function __construct(Calculator $calculator, Parser $parser, $name = null)
     {
         parent::__construct($name);
         $this->calculator = $calculator;
+        $this->parser = $parser;
     }
 
     protected function configure()
@@ -48,8 +49,7 @@ class Calculate extends Command
         }
         $inputXml = file_get_contents($inputFile);
 
-        $parser = new JmsSerializerParser();
-        $analysisResult = $parser->parseAnalysisResult($inputXml);
+        $analysisResult = $this->parser->parseAnalysisResult($inputXml);
 
         $stats = $this->calculator->calculateStats($analysisResult);
 
