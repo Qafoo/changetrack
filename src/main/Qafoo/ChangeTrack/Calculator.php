@@ -4,34 +4,30 @@ namespace Qafoo\ChangeTrack;
 
 use Qafoo\ChangeTrack\Analyzer\Result;
 
-use Qafoo\ChangeTrack\Calculator\StatsCollector;
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\ChainSelectionLabelProvider;
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider;
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider;
+use Qafoo\ChangeTrack\Calculator\StatsCollectorFactory;
 
 class Calculator
 {
-    private $analysisResult;
+    /**
+     * @var \Qafoo\ChangeTrack\Calculator\StatsCollectorFactory
+     */
+    private $statsCollectorFactory;
 
-    public function __construct(Result $analysisResult)
+    /**
+     * @param \Qafoo\ChangeTrack\Calculator\StatsCollectorFactory $statsCollectorFactory
+     */
+    public function __construct(StatsCollectorFactory $statsCollectorFactory)
     {
-        $this->analysisResult = $analysisResult;
+        $this->statsCollectorFactory = $statsCollectorFactory;
     }
 
-    public function calculateStats()
+    public function calculateStats(Result $analysisResult)
     {
-        $statsCollector = new StatsCollector(
-            $this->analysisResult->repositoryUrl,
-            new ChainSelectionLabelProvider(
-                array(
-                    new RegexLabelProvider('(fixed)i', 'fix'),
-                    new RegexLabelProvider('(implemented)i', 'implement'),
-                    new DefaultLabelProvider('misc')
-                )
-            )
+        $statsCollector = $this->statsCollectorFactory->createStatsCollector(
+            $analysisResult->repositoryUrl
         );
 
-        foreach ($this->analysisResult->revisionChanges as $revisionChange) {
+        foreach ($analysisResult->revisionChanges as $revisionChange) {
             $statsCollector->recordRevision($revisionChange);
         }
 

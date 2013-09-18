@@ -14,6 +14,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class Calculate extends Command
 {
+    /**
+     * @param \Qafoo\ChangeTrack\Calculator $calculator
+     * @param \Qafoo\ChangeTrack\Calculator\Renderer $renderer
+     * @param string $name
+     */
+    public function __construct(Calculator $calculator, $name = null)
+    {
+        parent::__construct($name);
+        $this->calculator = $calculator;
+    }
+
     protected function configure()
     {
         $this->setName('calculate')
@@ -40,8 +51,7 @@ class Calculate extends Command
         $parser = new JmsSerializerParser();
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
-        $calculator = new Calculator($analysisResult);
-        $stats = $calculator->calculateStats();
+        $stats = $this->calculator->calculateStats($analysisResult);
 
         $renderer = new JmsSerializerRenderer();
 

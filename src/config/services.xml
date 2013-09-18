@@ -23,6 +23,7 @@
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.Renderer" />
         </service>
         <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
+            <argument type="service" id="Qafoo.ChangeTrack.Calculator" />
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer" class="Qafoo\ChangeTrack\Analyzer">
@@ -32,6 +33,36 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.Renderer" class="Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer">
+        </service>
+
+        <service id="Qafoo.ChangeTrack.Calculator" class="Qafoo\ChangeTrack\Calculator">
+            <argument type="service" id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" />
+        </service>
+
+        <service id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" class="Qafoo\ChangeTrack\Calculator\StatsCollectorFactory">
+            <argument type="service" id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" />
+        </service>
+
+        <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\ChainSelectionLabelProvider">
+            <argument type="collection">
+                <argument type="service">
+                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider">
+                        <argument>(fixed)i</argument>
+                        <argument>fix</argument>
+                    </service>
+                </argument>
+                <argument type="service">
+                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider">
+                        <argument>(implemented)i</argument>
+                        <argument>implement</argument>
+                    </service>
+                </argument>
+                <argument type="service">
+                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
+                        <argument>misc</argument>
+                    </service>
+                </argument>
+            </argument>
         </service>
     </services>
 </container>
