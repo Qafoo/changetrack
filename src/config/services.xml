@@ -65,26 +65,10 @@
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" />
         </service>
 
-        <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\ChainSelectionLabelProvider">
-            <argument type="collection">
-                <argument type="service">
-                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider">
-                        <argument>(fixed)i</argument>
-                        <argument>fix</argument>
-                    </service>
-                </argument>
-                <argument type="service">
-                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\RegexLabelProvider">
-                        <argument>(implemented)i</argument>
-                        <argument>implement</argument>
-                    </service>
-                </argument>
-                <argument type="service">
-                    <service class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
-                        <argument>misc</argument>
-                    </service>
-                </argument>
-            </argument>
+        <!--
+        <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
+            <argument type="string">Please configure label providers!</argument>
         </service>
+        -->
     </services>
 </container>

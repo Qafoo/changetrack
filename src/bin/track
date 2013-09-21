@@ -7,10 +7,16 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Console\Input\ArgvInput;
 
+use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension;
+
+define('QAFOO_CHANGETRACK_BASEDIR', __DIR__ . '/../../');
+
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 $container = new ContainerBuilder();
-$container->setParameter('Qafoo.ChangeTrack.BaseDir', __DIR__ . '/../../');
+$container->setParameter('Qafoo.ChangeTrack.BaseDir', QAFOO_CHANGETRACK_BASEDIR);
+
+$container->registerExtension(new RevisionLabelProviderExtension());
 
 $loader = new XmlFileLoader(
     $container,
@@ -21,21 +27,21 @@ $loader = new XmlFileLoader(
 $loader->load('services.xml');
 
 // Pre-load configuration to allow service injection to depend on it
+$configFile = QAFOO_CHANGETRACK_BASEDIR . '/src/config/config.yml.dist';
 $input = new ArgvInput();
 if ($input->hasParameterOption(array('--config', '-c'))) {
     $configFile = $input->getParameterOption(array('--config', '-c'));
-
-    $loader = new YamlFileLoader(
-        $container,
-        new FileLocator(
-            getcwd()
-        )
-    );
-    $loader->load($configFile);
 }
+$loader = new YamlFileLoader(
+    $container,
+    new FileLocator(
+        getcwd()
+    )
+);
+$loader->load($configFile);
 
+// Compile container to make extensions hook in
 $container->compile();
 
 $application = $container->get('Qafoo.ChangeTrack.Application');
-
 $application->run();
