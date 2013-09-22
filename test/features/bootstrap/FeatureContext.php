@@ -11,9 +11,12 @@ use Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Analyzer\Change;
 
+use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension;
+
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -55,14 +58,21 @@ class FeatureContext extends BehatContext
     public function __construct(array $parameters)
     {
         $this->container = new ContainerBuilder();
+        $this->container->setParameter('Qafoo.ChangeTrack.BaseDir', __DIR__  . '/../..');
 
-        $loader = new XmlFileLoader(
-            $this->container,
-            new FileLocator(
-                __DIR__  . '/../../../src/config'
-            )
+        $this->container->registerExtension(new RevisionLabelProviderExtension());
+
+        $configFileLocator = new FileLocator(
+            __DIR__  . '/../../../src/config'
         );
-        $loader->load( 'services.xml' );
+
+        $loader = new XmlFileLoader($this->container, $configFileLocator);
+        $loader->load('services.xml');
+
+        $loader = new YamlFileLoader($this->container, $configFileLocator);
+        $loader->load('config.yml.dist');
+
+        $this->container->compile();
     }
 
     /**
