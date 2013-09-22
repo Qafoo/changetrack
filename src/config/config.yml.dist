@@ -7,4 +7,4 @@ revision_label_provider:
             pattern: '(implemented)i'
             label:   'implement'
         - default:
-            label:   'implement'
+            label:   'misc'
