@@ -56,6 +56,18 @@ class Analyze extends Command
                 InputArgument::OPTIONAL,
                 'Path to use for meta data cache',
                 'src/var/tmp/cache'
+            )->addOption(
+                'start-revision',
+                's',
+                InputArgument::OPTIONAL,
+                'Revision to start analyzis with.',
+                null
+            )->addOption(
+                'end-revision',
+                'e',
+                InputArgument::OPTIONAL,
+                'Revision to end analyzis with.',
+                null
             );
     }
 
@@ -69,7 +81,11 @@ class Analyze extends Command
         $changes = $this->analyzerFactory->createAnalyzer(
             $checkoutPath,
             $cachePath
-        )->analyze($url);
+        )->analyze(
+            $url,
+            $input->getOption('start-revision'),
+            $input->getOption('end-revision')
+        );
 
         $output->write($this->renderer->renderOutput($changes));
     }
