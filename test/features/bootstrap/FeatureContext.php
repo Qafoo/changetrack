@@ -44,6 +44,11 @@ class FeatureContext extends BehatContext
     private $repositoryUrl;
 
     /**
+     * @var string
+     */
+    private $repositoryUrlOverride;
+
+    /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
@@ -53,6 +58,10 @@ class FeatureContext extends BehatContext
     {
         $bootstrap = new Bootstrap();
         $this->container = $bootstrap->createContainer();
+
+        if (isset($parameters['repositoryUrl'])) {
+            $this->repositoryUrlOverride = $parameters['repositoryUrl'];
+        }
     }
 
     /**
@@ -80,8 +89,16 @@ class FeatureContext extends BehatContext
             $checkoutDir,
             $cacheDir
         )->analyze(
-            $this->repositoryUrl
+            $this->getRepositoryUrl()
         );
+    }
+
+    private function getRepositoryUrl()
+    {
+        if (isset($this->repositoryUrlOverride)) {
+            return $this->repositoryUrlOverride;
+        }
+        return $this->repositoryUrl;
     }
 
     /**
