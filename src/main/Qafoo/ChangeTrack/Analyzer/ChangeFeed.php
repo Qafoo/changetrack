@@ -13,20 +13,55 @@ class ChangeFeed implements \Iterator
 
     private $revisionIndex;
 
-    public function __construct($checkout)
+    /**
+     * @var int
+     */
+    private $startIndex;
+
+    /**
+     * @var int
+     */
+    private $endIndex;
+
+    public function __construct($checkout, $startRevision = null, $endRevision = null)
     {
         $this->checkout = $checkout;
         $this->revisions = $this->checkout->getVersions();
+
+        $this->determineEdgeIndexes($startRevision, $endRevision);
+        $this->rewind();
+    }
+
+    /**
+     * @param string $startRevision
+     * @param string $endRevision
+     */
+    private function determineEdgeIndexes($startRevision, $endRevision)
+    {
+        $startIndex = 0;
+        $endIndex = count($this->revisions) - 1;
+
+        foreach ($this->revisions as $index => $revision) {
+            if ($startRevision !== null && $revision === $startRevision) {
+                $startIndex = $index;
+            }
+            if ($endRevision !== null && $revision === $endRevision) {
+                $endIndex = $index;
+            }
+        }
+
+        $this->startIndex = $startIndex;
+        $this->endIndex = $endIndex;
     }
 
     public function valid()
     {
-        return $this->revisionIndex < count($this->revisions);
+        return $this->revisionIndex <= $this->endIndex;
     }
 
     public function rewind()
     {
-        $this->revisionIndex = 0;
+        $this->revisionIndex = $this->startIndex;
     }
 
     public function next()
@@ -36,10 +71,10 @@ class ChangeFeed implements \Iterator
 
     public function current()
     {
-        $currentRevision = $this->revisions[$this->revisionIndex];
+        $currentRevision = $this->getCurrentRevision();
         $this->checkout->update($currentRevision);
 
-        if ($this->revisionIndex == 0) {
+        if ($this->revisionIndex == $this->startIndex) {
             return new InitialChangeSet(
                 $this->checkout,
                 $currentRevision,
@@ -57,8 +92,13 @@ class ChangeFeed implements \Iterator
         }
     }
 
-    public function key()
+    private function getCurrentRevision()
     {
         return $this->revisions[$this->revisionIndex];
+    }
+
+    public function key()
+    {
+        return $this->getCurrentRevision();
     }
 }
