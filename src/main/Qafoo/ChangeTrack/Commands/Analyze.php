@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Commands;
 
-use Qafoo\ChangeTrack\Analyzer;
+use Qafoo\ChangeTrack\Analyzer\AnalyzerFactory;
 use Qafoo\ChangeTrack\Analyzer\Renderer;
 
 use Symfony\Component\Console\Command\Command;
@@ -14,9 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Analyze extends Command
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer
+     * @var \Qafoo\ChangeTrack\Analyzer\AnalyzerFactory
      */
-    private $analyzer;
+    private $analyzerFactory;
 
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\Renderer
@@ -24,14 +24,14 @@ class Analyze extends Command
     private $renderer;
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer $analyzer
+     * @param \Qafoo\ChangeTrack\Analyzer\AnalyzerFactory $analyzerFactory
      * @param \Qafoo\ChangeTrack\Analyzer\Renderer $renderer
      * @param string $name
      */
-    public function __construct(Analyzer $analyzer, Renderer $renderer, $name = null)
+    public function __construct(AnalyzerFactory $analyzerFactory, Renderer $renderer, $name = null)
     {
         parent::__construct($name);
-        $this->analyzer = $analyzer;
+        $this->analyzerFactory = $analyzerFactory;
         $this->renderer = $renderer;
     }
 
@@ -66,7 +66,10 @@ class Analyze extends Command
         $checkoutPath = $input->getOption('checkout-path');
         $cachePath = $input->getOption('cache-path');
 
-        $changes = $this->analyzer->analyze($url, $checkoutPath, $cachePath);
+        $changes = $this->analyzerFactory->createAnalyzer(
+            $checkoutPath,
+            $cachePath
+        )->analyze($url);
 
         $output->write($this->renderer->renderOutput($changes));
     }

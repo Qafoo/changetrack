@@ -20,7 +20,7 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.Command.Analyze" class="Qafoo\ChangeTrack\Commands\Analyze">
-            <argument type="service" id="Qafoo.ChangeTrack.Analyzer" />
+            <argument type="service" id="Qafoo.ChangeTrack.Analyzer.AnalyzerFactory" />
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.Renderer" />
         </service>
         <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
@@ -29,7 +29,7 @@
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.Renderer" />
         </service>
 
-        <service id="Qafoo.ChangeTrack.Analyzer" class="Qafoo\ChangeTrack\Analyzer">
+        <service id="Qafoo.ChangeTrack.Analyzer.AnalyzerFactory" class="Qafoo\ChangeTrack\Analyzer\AnalyzerFactory">
             <argument type="service">
                 <service class="Qafoo\ChangeTrack\Analyzer\CheckoutFactory" />
             </argument>

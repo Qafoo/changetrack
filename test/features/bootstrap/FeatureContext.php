@@ -74,12 +74,13 @@ class FeatureContext extends BehatContext
         $this->cleanupDirectory($checkoutDir);
         $this->cleanupDirectory($cacheDir);
 
-        $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
+        $analyzerFactory = $this->container->get('Qafoo.ChangeTrack.Analyzer.AnalyzerFactory');
 
-        $this->analyzedChanges = $analyzer->analyze(
-            $this->repositoryUrl,
+        $this->analyzedChanges = $analyzerFactory->createAnalyzer(
             $checkoutDir,
             $cacheDir
+        )->analyze(
+            $this->repositoryUrl
         );
     }
 

@@ -19,16 +19,34 @@ class Analyzer
     private $checkoutFactory;
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
+     * @var string
      */
-    public function __construct(CheckoutFactory $checkoutFactory)
+    private $checkoutPath;
+
+    /**
+     * @var string
+     */
+    private $cachePath;
+
+    /**
+     * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
+     * @param string $checkoutPath
+     * @param string $cachePath
+     */
+    public function __construct(CheckoutFactory $checkoutFactory, $checkoutPath, $cachePath)
     {
         $this->checkoutFactory = $checkoutFactory;
+        $this->checkoutPath = $checkoutPath;
+        $this->cachePath = $cachePath;
     }
 
-    public function analyze($repositoryUrl, $checkoutPath, $cachePath)
+    public function analyze($repositoryUrl)
     {
-        $checkout = $this->checkoutFactory->createCheckout($repositoryUrl, $checkoutPath, $cachePath);
+        $checkout = $this->checkoutFactory->createCheckout(
+            $repositoryUrl,
+            $this->checkoutPath,
+            $this->cachePath
+        );
 
         $session = new ReflectionSession();
         $query = $session->createFileQuery();
