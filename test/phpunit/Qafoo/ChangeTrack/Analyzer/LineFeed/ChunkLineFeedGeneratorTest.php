@@ -2,10 +2,12 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
-// FIXME: Should be moved!
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed\ChunkLineFeedGenerator;
 use Arbit\VCSWrapper\Diff;
 
+/**
+ * @group integration
+ */
 class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
 {
     public function testIteratePureAddedDiff()
