@@ -40,7 +40,7 @@ class Analyzer
         $this->cachePath = $cachePath;
     }
 
-    public function analyze($repositoryUrl)
+    public function analyze($repositoryUrl, $startRevision = null, $endRevision = null)
     {
         $checkout = $this->checkoutFactory->createCheckout(
             $repositoryUrl,
@@ -51,7 +51,7 @@ class Analyzer
         $session = new ReflectionSession();
         $query = $session->createFileQuery();
 
-        $changeFeed = new ChangeFeed($checkout);
+        $changeFeed = new ChangeFeed($checkout, $startRevision, $endRevision);
         $resultBuilder = new ResultBuilder($repositoryUrl);
         $changeRecorder = new ChangeRecorder($query, $resultBuilder);
 

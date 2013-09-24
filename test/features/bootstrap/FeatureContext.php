@@ -77,6 +77,14 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChanges()
     {
+        $this->iAnalyzeTheChangesFromTo(null, null);
+    }
+
+    /**
+     * @When /^I analyze the changes from "([^"]*)" to "([^"]*)"$/
+     */
+    public function iAnalyzeTheChangesFromTo($startRevision, $endRevision)
+    {
         $checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
         $cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
 
@@ -89,8 +97,25 @@ class FeatureContext extends BehatContext
             $checkoutDir,
             $cacheDir
         )->analyze(
-            $this->getRepositoryUrl()
+            $this->getRepositoryUrl(),
+            $startRevision,
+            $endRevision
         );
+    }
+
+    /**
+     * @Then /^there are no stats for revision "([^"]*)"$/
+     */
+    public function thereAreNoStatsForRevision($revision)
+    {
+        if (isset($this->analyzedChanges->revisionChanges[$revision])) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Unexpected analysis result for revision "%s"',
+                    $revision
+                )
+            );
+        }
     }
 
     private function getRepositoryUrl()
