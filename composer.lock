@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "cac999be8b9fbeed7b063e499c41f0ee",
+    "hash": "78b5ca4133db3a53188a76474fe969c0",
     "packages": [
         {
             "name": "arbit/system-process",
@@ -716,6 +716,36 @@
             "time": "2013-03-02 10:38:40"
         },
         {
+            "name": "mikey179/vfsStream",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikey179/vfsStream.git",
+                "reference": "063fb10633f10c5ccbcac26227e94f46d9336f90"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/063fb10633f10c5ccbcac26227e94f46d9336f90",
+                "reference": "063fb10633f10c5ccbcac26227e94f46d9336f90",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "org\\bovigo\\vfs\\": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "homepage": "http://vfs.bovigo.org/",
+            "time": "2013-04-01 10:41:02"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "1.2.12",
             "source": {
@@ -1392,7 +1422,8 @@
         "symfony/dependency-injection": 0,
         "symfony/console": 0,
         "behat/behat": 0,
-        "phpunit/phpunit": 0
+        "phpunit/phpunit": 0,
+        "mikey179/vfsstream": 0
     },
     "platform": [
 

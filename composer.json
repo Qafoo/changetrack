@@ -27,7 +27,8 @@
     },
     "require-dev": {
         "behat/behat" : "2.4.*@stable",
-        "phpunit/phpunit": "3.7.*@stable"
+        "phpunit/phpunit": "3.7.*@stable",
+        "mikey179/vfsStream": "1.2.*@stable"
     },
 
     "autoload": {
