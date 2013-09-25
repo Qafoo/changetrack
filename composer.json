@@ -16,11 +16,15 @@
                     }
                 }
             }
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/tobyS/VCSWrapper.git"
         }
     ],
     "require": {
         "manuelpichler/staticReflection": "@dev",
-        "arbit/vcs-wrapper": "dev-master",
+        "arbit/vcs-wrapper": "dev-support-git-diff-special-version",
         "jms/serializer": "@stable",
         "symfony/dependency-injection": "@stable",
         "symfony/console": "@stable"
