@@ -32,7 +32,7 @@ class DiffChangeSet extends ChangeSet
 
         $diffIterator = new Diff\DiffIterator(
             $this->checkout->getDiff(
-                $this->previousRevision,
+                $this->revision . '^',
                 $this->revision
             )
         );
