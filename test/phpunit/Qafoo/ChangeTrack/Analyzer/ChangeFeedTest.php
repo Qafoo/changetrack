@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -24,7 +25,7 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
         $this->cleanupTempDir($checkoutPath);
 
         VCSWrapper\Cache\Manager::initialize($cachePath);
-        $this->checkout = new VCSWrapper\GitCli\Checkout($checkoutPath);
+        $this->checkout = new GitCheckout($checkoutPath);
 
         $this->checkout->initialize(
             'https://github.com/tobyS/Daemon.git'
@@ -76,12 +77,12 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function first_change_set_is_initial()
+    public function first_change_set_is_no_more_initial()
     {
         $changeFeed = new ChangeFeed($this->checkout);
 
         $this->assertInstanceOf(
-            'Qafoo\\ChangeTrack\\Analyzer\\ChangeSet\\InitialChangeSet',
+            'Qafoo\\ChangeTrack\\Analyzer\\ChangeSet\\DiffChangeSet',
             $changeFeed->current()
         );
     }

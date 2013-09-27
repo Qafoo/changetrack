@@ -6,7 +6,7 @@ use Qafoo\ChangeTrack\Analyzer\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
 
-use Arbit\VCSWrapper;
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class DiffChangeSet extends ChangeSet
 {
@@ -18,10 +18,9 @@ class DiffChangeSet extends ChangeSet
 
     private $message;
 
-    public function __construct(VCSWrapper\Checkout $checkout, $previousRevision, $revision, $message)
+    public function __construct(GitCheckout $checkout, $revision, $message)
     {
         $this->checkout = $checkout;
-        $this->previousRevision = $previousRevision;
         $this->revision = $revision;
         $this->message = $message;
     }
@@ -31,10 +30,7 @@ class DiffChangeSet extends ChangeSet
         $this->checkout->update($this->revision);
 
         $diffIterator = new Diff\DiffIterator(
-            $this->checkout->getDiff(
-                $this->revision . '^',
-                $this->revision
-            )
+            $this->checkout->getRevisionDiff($this->revision)
         );
 
         foreach ($diffIterator as $diffCollection) {

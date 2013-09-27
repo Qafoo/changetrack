@@ -4,9 +4,13 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffChangeSet;
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeFeed implements \Iterator
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
+     */
     private $checkout;
 
     private $revisions;
@@ -23,7 +27,7 @@ class ChangeFeed implements \Iterator
      */
     private $endIndex;
 
-    public function __construct($checkout, $startRevision = null, $endRevision = null)
+    public function __construct(GitCheckout $checkout, $startRevision = null, $endRevision = null)
     {
         $this->checkout = $checkout;
         $this->revisions = $this->checkout->getVersions();
@@ -74,22 +78,11 @@ class ChangeFeed implements \Iterator
         $currentRevision = $this->getCurrentRevision();
         $this->checkout->update($currentRevision);
 
-        if ($this->revisionIndex == $this->startIndex) {
-            return new InitialChangeSet(
-                $this->checkout,
-                $currentRevision,
-                $this->checkout->getLogEntry($currentRevision)->message
-            );
-        } else {
-            $previousRevision = $this->revisions[$this->revisionIndex - 1];
-
-            return new DiffChangeSet(
-                $this->checkout,
-                $previousRevision,
-                $currentRevision,
-                $this->checkout->getLogEntry($currentRevision)->message
-            );
-        }
+        return new DiffChangeSet(
+            $this->checkout,
+            $currentRevision,
+            $this->checkout->getLogEntry($currentRevision)->message
+        );
     }
 
     private function getCurrentRevision()
