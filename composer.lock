@@ -35,7 +35,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tobyS/VCSWrapper.git",
-                "reference": "24b71fa7ec6b6c67024a17f7b58490e4a2be53b1"
+                "reference": "4d1b5ee9b662b6ad02b3447f11a87df026835d90"
             },
             "require": {
                 "arbit/system-process": "*",
@@ -51,7 +51,7 @@
                 "LGPL-3.0+"
             ],
             "description": "VCS wrapper is a PHP abstraction layer for version control systems.",
-            "time": "2013-09-25 17:45:26"
+            "time": "2013-09-27 04:16:28"
         },
         {
             "name": "arbit/xml",
