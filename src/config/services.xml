@@ -9,26 +9,6 @@
         <parameter key="Qafoo.ChangeTrack.JmsSerializer.MetaDataDir">%Qafoo.ChangeTrack.BaseDir%/src/config/jmsserializer</parameter>
     </parameters>
     <services>
-        <service id="Qafoo.ChangeTrack.Application" class="Qafoo\ChangeTrack\Application">
-            <argument>%Qafoo.ChangeTrack.ApplicationName%</argument>
-            <call method="add">
-                <argument type="service" id="Qafoo.ChangeTrack.Command.Analyze" />
-            </call>
-            <call method="add">
-                <argument type="service" id="Qafoo.ChangeTrack.Command.Calculate" />
-            </call>
-        </service>
-
-        <service id="Qafoo.ChangeTrack.Command.Analyze" class="Qafoo\ChangeTrack\Commands\Analyze">
-            <argument type="service" id="Qafoo.ChangeTrack.Analyzer.AnalyzerFactory" />
-            <argument type="service" id="Qafoo.ChangeTrack.Analyzer.Renderer" />
-        </service>
-        <service id="Qafoo.ChangeTrack.Command.Calculate" class="Qafoo\ChangeTrack\Commands\Calculate">
-            <argument type="service" id="Qafoo.ChangeTrack.Calculator" />
-            <argument type="service" id="Qafoo.ChangeTrack.Calculator.Parser" />
-            <argument type="service" id="Qafoo.ChangeTrack.Calculator.Renderer" />
-        </service>
-
         <service id="Qafoo.ChangeTrack.Analyzer.AnalyzerFactory" class="Qafoo\ChangeTrack\Analyzer\AnalyzerFactory">
             <argument type="service">
                 <service class="Qafoo\ChangeTrack\Analyzer\CheckoutFactory" />

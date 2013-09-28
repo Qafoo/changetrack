@@ -6,7 +6,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
 use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension;
+
+use Qafoo\ChangeTrack\Application;
+use Qafoo\ChangeTrack\Commands;
 
 class Bootstrap
 {
@@ -41,6 +45,20 @@ class Bootstrap
     }
 
     /**
+     * @return \Qafoo\ChangeTrack\Application
+     */
+    public function createApplication()
+    {
+        $container = $this->createContainer();
+
+        $application = new Application('Qafoo ChangeTrack');
+        $application->add(new Commands\Analyze($container));
+        $application->add(new Commands\Calculate($container));
+
+        return $application;
+    }
+
+    /**
      * @return \Symfony\DependencyInjection\Container
      */
     public function createContainer()
@@ -55,9 +73,6 @@ class Bootstrap
 
         $loader = new YamlFileLoader($container, new FileLocator(getcwd()));
         $loader->load($this->configFile);
-
-        // Compile container to make extensions hook in
-        $container->compile();
 
         return $container;
     }

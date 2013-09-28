@@ -6,26 +6,19 @@ use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Calculator\Parser;
 use Qafoo\ChangeTrack\Calculator\Renderer;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Calculate extends Command
+class Calculate extends BaseCommand
 {
     /**
-     * @param \Qafoo\ChangeTrack\Calculator $calculator
-     * @param \Qafoo\ChangeTrack\Calculator\Parser $parser
-     * @param \Qafoo\ChangeTrack\Calculator\Renderer $renderer
-     * @param string $name
+     * @return string
      */
-    public function __construct(Calculator $calculator, Parser $parser, Renderer $renderer, $name = null)
+    protected function getCommandName()
     {
-        parent::__construct($name);
-        $this->calculator = $calculator;
-        $this->parser = $parser;
-        $this->renderer = $renderer;
+        return 'calculate';
     }
 
     protected function configure()
@@ -39,7 +32,15 @@ class Calculate extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
+    protected function configureContainer(InputInterface $input)
+    {
+        // TODO: Implement
+    }
+
+    protected function executeCommand(InputInterface $input, OutputInterface $output)
     {
         $inputFile = 'php://stdin';
         if ($input->hasArgument('file')) {
@@ -51,10 +52,14 @@ class Calculate extends Command
         }
         $inputXml = file_get_contents($inputFile);
 
-        $analysisResult = $this->parser->parseAnalysisResult($inputXml);
+        $parser = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator.Parser');
+        $calculator = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator');
+        $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator.Renderer');
 
-        $stats = $this->calculator->calculateStats($analysisResult);
+        $analysisResult = $parser->parseAnalysisResult($inputXml);
 
-        $output->write($this->renderer->renderOutput($stats));
+        $stats = $calculator->calculateStats($analysisResult);
+
+        $output->write($renderer->renderOutput($stats));
     }
 }

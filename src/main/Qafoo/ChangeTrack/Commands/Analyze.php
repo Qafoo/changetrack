@@ -11,30 +11,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Analyze extends Command
+class Analyze extends BaseCommand
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\AnalyzerFactory
+     * @return string
      */
-    private $analyzerFactory;
-
-    /**
-     * @var \Qafoo\ChangeTrack\Analyzer\Renderer
-     */
-    private $renderer;
-
-    /**
-     * @param \Qafoo\ChangeTrack\Analyzer\AnalyzerFactory $analyzerFactory
-     * @param \Qafoo\ChangeTrack\Analyzer\Renderer $renderer
-     * @param string $name
-     */
-    public function __construct(AnalyzerFactory $analyzerFactory, Renderer $renderer, $name = null)
+    protected function getCommandName()
     {
-        parent::__construct($name);
-        $this->analyzerFactory = $analyzerFactory;
-        $this->renderer = $renderer;
+        return 'analyze';
     }
-
 
     protected function configure()
     {
@@ -71,14 +56,29 @@ class Analyze extends Command
             );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
+    protected function configureContainer(InputInterface $input)
+    {
+        // TODO: Configure
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function executeCommand(InputInterface $input, OutputInterface $output)
     {
         $url = $input->getArgument('url');
 
         $checkoutPath = $input->getOption('checkout-path');
         $cachePath = $input->getOption('cache-path');
 
-        $changes = $this->analyzerFactory->createAnalyzer(
+        $analyzerFactory = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.AnalyzerFactory');
+        $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.Renderer');
+
+        $changes = $analyzerFactory->createAnalyzer(
             $checkoutPath,
             $cachePath
         )->analyze(
@@ -87,6 +87,6 @@ class Analyze extends Command
             $input->getOption('end-revision')
         );
 
-        $output->write($this->renderer->renderOutput($changes));
+        $output->write($renderer->renderOutput($changes));
     }
 }

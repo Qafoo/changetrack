@@ -58,6 +58,7 @@ class FeatureContext extends BehatContext
     {
         $bootstrap = new Bootstrap();
         $this->container = $bootstrap->createContainer();
+        $this->container->compile();
 
         if (isset($parameters['repositoryUrl'])) {
             $this->repositoryUrlOverride = $parameters['repositoryUrl'];
