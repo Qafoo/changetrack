@@ -18,8 +18,14 @@ class ChangeFeed implements \Iterator
      */
     private $observer;
 
+    /**
+     * @var string[]
+     */
     private $revisions;
 
+    /**
+     * @var int
+     */
     private $revisionIndex;
 
     /**
@@ -32,6 +38,12 @@ class ChangeFeed implements \Iterator
      */
     private $endIndex;
 
+    /**
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
+     * @param string $startRevision
+     * @param string $endRevision
+     */
     public function __construct(
         GitCheckout $checkout,
         ChangeFeedObserver $observer,
@@ -68,6 +80,9 @@ class ChangeFeed implements \Iterator
         $this->endIndex = $endIndex;
     }
 
+    /**
+     * @return bool
+     */
     public function valid()
     {
         return $this->revisionIndex <= $this->endIndex;
@@ -84,6 +99,9 @@ class ChangeFeed implements \Iterator
         $this->revisionIndex++;
     }
 
+    /**
+     * @return \Qafoo\ChangeTrack\Analyzer\ChangeSet
+     */
     public function current()
     {
         $currentRevision = $this->getCurrentRevision();
@@ -101,11 +119,17 @@ class ChangeFeed implements \Iterator
         );
     }
 
+    /**
+     * @return string
+     */
     private function getCurrentRevision()
     {
         return $this->revisions[$this->revisionIndex];
     }
 
+    /**
+     * @return string
+     */
     public function key()
     {
         return $this->getCurrentRevision();
