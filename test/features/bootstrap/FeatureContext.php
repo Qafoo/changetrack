@@ -49,6 +49,16 @@ class FeatureContext extends BehatContext
     private $repositoryUrlOverride;
 
     /**
+     * @var string
+     */
+    private $checkoutDir;
+
+    /**
+     * @var string
+     */
+    private $cacheDir;
+
+    /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
@@ -58,6 +68,19 @@ class FeatureContext extends BehatContext
     {
         $bootstrap = new Bootstrap();
         $this->container = $bootstrap->createContainer();
+
+        $this->checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
+        $this->cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
+
+        $this->container->setParameter(
+            'Qafoo.ChangeTrack.Analyzer.CheckoutPath',
+            $this->checkoutDir
+        );
+        $this->container->setParameter(
+            'Qafoo.ChangeTrack.Analyzer.CachePath',
+            $this->cacheDir
+        );
+
         $this->container->compile();
 
         if (isset($parameters['repositoryUrl'])) {
@@ -86,18 +109,12 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChangesFromTo($startRevision, $endRevision)
     {
-        $checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
-        $cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
+        $this->cleanupDirectory($this->checkoutDir);
+        $this->cleanupDirectory($this->cacheDir);
 
-        $this->cleanupDirectory($checkoutDir);
-        $this->cleanupDirectory($cacheDir);
+        $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
 
-        $analyzerFactory = $this->container->get('Qafoo.ChangeTrack.Analyzer.AnalyzerFactory');
-
-        $this->analyzedChanges = $analyzerFactory->createAnalyzer(
-            $checkoutDir,
-            $cacheDir
-        )->analyze(
+        $this->analyzedChanges = $analyzer->analyze(
             $this->getRepositoryUrl(),
             $startRevision,
             $endRevision

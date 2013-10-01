@@ -61,7 +61,14 @@ class Analyze extends BaseCommand
      */
     protected function configureContainer(InputInterface $input)
     {
-        // TODO: Configure
+        $this->getContainer()->setParameter(
+            'Qafoo.ChangeTrack.Analyzer.CheckoutPath',
+            $input->getOption('checkout-path')
+        );
+        $this->getContainer()->setParameter(
+            'Qafoo.ChangeTrack.Analyzer.CachePath',
+            $input->getOption('cache-path')
+        );
     }
 
     /**
@@ -72,20 +79,14 @@ class Analyze extends BaseCommand
     {
         $url = $input->getArgument('url');
 
-        $checkoutPath = $input->getOption('checkout-path');
-        $cachePath = $input->getOption('cache-path');
+        $changes = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer')
+            ->analyze(
+                $url,
+                $input->getOption('start-revision'),
+                $input->getOption('end-revision')
+            );
 
-        $analyzerFactory = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.AnalyzerFactory');
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.Renderer');
-
-        $changes = $analyzerFactory->createAnalyzer(
-            $checkoutPath,
-            $cachePath
-        )->analyze(
-            $url,
-            $input->getOption('start-revision'),
-            $input->getOption('end-revision')
-        );
 
         $output->write($renderer->renderOutput($changes));
     }

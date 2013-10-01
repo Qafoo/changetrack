@@ -13,6 +13,11 @@ class ChangeFeed implements \Iterator
      */
     private $checkout;
 
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver
+     */
+    private $observer;
+
     private $revisions;
 
     private $revisionIndex;
@@ -27,9 +32,14 @@ class ChangeFeed implements \Iterator
      */
     private $endIndex;
 
-    public function __construct(GitCheckout $checkout, $startRevision = null, $endRevision = null)
-    {
+    public function __construct(
+        GitCheckout $checkout,
+        ChangeFeedObserver $observer,
+        $startRevision = null,
+        $endRevision = null
+    ) {
         $this->checkout = $checkout;
+        $this->observer = $observer;
         $this->revisions = $this->checkout->getVersions();
 
         $this->determineEdgeIndexes($startRevision, $endRevision);
@@ -66,6 +76,7 @@ class ChangeFeed implements \Iterator
     public function rewind()
     {
         $this->revisionIndex = $this->startIndex;
+        $this->observer->notifyInitialized($this->revisions);
     }
 
     public function next()
@@ -77,6 +88,11 @@ class ChangeFeed implements \Iterator
     {
         $currentRevision = $this->getCurrentRevision();
         $this->checkout->update($currentRevision);
+
+        $this->observer->notifyProcessingRevision(
+            $this->revisionIndex,
+            $currentRevision
+        );
 
         return new DiffChangeSet(
             $this->checkout,

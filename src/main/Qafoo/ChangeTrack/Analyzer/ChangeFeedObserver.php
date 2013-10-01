@@ -18,9 +18,4 @@ interface ChangeFeedObserver
      * @param string $revision
      */
     public function notifyProcessingRevision($number, $revision);
-
-    /**
-     * The ChangeFeed finished processing
-     */
-    public function notifyFinished();
 }
