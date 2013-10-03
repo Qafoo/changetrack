@@ -53,6 +53,12 @@ class Analyze extends BaseCommand
                 InputArgument::OPTIONAL,
                 'Revision to end analyzis with.',
                 null
+            )->addOption(
+                'output',
+                'o',
+                InputArgument::OPTIONAL,
+                'Output to given file instead of STDOUT.',
+                null
             );
     }
 
@@ -87,7 +93,9 @@ class Analyze extends BaseCommand
             );
 
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.Renderer');
+        $resultOutput = $this->getContainer()->get('Qafoo.ChangeTrack.ResultOutputFactory')
+            ->createOutputFromParameters($input, $output);
 
-        $output->write($renderer->renderOutput($changes));
+        $resultOutput->write($renderer->renderOutput($changes));
     }
 }

@@ -12,6 +12,8 @@
         <parameter key="Qafoo.ChangeTrack.Analyzer.CachePath">Please specify this through configuration!</parameter>
     </parameters>
     <services>
+        <service id="Qafoo.ChangeTrack.ResultOutputFactory" class="Qafoo\ChangeTrack\ResultOutputFactory" />
+            
         <service id="Qafoo.ChangeTrack.Analyzer" class="Qafoo\ChangeTrack\Analyzer">
             <argument type="service">
                 <service class="Qafoo\ChangeTrack\Analyzer\CheckoutFactory" />
