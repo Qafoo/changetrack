@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer;
 
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffChangeSet;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;

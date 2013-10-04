@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 
-use Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver;
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Output\OutputInterface;
 

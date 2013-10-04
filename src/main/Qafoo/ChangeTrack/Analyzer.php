@@ -6,7 +6,7 @@ use pdepend\reflection\ReflectionSession;
 
 use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory;
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory;
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 use Qafoo\ChangeTrack\Analyzer\DiffIterator;
 use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;

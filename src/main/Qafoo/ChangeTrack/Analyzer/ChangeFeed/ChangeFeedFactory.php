@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer;
+namespace Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 

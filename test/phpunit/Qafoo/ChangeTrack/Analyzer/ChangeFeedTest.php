@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -12,9 +13,19 @@ use Symfony\Component\Filesystem\Filesystem;
 class ChangeFeedTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * @var string
+     */
+    private $repositoryUrl = 'https://github.com/tobyS/Daemon.git';
+
+    /**
      * @var \Arbit\VCSWrapper\Checkout
      */
     private $checkout;
+
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver
+     */
+    private $observerDummy;
 
     public function setup()
     {
@@ -26,10 +37,9 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
 
         VCSWrapper\Cache\Manager::initialize($cachePath);
         $this->checkout = new GitCheckout($checkoutPath);
+        $this->checkout->initialize($this->repositoryUrl);
 
-        $this->checkout->initialize(
-            'https://github.com/tobyS/Daemon.git'
-        );
+        $this->observerDummy = new NullObserver();
     }
 
     /**
@@ -49,14 +59,14 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
      */
     public function can_iterate_full_log()
     {
-        $changeFeed = new ChangeFeed($this->checkout);
+        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
 
         $counter = 0;
         foreach ($changeFeed as $changeSet) {
             $counter++;
         }
 
-        $this->assertEquals(11, $counter);
+        $this->assertEquals(10, $counter);
     }
 
     /**
@@ -64,7 +74,7 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
      */
     public function always_returns_changeset()
     {
-        $changeFeed = new ChangeFeed($this->checkout);
+        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
 
         foreach ($changeFeed as $changeSet) {
             $this->assertInstanceOf(
@@ -79,7 +89,7 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
      */
     public function first_change_set_is_no_more_initial()
     {
-        $changeFeed = new ChangeFeed($this->checkout);
+        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
 
         $this->assertInstanceOf(
             'Qafoo\\ChangeTrack\\Analyzer\\ChangeSet\\DiffChangeSet',
@@ -94,6 +104,7 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
     {
         $changeFeed = new ChangeFeed(
             $this->checkout,
+            $this->observerDummy,
             'bb6f4f102ebaad2b8151bb44929eadce298e8ec9'
         );
 
@@ -110,6 +121,7 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
     {
         $changeFeed = new ChangeFeed(
             $this->checkout,
+            $this->observerDummy,
             null,
             'bb6f4f102ebaad2b8151bb44929eadce298e8ec9'
         );
