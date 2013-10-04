@@ -29,6 +29,10 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
+        if (isset($_ENV['repositoryUrl'])) {
+            $this->repositoryUrl = $_ENV['repositoryUrl'];
+        }
+
         $cachePath = __DIR__ . '/../../../../../src/var/tmp/cache';
         $checkoutPath =  __DIR__ . '/../../../../../src/var/tmp/checkout';
 

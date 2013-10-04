@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./vendor/autoload.php">
 
+    <!--
+        Use in your local phpunit.xml if you want to test with a local copy of
+        the https://github.com/QafooLabs/Daemon repository
+
+    <env name="repositoryUrl" value="~/projects/Daemon" />
+    -->
+
     <testsuites>
         <testsuite name="Tests">
             <directory>./test/phpunit</directory>
