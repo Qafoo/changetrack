@@ -23,11 +23,11 @@
             <argument>%Qafoo.ChangeTrack.Analyzer.CachePath%</argument>
         </service>
 
-        <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory">
+        <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory">
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver" />
         </service>
 
-        <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver" class="Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver\NullObserver" />
+        <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver" />
 
         <service id="Qafoo.ChangeTrack.Analyzer.Renderer" class="Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer">
             <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />

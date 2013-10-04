@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeFeedFactory
