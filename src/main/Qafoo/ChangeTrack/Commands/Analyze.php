@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Analyzer\AnalyzerFactory;
 use Qafoo\ChangeTrack\Analyzer\Renderer;
+use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\ProgressObserver;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -59,14 +60,22 @@ class Analyze extends BaseCommand
                 InputArgument::OPTIONAL,
                 'Output to given file instead of STDOUT.',
                 null
+            )->addOption(
+                'progress',
+                'p',
+                InputOption::VALUE_NONE,
+                'Display progress bar (requires output file to be specified).'
             );
     }
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    protected function configureContainer(InputInterface $input)
+    protected function configureContainer(InputInterface $input, OutputInterface $output)
     {
+        $this->validateOptions($input);
+
         $this->getContainer()->setParameter(
             'Qafoo.ChangeTrack.Analyzer.CheckoutPath',
             $input->getOption('checkout-path')
@@ -75,6 +84,26 @@ class Analyze extends BaseCommand
             'Qafoo.ChangeTrack.Analyzer.CachePath',
             $input->getOption('cache-path')
         );
+
+        // TODO: Cleanup
+        if ($input->getOption('progress')) {
+            $this->getContainer()->set(
+                'Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver',
+                new ProgressObserver(
+                    $this->getHelperSet()->get('progress'),
+                    $output
+                )
+            );
+        }
+    }
+
+    private function validateOptions(InputInterface $input)
+    {
+        if ($input->getOption('progress') && $input->getOption('output') === null) {
+            throw new \RuntimeException(
+                'Progress can only be displayed when result is redirected to a file (--output).'
+            );
+        }
     }
 
     /**

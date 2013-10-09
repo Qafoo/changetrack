@@ -18,6 +18,16 @@ class ChangeRecorder
 
     public function recordChange(Change $change)
     {
+        /*
+         * TODO: Integrate
+         *
+        if (substr($fileName, -3, 3) !== 'php') {
+            // Skip all non-PHP files
+            // @TODO: Make configurable
+            continue;
+        }
+        */
+
         $affectedMethod = $this->determineAffectedMethod($change);
 
         if ($affectedMethod !== null) {

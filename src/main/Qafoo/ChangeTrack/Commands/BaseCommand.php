@@ -32,8 +32,9 @@ abstract class BaseCommand extends Command
      * Prepare the container according to the provided config flags.
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    abstract protected function configureContainer(InputInterface $input);
+    abstract protected function configureContainer(InputInterface $input, OutputInterface $output);
 
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -47,7 +48,7 @@ abstract class BaseCommand extends Command
      */
     final protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->configureContainer($input);
+        $this->configureContainer($input, $output);
         $this->container->compile();
         $this->executeCommand($input, $output);
     }
