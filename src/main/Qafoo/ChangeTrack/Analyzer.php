@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack;
 
 use pdepend\reflection\ReflectionSession;
+use Qafoo\ChangeTrack\Analyzer\Reflection\NullSourceResolver;
 
 use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
@@ -59,7 +60,9 @@ class Analyzer
             $this->cachePath
         );
 
-        $session = new ReflectionSession();
+        $sourceResolver = new NullSourceResolver();
+        $session = ReflectionSession::createDefaultSession($sourceResolver);
+
         $query = $session->createFileQuery();
 
         $changeFeed = $this->changeFeedFactory->createChangeFeed($checkout, $startRevision, $endRevision);

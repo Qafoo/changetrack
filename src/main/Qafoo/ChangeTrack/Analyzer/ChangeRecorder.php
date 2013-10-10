@@ -60,15 +60,10 @@ class ChangeRecorder
     {
         $classes = $this->reflectionQuery->find($change->localFile);
         foreach ($classes as $class) {
-            try {
-                foreach ($class->getMethods() as $method) {
-                    if ($change->affectedLine >= $method->getStartLine() && $change->affectedLine <= $method->getEndLine()) {
-                        return $method;
-                    }
+            foreach ($class->getMethods() as $method) {
+                if ($change->affectedLine >= $method->getStartLine() && $change->affectedLine <= $method->getEndLine()) {
+                    return $method;
                 }
-            } catch (\ReflectionException $e) {
-                // Thrown for classes, which are frome external projects
-                continue;
             }
         }
         return null;
