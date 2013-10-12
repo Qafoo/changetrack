@@ -5,18 +5,14 @@ namespace Qafoo\ChangeTrack\Analyzer;
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
-use Symfony\Component\Filesystem\Filesystem;
+
+use Qafoo\ChangeTrack\CheckoutAwareTestBase;
 
 /**
  * @group integration
  */
-class ChangeFeedTest extends \PHPUnit_Framework_TestCase
+class ChangeFeedTest extends CheckoutAwareTestBase
 {
-    /**
-     * @var string
-     */
-    private $repositoryUrl = 'https://github.com/tobyS/Daemon.git';
-
     /**
      * @var \Arbit\VCSWrapper\Checkout
      */
@@ -29,33 +25,13 @@ class ChangeFeedTest extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        if (isset($_ENV['repositoryUrl'])) {
-            $this->repositoryUrl = $_ENV['repositoryUrl'];
-        }
+        parent::setup();
 
-        $cachePath = __DIR__ . '/../../../../../src/var/tmp/cache';
-        $checkoutPath =  __DIR__ . '/../../../../../src/var/tmp/checkout';
-
-        $this->cleanupTempDir($cachePath);
-        $this->cleanupTempDir($checkoutPath);
-
-        VCSWrapper\Cache\Manager::initialize($cachePath);
-        $this->checkout = new GitCheckout($checkoutPath);
-        $this->checkout->initialize($this->repositoryUrl);
+        VCSWrapper\Cache\Manager::initialize($this->getCachePath());
+        $this->checkout = new GitCheckout($this->getCheckoutPath());
+        $this->checkout->initialize($this->getRepositoryUrl());
 
         $this->observerDummy = new NullObserver();
-    }
-
-    /**
-     * @param string $path
-     */
-    private function cleanupTempDir($path)
-    {
-        $fsTools = new Filesystem();
-        if (is_dir($path)) {
-            $fsTools->remove($path);
-        }
-        $fsTools->mkdir($path);
     }
 
     /**
