@@ -37,7 +37,7 @@
 
     "autoload": {
         "psr-0": {
-            "Qafoo\\ChangeTrack": "src/main"
+            "Qafoo\\ChangeTrack": [ "src/main", "test/phpunit" ]
         }
     },
 
