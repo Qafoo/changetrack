@@ -21,15 +21,17 @@ class ChangeFeedFactory
     }
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $beforeCheckout
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $beforeCheckout
      * @param string $startRevision
      * @param string $endRevision
      * @return \Qafoo\Analyzer\ChangeFeed
      */
-    public function createChangeFeed(GitCheckout $checkout, $startRevision = null, $endRevision = null)
+    public function createChangeFeed(GitCheckout $beforeCheckout, GitCheckout $afterCheckout, $startRevision = null, $endRevision = null)
     {
         return new ChangeFeed(
-            $checkout,
+            $beforeCheckout,
+            $afterCheckout,
             $this->observer,
             $startRevision,
             $endRevision

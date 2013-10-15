@@ -54,18 +54,19 @@ class Analyzer
 
     public function analyze($repositoryUrl, $startRevision = null, $endRevision = null)
     {
-        $checkout = $this->checkoutFactory->createCheckout(
-            $repositoryUrl,
-            $this->checkoutPath,
-            $this->cachePath
-        );
+        $beforeCheckout = $this->createCheckout($repositoryUrl, 'before');
+        $afterCheckout = $this->createCheckout($repositoryUrl, 'after');
 
         $sourceResolver = new NullSourceResolver();
         $session = ReflectionSession::createDefaultSession($sourceResolver);
-
         $query = $session->createFileQuery();
 
-        $changeFeed = $this->changeFeedFactory->createChangeFeed($checkout, $startRevision, $endRevision);
+        $changeFeed = $this->changeFeedFactory->createChangeFeed(
+            $beforeCheckout,
+            $afterCheckout,
+            $startRevision,
+            $endRevision
+        );
         $resultBuilder = new ResultBuilder($repositoryUrl);
         $changeRecorder = new ChangeRecorder($query, $resultBuilder);
 
@@ -73,5 +74,26 @@ class Analyzer
             $changeSet->recordChanges($changeRecorder);
         }
         return $resultBuilder->buildResult();
+    }
+
+    /**
+     * Creates a checkout with the given $identifier
+     *
+     * @param string $repositoryUrl
+     * @param string $identifier
+     */
+    private function createCheckout($repositoryUrl, $identifier)
+    {
+        $checkoutPath = $this->checkoutPath . '/' . $identifier;
+        $cachePath = $this->checkoutPath . '/' . $identifier . '.cache';
+
+        mkdir($checkoutPath);
+        mkdir($cachePath);
+
+        return $this->checkoutFactory->createCheckout(
+            $repositoryUrl,
+            $checkoutPath,
+            $cachePath
+        );
     }
 }

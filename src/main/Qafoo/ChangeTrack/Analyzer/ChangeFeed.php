@@ -40,20 +40,23 @@ class ChangeFeed implements \Iterator
     private $endIndex;
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $beforeCheckout
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $afterCheckout
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
      * @param string $startRevision
      * @param string $endRevision
      */
     public function __construct(
-        GitCheckout $checkout,
+        GitCheckout $beforeCheckout,
+        GitCheckout $afterCheckout,
         ChangeFeedObserver $observer,
         $startRevision = null,
         $endRevision = null
     ) {
-        $this->checkout = $checkout;
+        $this->beforeCheckout = $beforeCheckout;
+        $this->afterCheckout = $afterCheckout;
         $this->observer = $observer;
-        $this->revisions = $this->checkout->getVersions();
+        $this->revisions = $this->afterCheckout->getVersions();
 
         $this->determineEdgeIndexes($startRevision, $endRevision);
         $this->rewind();
@@ -106,7 +109,7 @@ class ChangeFeed implements \Iterator
     public function current()
     {
         $currentRevision = $this->getCurrentRevision();
-        $this->checkout->update($currentRevision);
+        $this->afterCheckout->update($currentRevision);
 
         $this->observer->notifyProcessingRevision(
             $this->revisionIndex,
@@ -114,9 +117,10 @@ class ChangeFeed implements \Iterator
         );
 
         return new DiffChangeSet(
-            $this->checkout,
+            $this->beforeCheckout,
+            $this->afterCheckout,
             $currentRevision,
-            $this->checkout->getLogEntry($currentRevision)->message
+            $this->afterCheckout->getLogEntry($currentRevision)->message
         );
     }
 

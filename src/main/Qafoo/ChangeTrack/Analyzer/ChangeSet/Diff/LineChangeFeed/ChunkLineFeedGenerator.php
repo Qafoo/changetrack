@@ -9,33 +9,62 @@ use Arbit\VCSWrapper\Diff;
 
 class ChunkLineFeedGenerator extends LineChangeFeed
 {
-    private $chunk;
+    /**
+     * @var \Arbit\VCSWrapper\Diff\Chunk
+     */
+    private $diffChunk;
 
-    public function __construct(Diff\Chunk $chunk)
+    /**
+     * @var int
+     */
+    private $beforeLineIndex;
+
+    /**
+     * @var int
+     */
+    private $afterLineIndex;
+
+    /**
+     * @param \Arbit\VCSWrapper\Diff\Chunk $diffChunk
+     */
+    public function __construct(Diff\Chunk $diffChunk)
     {
-        $this->chunk = $chunk;
+        $this->diffChunk = $diffChunk;
     }
 
     public function getIterator()
     {
-        $lineCount = count($this->chunk->lines);
-        $lineNumber = $this->chunk->end;
+        $this->beforeLineIndex = $this->diffChunk->start;
+        $this->afterLineIndex = $this->diffChunk->end;
 
-        for ($lineOffset = 0; $lineOffset < $lineCount; $lineOffset++) {
-            $line = $this->chunk->lines[$lineOffset];
-
+        foreach ($this->diffChunk->lines as $line) {
             switch ($line->type) {
                 case Diff\Line::ADDED:
-                    yield new Change(null, $lineNumber, Change::ADDED, null, null);
-                    $lineNumber++;
-                    break;
-                case Diff\Line::UNCHANGED:
-                    $lineNumber++;
+                    yield new Change(
+                        null,
+                        $this->afterLineIndex,
+                        Change::ADDED,
+                        null,
+                        null
+                    );
+                    $this->afterLineIndex++;
                     break;
                 case Diff\Line::REMOVED:
-                    yield new Change(null, $lineNumber, Change::REMOVED, null, null);
+                    yield new Change(
+                        null,
+                        $this->beforeLineIndex,
+                        Change::REMOVED,
+                        null,
+                        null
+                    );
+                    $this->beforeLineIndex++;
+                    break;
+                case Diff\Line::UNCHANGED:
+                    $this->beforeLineIndex++;
+                    $this->afterLineIndex++;
                     break;
             }
         }
+
     }
 }
