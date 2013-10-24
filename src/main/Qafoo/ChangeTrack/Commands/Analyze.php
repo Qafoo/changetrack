@@ -31,17 +31,11 @@ class Analyze extends BaseCommand
                 InputArgument::REQUIRED,
                 'Repository URL'
             )->addOption(
-                'checkout-path',
-                'co',
+                'working-path',
+                'w',
                 InputArgument::OPTIONAL,
-                'Path to use for checkouts (must be empty dir)',
-                'src/var/tmp/checkout'
-            )->addOption(
-                'cache-path',
-                'ca',
-                InputArgument::OPTIONAL,
-                'Path to use for meta data cache',
-                'src/var/tmp/cache'
+                'Path to use for checkouts, temp files, etc. (must be empty dir)',
+                'src/var/tmp'
             )->addOption(
                 'start-revision',
                 's',
@@ -77,12 +71,8 @@ class Analyze extends BaseCommand
         $this->validateOptions($input);
 
         $this->getContainer()->setParameter(
-            'Qafoo.ChangeTrack.Analyzer.CheckoutPath',
-            $input->getOption('checkout-path')
-        );
-        $this->getContainer()->setParameter(
-            'Qafoo.ChangeTrack.Analyzer.CachePath',
-            $input->getOption('cache-path')
+            'Qafoo.ChangeTrack.Analyzer.WorkingPath',
+            $input->getOption('working-path')
         );
 
         // TODO: Cleanup

@@ -9,10 +9,8 @@ class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        `rm -rf src/var/tmp/checkout`;
-        `rm -rf src/var/tmp/cache`;
-        `mkdir src/var/tmp/checkout`;
-        `mkdir src/var/tmp/cache`;
+        `rm -rf src/var/tmp`;
+        `mkdir src/var/tmp`;
     }
 
     public function tearDown()

@@ -20,12 +20,11 @@ class AnalyzerFactory
     }
 
     /**
-     * @param string $checkoutPath
-     * @param string $cachePath
+     * @param string $workingPath
      * @return \Qafoo\ChangeTrack\Analyzer
      */
-    public function createAnalyzer($checkoutPath, $cachePath)
+    public function createAnalyzer($workingPath)
     {
-        return new Analyzer($this->checkoutFactory, $checkoutPath, $cachePath);
+        return new Analyzer($this->checkoutFactory, $workingPath);
     }
 }

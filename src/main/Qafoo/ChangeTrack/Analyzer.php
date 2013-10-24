@@ -27,29 +27,21 @@ class Analyzer
     /**
      * @var string
      */
-    private $checkoutPath;
-
-    /**
-     * @var string
-     */
-    private $cachePath;
+    private $workingPath;
 
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory $changeFeedFactory
-     * @param string $checkoutPath
-     * @param string $cachePath
+     * @param string $workingPath
      */
     public function __construct(
         CheckoutFactory $checkoutFactory,
         ChangeFeedFactory $changeFeedFactory,
-        $checkoutPath,
-        $cachePath
+        $workingPath
     ) {
         $this->checkoutFactory = $checkoutFactory;
         $this->changeFeedFactory = $changeFeedFactory;
-        $this->checkoutPath = $checkoutPath;
-        $this->cachePath = $cachePath;
+        $this->workingPath = $workingPath;
     }
 
     public function analyze($repositoryUrl, $startRevision = null, $endRevision = null)
@@ -84,8 +76,8 @@ class Analyzer
      */
     private function createCheckout($repositoryUrl, $identifier)
     {
-        $checkoutPath = $this->checkoutPath . '/' . $identifier;
-        $cachePath = $this->checkoutPath . '/' . $identifier . '.cache';
+        $checkoutPath = $this->workingPath . '/' . $identifier . '_checkout';
+        $cachePath = $this->workingPath . '/' . $identifier . '_cache';
 
         mkdir($checkoutPath);
         mkdir($cachePath);

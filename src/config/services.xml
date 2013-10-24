@@ -8,8 +8,7 @@
         <parameter key="Qafoo.ChangeTrack.ApplicationName">Qafoo ChangeTrack</parameter>
         <parameter key="Qafoo.ChangeTrack.JmsSerializer.MetaDataDir">%Qafoo.ChangeTrack.BaseDir%/src/config/jmsserializer</parameter>
         <!-- Set through commands from parameters/config file: -->
-        <parameter key="Qafoo.ChangeTrack.Analyzer.CheckoutPath">Please specify this through configuration!</parameter>
-        <parameter key="Qafoo.ChangeTrack.Analyzer.CachePath">Please specify this through configuration!</parameter>
+        <parameter key="Qafoo.ChangeTrack.Analyzer.WorkingPath">Please specify this through configuration!</parameter>
     </parameters>
     <services>
         <service id="Qafoo.ChangeTrack.ResultOutputFactory" class="Qafoo\ChangeTrack\ResultOutputFactory" />
@@ -19,8 +18,7 @@
                 <service class="Qafoo\ChangeTrack\Analyzer\CheckoutFactory" />
             </argument>
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" />
-            <argument>%Qafoo.ChangeTrack.Analyzer.CheckoutPath%</argument>
-            <argument>%Qafoo.ChangeTrack.Analyzer.CachePath%</argument>
+            <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory">
