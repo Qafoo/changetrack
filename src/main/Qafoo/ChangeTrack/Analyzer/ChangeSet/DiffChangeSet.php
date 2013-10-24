@@ -32,7 +32,9 @@ class DiffChangeSet extends ChangeSet
         $this->afterCheckout->update($this->revision);
 
         $diffIterator = new Diff\DiffIterator(
-            $this->afterCheckout->getRevisionDiff($this->revision)
+            $this->afterCheckout->getRevisionDiff($this->revision),
+            $this->beforeCheckout->getLocalPath(),
+            $this->afterCheckout->getLocalPath()
         );
 
         if ($this->afterCheckout->hasPredecessor($this->revision)) {
@@ -42,26 +44,12 @@ class DiffChangeSet extends ChangeSet
             // TODO: Ensure that no removals occur if no predecessor exists!
         }
 
-        foreach ($diffIterator as $diffCollection) {
-            $chunksIterator = new Diff\LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
+        foreach ($diffIterator as $change) {
 
-            foreach ($chunksIterator as $change) {
+            $change->revision = $this->revision;
+            $change->message = $this->message;
 
-                // FIXME: Refactor!
-                switch($change->changeType) {
-                    case Change::REMOVED:
-                        $change->localFile = $this->beforeCheckout->getLocalPath() . substr($diffCollection->from, 1);
-                        break;
-                    case Change::ADDED:
-                        $change->localFile = $this->afterCheckout->getLocalPath() . substr($diffCollection->to, 1);
-                        break;
-                }
-
-                $change->revision = $this->revision;
-                $change->message = $this->message;
-
-                $changeRecorder->recordChange($change);
-            }
+            $changeRecorder->recordChange($change);
         }
     }
 }
