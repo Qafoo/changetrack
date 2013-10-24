@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<changes repository="https://github.com/QafooLabs/Daemon.git">
+  <changeSet revision="53b041d6cb921a9891a4d1fd750b372cdb8dfa13" message="Implemented: Abstract base class for a background daemon.&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="__construct">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="run">
+          <added>1</added>
+          <removed>0</removed>
+        </method>
+        <method name="start">
+          <added>8</added>
+          <removed>0</removed>
+        </method>
+        <method name="doStart">
+          <added>47</added>
+          <removed>0</removed>
+        </method>
+        <method name="setOutputLog">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setErrorLog">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="bb6f4f102ebaad2b8151bb44929eadce298e8ec9" message="Do not use constructor and let implementations use it&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="__construct">
+          <added>0</added>
+          <removed>6</removed>
+        </method>
+        <method name="start">
+          <added>3</added>
+          <removed>1</removed>
+        </method>
+        <method name="initialize">
+          <added>17</added>
+          <removed>0</removed>
+        </method>
+        <method name="doStart">
+          <added>2</added>
+          <removed>2</removed>
+        </method>
+        <method name="setScript">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDaemonId">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setArguments">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setQuietPeriod">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultScript">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultDaemonId">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultArguments">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultQuietPeriod">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="166d2b3c3fa93027ee75cfd7be67347439e791f9" message="Implemented: Daemon ramp up time&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="initialize">
+          <added>1</added>
+          <removed>0</removed>
+        </method>
+        <method name="doStart">
+          <added>2</added>
+          <removed>0</removed>
+        </method>
+        <method name="setRampUpTime">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultRampUpTime">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="waitRampUpTime">
+          <added>13</added>
+          <removed>0</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="c9691b4c9be7f92297739c9393c2ad46d25195fd" message="Default ramp up time should be zero&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="initialize">
+          <added>1</added>
+          <removed>1</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="57732459b4b44e6752437788136c58f9c0f90d6b" message="Quiet period should be part of the sub process.&#10;This change allows runtime configuration of the quiet period.&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="start">
+          <added>2</added>
+          <removed>0</removed>
+        </method>
+        <method name="doStart">
+          <added>0</added>
+          <removed>1</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="de6bbebd2b0a8f70af2182c47fe3cca106dcd072" message="Fixed: Superfluous debug output removed.&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="start">
+          <added>1</added>
+          <removed>1</removed>
+        </method>
+        <method name="waitRampUpTime">
+          <added>1</added>
+          <removed>6</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="55ab1318f4631ab138b68c8bb78d8204c2970b76" message="Added: SetDebug method&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="setDebug">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+  <changeSet revision="467e73436e65eb4470553ebb206a4791763790e4" message="Use fix --spawn cli option to flag a spawned process&#10;">
+    <package name="QafooLabs\Daemon">
+      <class name="Daemon">
+        <method name="start">
+          <added>1</added>
+          <removed>1</removed>
+        </method>
+        <method name="initialize">
+          <added>0</added>
+          <removed>1</removed>
+        </method>
+        <method name="doStart">
+          <added>1</added>
+          <removed>7</removed>
+        </method>
+        <method name="setDaemonId">
+          <added>0</added>
+          <removed>1</removed>
+        </method>
+        <method name="setDefaultDaemonId">
+          <added>0</added>
+          <removed>6</removed>
+        </method>
+      </class>
+    </package>
+  </changeSet>
+</changes>
