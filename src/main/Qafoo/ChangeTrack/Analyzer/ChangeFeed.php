@@ -12,7 +12,12 @@ class ChangeFeed implements \Iterator
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
      */
-    private $checkout;
+    private $beforeCheckout;
+
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
+     */
+    private $afterCheckout;
 
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver
