@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d6c01515c16146a00906f828824313a0",
+    "hash": "e95ba33f2a666156fb1525f3f6a18df6",
     "packages": [
         {
             "name": "arbit/system-process",
@@ -31,11 +31,17 @@
         },
         {
             "name": "arbit/vcs-wrapper",
-            "version": "dev-support-git-diff-special-version",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tobyS/VCSWrapper.git",
-                "reference": "4d1b5ee9b662b6ad02b3447f11a87df026835d90"
+                "url": "https://github.com/Arbitracker/VCSWrapper.git",
+                "reference": "64907c0c438600ce67d79a5d17f5155563f2bbf2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Arbitracker/VCSWrapper/zipball/64907c0c438600ce67d79a5d17f5155563f2bbf2",
+                "reference": "64907c0c438600ce67d79a5d17f5155563f2bbf2",
+                "shasum": ""
             },
             "require": {
                 "arbit/system-process": "*",
@@ -47,11 +53,12 @@
                     "Arbit\\VCSWrapper": "src/main/php/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0+"
             ],
             "description": "VCS wrapper is a PHP abstraction layer for version control systems.",
-            "time": "2013-09-27 04:16:28"
+            "time": "2013-10-24 10:30:24"
         },
         {
             "name": "arbit/xml",
@@ -984,16 +991,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.27",
+            "version": "3.7.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376"
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b024e753e3421837afbcca962c8724c58b39376",
-                "reference": "4b024e753e3421837afbcca962c8724c58b39376",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
+                "reference": "3b97c8492bcafbabe6b6fbd2ab35f2f04d932a8d",
                 "shasum": ""
             },
             "require": {
@@ -1054,7 +1061,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2013-09-16 03:09:52"
+            "time": "2013-10-17 07:27:40"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
