@@ -69,16 +69,11 @@ class FeatureContext extends BehatContext
         $bootstrap = new Bootstrap();
         $this->container = $bootstrap->createContainer();
 
-        $this->checkoutDir = __DIR__ . '/../../../src/var/tmp/checkout';
-        $this->cacheDir = __DIR__ . '/../../../src/var/tmp/cache';
+        $this->workingDir = __DIR__ . '/../../../src/var/tmp';
 
         $this->container->setParameter(
-            'Qafoo.ChangeTrack.Analyzer.CheckoutPath',
-            $this->checkoutDir
-        );
-        $this->container->setParameter(
-            'Qafoo.ChangeTrack.Analyzer.CachePath',
-            $this->cacheDir
+            'Qafoo.ChangeTrack.Analyzer.WorkingPath',
+            $this->workingDir
         );
 
         $this->container->compile();
@@ -109,8 +104,7 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChangesFromTo($startRevision, $endRevision)
     {
-        $this->cleanupDirectory($this->checkoutDir);
-        $this->cleanupDirectory($this->cacheDir);
+        $this->cleanupDirectory($this->workingDir);
 
         $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
 
