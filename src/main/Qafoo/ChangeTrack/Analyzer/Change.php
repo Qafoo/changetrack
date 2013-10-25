@@ -2,6 +2,8 @@
 
 namespace Qafoo\ChangeTrack\Analyzer;
 
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+
 class Change
 {
     /**
@@ -56,13 +58,11 @@ class Change
     }
 
     /**
-     * @param string $beforePath
-     * @param string $afterPath
-     *
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
      */
-    public function getAffectedFile($beforePath, $afterPath)
+    public function determineAffectedArtifact(GitCheckout $checkout)
     {
-        return $this->localChange->getAffectedFile($beforePath, $afterPath);
+        return $this->localChange->determineAffectedArtifact($checkout, $this->revision);
     }
 
     /**

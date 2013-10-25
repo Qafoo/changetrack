@@ -2,6 +2,8 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Change;
 
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+
 class LineAddedChange extends LineChange
 {
     /**
@@ -11,8 +13,12 @@ class LineAddedChange extends LineChange
      * @param string $afterPath
      * @param \Qafoo\ChangeTrack\Analyzer\Change\FileChange $fileChange
      */
-    public function determineAffectedFile($beforePath, $afterPath, FileChange $fileChange)
+    public function determineAffectedArtifact(GitCheckout $checkout, $revision, FileChange $fileChange)
     {
-        return $afterPath . '/' . $fileChange->getToFile();
+        $checkout->update($revision);
+
+        $affectedFilePath = $checkout->getLocalPath() . '/' . $fileChange->getToFile();
+
+        return $this->reflectionLookup->getAffectedMethod($affectedFilePath, $this->affectedLine);
     }
 }

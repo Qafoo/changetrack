@@ -4,12 +4,20 @@ namespace Qafoo\ChangeTrack\Analyzer\Change;
 
 use Arbit\VCSWrapper\Diff;
 
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\ReflectionLookupFactory;
+
 abstract class LineChange
 {
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\RelfectionLookup
+     */
+    protected $reflectionLookup;
+
+    /**
      * @var int
      */
-    private $affectedLine;
+    protected $affectedLine;
 
     /**
      * @param int $affectedLine
@@ -17,16 +25,19 @@ abstract class LineChange
     public function __construct($affectedLine)
     {
         $this->affectedLine = $affectedLine;
+
+        $lookupFactory = new ReflectionLookupFactory();
+        $this->reflectionLookup = $lookupFactory->createReflectionLookup();
     }
 
     /**
-     * Returns the absolute path of the affected file.
+     * Returns a ReflectionMethod, if a method is affected by the change
      *
-     * @param string $beforePath
-     * @param string $afterPath
-     * @param \Qafoo\ChangeTrack\Analyzer\Change\FileChange $fileChange
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param string $revision
+     * @param \Qafoo\ChangeTrack\Analyzer\Change\FileChange
      */
-    abstract public function determineAffectedFile($beforePath, $afterPath, FileChange $fileChange);
+    abstract public function determineAffectedArtifact(GitCheckout $checkout, $revision, FileChange $fileChange);
 
     /**
      * @return int

@@ -2,9 +2,6 @@
 
 namespace Qafoo\ChangeTrack;
 
-use pdepend\reflection\ReflectionSession;
-use Qafoo\ChangeTrack\Analyzer\Reflection\NullSourceResolver;
-
 use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory;
@@ -49,10 +46,6 @@ class Analyzer
         $beforeCheckout = $this->createCheckout($repositoryUrl, 'before');
         $afterCheckout = $this->createCheckout($repositoryUrl, 'after');
 
-        $sourceResolver = new NullSourceResolver();
-        $session = ReflectionSession::createDefaultSession($sourceResolver);
-        $query = $session->createFileQuery();
-
         $changeFeed = $this->changeFeedFactory->createChangeFeed(
             $beforeCheckout,
             $afterCheckout,
@@ -60,7 +53,7 @@ class Analyzer
             $endRevision
         );
         $resultBuilder = new ResultBuilder($repositoryUrl);
-        $changeRecorder = new ChangeRecorder($query, $resultBuilder);
+        $changeRecorder = new ChangeRecorder($resultBuilder);
 
         foreach ($changeFeed as $changeSet) {
             $changeSet->recordChanges($changeRecorder);

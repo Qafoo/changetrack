@@ -10,13 +10,10 @@ use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeRecorder
 {
-    private $reflectionQuery;
-
     private $resultBuilder;
 
-    public function __construct($reflectionQuery, ResultBuilder $resultBuilder)
+    public function __construct(ResultBuilder $resultBuilder)
     {
-        $this->reflectionQuery = $reflectionQuery;
         $this->resultBuilder = $resultBuilder;
     }
 
@@ -32,18 +29,7 @@ class ChangeRecorder
         }
         */
 
-        $afterCheckout->update($change->getRevision());
-
-        if ($afterCheckout->hasPredecessor($change->getRevision())) {
-            $beforeCheckout->update($afterCheckout->getPredecessor($change->getRevision()));
-        }
-
-        $affectedFile = $change->getAffectedFile(
-            $beforeCheckout->getLocalPath(),
-            $afterCheckout->getLocalPath()
-        );
-
-        $affectedMethod = $this->determineAffectedMethod($affectedFile, $change->getAffectedLine());
+        $affectedMethod = $change->determineAffectedArtifact($beforeCheckout);
 
         if ($affectedMethod !== null) {
             $affectedClass = $affectedMethod->getDeclaringClass();
@@ -63,25 +49,5 @@ class ChangeRecorder
                     break;
             }
         }
-    }
-
-    /**
-     * Determines which method is affected by a change
-     *
-     * @param string $affectedFile
-     * @param int $affectedLine
-     * @return \ReflectionMethod
-     */
-    private function determineAffectedMethod($affectedFile, $affectedLine)
-    {
-        $classes = $this->reflectionQuery->find($affectedFile);
-        foreach ($classes as $class) {
-            foreach ($class->getMethods() as $method) {
-                if ($affectedLine >= $method->getStartLine() && $affectedLine <= $method->getEndLine()) {
-                    return $method;
-                }
-            }
-        }
-        return null;
     }
 }

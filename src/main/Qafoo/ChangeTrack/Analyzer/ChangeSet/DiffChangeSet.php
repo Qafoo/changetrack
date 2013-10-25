@@ -33,13 +33,6 @@ class DiffChangeSet extends ChangeSet
             $this->afterCheckout->getRevisionDiff($this->revision)
         );
 
-        if ($this->afterCheckout->hasPredecessor($this->revision)) {
-            $this->beforeCheckout->update(
-                $this->afterCheckout->getPredecessor($this->revision)
-            );
-            // TODO: Ensure that no removals occur if no predecessor exists!
-        }
-
         foreach ($diffIterator as $localChange) {
 
             $change = new Change($localChange, $this->revision, $this->message);
