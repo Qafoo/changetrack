@@ -20,7 +20,7 @@ class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
 
     public function testAnalyzerRegressionDaemonRepository()
     {
-        `src/bin/track analyze -o test/temp_result.xml  https://github.com/QafooLabs/Daemon.git`;
+        `src/bin/track analyze -o test/temp_result.xml -v https://github.com/QafooLabs/Daemon.git`;
 
         $this->assertXmlFileEqualsXmlFile(
             __DIR__ . '/../../_fixtures/regression_analysis_daemon.xml',
