@@ -2,7 +2,8 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
-use Qafoo\ChangeTrack\Analyzer\Change;
+use Qafoo\ChangeTrack\Analyzer\Change\FileChange;
+use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
 
 class DiffIterator implements \IteratorAggregate
 {
@@ -12,44 +13,29 @@ class DiffIterator implements \IteratorAggregate
     private $diffs;
 
     /**
-     * @var string
-     */
-    private $beforePath;
-
-    /**
-     * @var string
-     */
-    private $afterPath;
-
-    /**
      * @param \Arbit\VCSWrapper\Diff\Collection[] $diffs
      */
-    public function __construct(array $diffs, $beforePath, $afterPath)
+    public function __construct(array $diffs)
     {
         $this->diffs = $diffs;
-        $this->beforePath = $beforePath;
-        $this->afterPath = $afterPath;
     }
 
     /**
-     * @var \Iterator(Qafoo\ChangeTrack\Analyzer\Change)
+     * @var \Iterator(Qafoo\ChangeTrack\Analyzer\Change\LocalChange)
      */
     public function getIterator()
     {
         foreach ($this->diffs as $diffCollection) {
             $chunksIterator = new LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
 
-            foreach ($chunksIterator as $change) {
-                // FIXME: Refactor!
-                switch($change->changeType) {
-                    case Change::REMOVED:
-                        $change->localFile = $this->beforePath . substr($diffCollection->from, 1);
-                        break;
-                    case Change::ADDED:
-                        $change->localFile = $this->afterPath . substr($diffCollection->to, 1);
-                        break;
-                }
-                yield $change;
+            $fileChange = new FileChange(
+                substr($diffCollection->from, 1),
+                substr($diffCollection->to, 1)
+            );
+
+            foreach ($chunksIterator as $lineChange) {
+                $localChange = new LocalChange($fileChange, $lineChange);
+                yield $localChange;
             }
         }
     }

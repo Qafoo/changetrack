@@ -3,7 +3,8 @@
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
-use Qafoo\ChangeTrack\Analyzer\Change;
+use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
+use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
 
 use Arbit\VCSWrapper\Diff;
 
@@ -32,6 +33,9 @@ class ChunkLineFeedGenerator extends LineChangeFeed
         $this->diffChunk = $diffChunk;
     }
 
+    /**
+     * @return \Iterator(\Qafoo\ChangeTrack\Analyzer\Change\LineChange)
+     */
     public function getIterator()
     {
         $this->beforeLineIndex = $this->diffChunk->start;
@@ -40,23 +44,11 @@ class ChunkLineFeedGenerator extends LineChangeFeed
         foreach ($this->diffChunk->lines as $line) {
             switch ($line->type) {
                 case Diff\Line::ADDED:
-                    yield new Change(
-                        null,
-                        $this->afterLineIndex,
-                        Change::ADDED,
-                        null,
-                        null
-                    );
+                    yield new LineAddedChange($this->afterLineIndex);
                     $this->afterLineIndex++;
                     break;
                 case Diff\Line::REMOVED:
-                    yield new Change(
-                        null,
-                        $this->beforeLineIndex,
-                        Change::REMOVED,
-                        null,
-                        null
-                    );
+                    yield new LineRemovedChange($this->beforeLineIndex);
                     $this->beforeLineIndex++;
                     break;
                 case Diff\Line::UNCHANGED:

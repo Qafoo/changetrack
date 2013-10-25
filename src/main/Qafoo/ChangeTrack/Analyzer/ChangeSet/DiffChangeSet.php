@@ -29,12 +29,8 @@ class DiffChangeSet extends ChangeSet
 
     public function recordChanges(ChangeRecorder $changeRecorder)
     {
-        $this->afterCheckout->update($this->revision);
-
         $diffIterator = new Diff\DiffIterator(
-            $this->afterCheckout->getRevisionDiff($this->revision),
-            $this->beforeCheckout->getLocalPath(),
-            $this->afterCheckout->getLocalPath()
+            $this->afterCheckout->getRevisionDiff($this->revision)
         );
 
         if ($this->afterCheckout->hasPredecessor($this->revision)) {
@@ -44,12 +40,10 @@ class DiffChangeSet extends ChangeSet
             // TODO: Ensure that no removals occur if no predecessor exists!
         }
 
-        foreach ($diffIterator as $change) {
+        foreach ($diffIterator as $localChange) {
 
-            $change->revision = $this->revision;
-            $change->message = $this->message;
-
-            $changeRecorder->recordChange($change);
+            $change = new Change($localChange, $this->revision, $this->message);
+            $changeRecorder->recordChange($change, $this->beforeCheckout, $this->afterCheckout);
         }
     }
 }

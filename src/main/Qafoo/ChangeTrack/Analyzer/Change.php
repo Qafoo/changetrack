@@ -4,26 +4,72 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 class Change
 {
-    const ADDED = 1;
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Change\LocalChange
+     */
+    private $localChange;
 
-    const REMOVED = -1;
+    /**
+     * @var string
+     */
+    private $revision;
 
-    public $localFile;
+    /**
+     * @var string
+     */
+    private $message;
 
-    public $affectedLine;
-
-    public $changeType;
-
-    public $revision;
-
-    public $message;
-
-    public function __construct($localFile, $affectedLine, $changeType, $revision, $message)
+    /**
+     * @param \Qafoo\ChangeTrack\Analyzer\Change\LocalChange $localChange
+     * @param string $revision
+     * @param string $message
+     */
+    public function __construct(Change\LocalChange $localChange, $revision, $message)
     {
-        $this->localFile = $localFile;
-        $this->affectedLine = $affectedLine;
-        $this->changeType = $changeType;
+        $this->localChange = $localChange;
         $this->revision = $revision;
         $this->message = $message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRevision()
+    {
+        return $this->revision;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAffectedLine()
+    {
+        return $this->localChange->getAffectedLine();
+    }
+
+    /**
+     * @param string $beforePath
+     * @param string $afterPath
+     *
+     */
+    public function getAffectedFile($beforePath, $afterPath)
+    {
+        return $this->localChange->getAffectedFile($beforePath, $afterPath);
+    }
+
+    /**
+     * @return \Qafoo\ChangeTrack\Analyzer\Change\LineChange
+     */
+    public function getLineChange()
+    {
+        return $this->localChange->getLineChange();
     }
 }

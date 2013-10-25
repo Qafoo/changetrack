@@ -3,6 +3,10 @@
 namespace Qafoo\ChangeTrack\Analyzer;
 
 use Qafoo\ChangeTrack\Analyzer\Change;
+use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
+use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
+
+use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeRecorder
 {
@@ -16,7 +20,7 @@ class ChangeRecorder
         $this->resultBuilder = $resultBuilder;
     }
 
-    public function recordChange(Change $change)
+    public function recordChange(Change $change, GitCheckout $beforeCheckout, GitCheckout $afterCheckout)
     {
         /*
          * TODO: Integrate
@@ -28,22 +32,33 @@ class ChangeRecorder
         }
         */
 
-        $affectedMethod = $this->determineAffectedMethod($change);
+        $afterCheckout->update($change->getRevision());
+
+        if ($afterCheckout->hasPredecessor($change->getRevision())) {
+            $beforeCheckout->update($afterCheckout->getPredecessor($change->getRevision()));
+        }
+
+        $affectedFile = $change->getAffectedFile(
+            $beforeCheckout->getLocalPath(),
+            $afterCheckout->getLocalPath()
+        );
+
+        $affectedMethod = $this->determineAffectedMethod($affectedFile, $change->getAffectedLine());
 
         if ($affectedMethod !== null) {
             $affectedClass = $affectedMethod->getDeclaringClass();
 
-            $methodChangesBuilder = $this->resultBuilder->revisionChanges($change->revision)
-                ->commitMessage($change->message)
+            $methodChangesBuilder = $this->resultBuilder->revisionChanges($change->getRevision())
+                ->commitMessage($change->getMessage())
                 ->packageChanges($affectedClass->getNamespaceName())
                 ->classChanges($affectedClass->getShortName())
                 ->methodChanges($affectedMethod->getName());
 
-            switch ($change->changeType) {
-                case Change::REMOVED:
+            switch (true) {
+                case ($change->getLineChange() instanceof LineRemovedChange):
                     $methodChangesBuilder->lineRemoved();
                     break;
-                case Change::ADDED:
+                case ($change->getLineChange() instanceof LineAddedChange):
                     $methodChangesBuilder->lineAdded();
                     break;
             }
@@ -53,15 +68,16 @@ class ChangeRecorder
     /**
      * Determines which method is affected by a change
      *
-     * @param Change $change
+     * @param string $affectedFile
+     * @param int $affectedLine
      * @return \ReflectionMethod
      */
-    private function determineAffectedMethod(Change $change)
+    private function determineAffectedMethod($affectedFile, $affectedLine)
     {
-        $classes = $this->reflectionQuery->find($change->localFile);
+        $classes = $this->reflectionQuery->find($affectedFile);
         foreach ($classes as $class) {
             foreach ($class->getMethods() as $method) {
-                if ($change->affectedLine >= $method->getStartLine() && $change->affectedLine <= $method->getEndLine()) {
+                if ($affectedLine >= $method->getStartLine() && $affectedLine <= $method->getEndLine()) {
                     return $method;
                 }
             }
