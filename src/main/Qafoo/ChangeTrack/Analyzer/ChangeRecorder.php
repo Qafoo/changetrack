@@ -17,7 +17,7 @@ class ChangeRecorder
         $this->resultBuilder = $resultBuilder;
     }
 
-    public function recordChange(Change $change, GitCheckout $beforeCheckout, GitCheckout $afterCheckout)
+    public function recordChange(Change $change, GitCheckout $checkout)
     {
         /*
          * TODO: Integrate
@@ -29,7 +29,7 @@ class ChangeRecorder
         }
         */
 
-        $affectedMethod = $change->determineAffectedArtifact($beforeCheckout);
+        $affectedMethod = $change->determineAffectedArtifact($checkout);
 
         if ($affectedMethod !== null) {
             $affectedClass = $affectedMethod->getDeclaringClass();

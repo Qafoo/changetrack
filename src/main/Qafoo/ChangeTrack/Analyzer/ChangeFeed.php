@@ -12,12 +12,7 @@ class ChangeFeed implements \Iterator
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
      */
-    private $beforeCheckout;
-
-    /**
-     * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
-     */
-    private $afterCheckout;
+    private $checkout;
 
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver
@@ -45,23 +40,20 @@ class ChangeFeed implements \Iterator
     private $endIndex;
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $beforeCheckout
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $afterCheckout
+     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
      * @param string $startRevision
      * @param string $endRevision
      */
     public function __construct(
-        GitCheckout $beforeCheckout,
-        GitCheckout $afterCheckout,
+        GitCheckout $checkout,
         ChangeFeedObserver $observer,
         $startRevision = null,
         $endRevision = null
     ) {
-        $this->beforeCheckout = $beforeCheckout;
-        $this->afterCheckout = $afterCheckout;
+        $this->checkout = $checkout;
         $this->observer = $observer;
-        $this->revisions = $this->afterCheckout->getVersions();
+        $this->revisions = $this->checkout->getVersions();
 
         $this->determineEdgeIndexes($startRevision, $endRevision);
         $this->rewind();
@@ -114,7 +106,7 @@ class ChangeFeed implements \Iterator
     public function current()
     {
         $currentRevision = $this->getCurrentRevision();
-        $this->afterCheckout->update($currentRevision);
+        $this->checkout->update($currentRevision);
 
         $this->observer->notifyProcessingRevision(
             $this->revisionIndex,
@@ -122,10 +114,9 @@ class ChangeFeed implements \Iterator
         );
 
         return new DiffChangeSet(
-            $this->beforeCheckout,
-            $this->afterCheckout,
+            $this->checkout,
             $currentRevision,
-            $this->afterCheckout->getLogEntry($currentRevision)->message
+            $this->checkout->getLogEntry($currentRevision)->message
         );
     }
 

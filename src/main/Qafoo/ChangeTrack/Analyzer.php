@@ -43,12 +43,10 @@ class Analyzer
 
     public function analyze($repositoryUrl, $startRevision = null, $endRevision = null)
     {
-        $beforeCheckout = $this->createCheckout($repositoryUrl, 'before');
-        $afterCheckout = $this->createCheckout($repositoryUrl, 'after');
+        $checkout = $this->createCheckout($repositoryUrl);
 
         $changeFeed = $this->changeFeedFactory->createChangeFeed(
-            $beforeCheckout,
-            $afterCheckout,
+            $checkout,
             $startRevision,
             $endRevision
         );
@@ -62,15 +60,12 @@ class Analyzer
     }
 
     /**
-     * Creates a checkout with the given $identifier
-     *
      * @param string $repositoryUrl
-     * @param string $identifier
      */
-    private function createCheckout($repositoryUrl, $identifier)
+    private function createCheckout($repositoryUrl)
     {
-        $checkoutPath = $this->workingPath . '/' . $identifier . '_checkout';
-        $cachePath = $this->workingPath . '/' . $identifier . '_cache';
+        $checkoutPath = $this->workingPath . '/checkout';
+        $cachePath = $this->workingPath . '/cache';
 
         mkdir($checkoutPath);
         mkdir($cachePath);

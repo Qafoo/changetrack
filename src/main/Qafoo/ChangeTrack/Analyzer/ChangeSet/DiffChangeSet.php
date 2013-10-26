@@ -11,18 +11,15 @@ use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class DiffChangeSet extends ChangeSet
 {
-    private $beforeCheckout;
+    private $checkout;
 
     private $revision;
 
-    private $previousRevision;
-
     private $message;
 
-    public function __construct(GitCheckout $beforeCheckout, GitCheckout $afterCheckout, $revision, $message)
+    public function __construct(GitCheckout $checkout, $revision, $message)
     {
-        $this->beforeCheckout = $beforeCheckout;
-        $this->afterCheckout = $afterCheckout;
+        $this->checkout = $checkout;
         $this->revision = $revision;
         $this->message = $message;
     }
@@ -30,13 +27,13 @@ class DiffChangeSet extends ChangeSet
     public function recordChanges(ChangeRecorder $changeRecorder)
     {
         $diffIterator = new Diff\DiffIterator(
-            $this->afterCheckout->getRevisionDiff($this->revision)
+            $this->checkout->getRevisionDiff($this->revision)
         );
 
         foreach ($diffIterator as $localChange) {
 
             $change = new Change($localChange, $this->revision, $this->message);
-            $changeRecorder->recordChange($change, $this->beforeCheckout, $this->afterCheckout);
+            $changeRecorder->recordChange($change, $this->checkout, $this->checkout);
         }
     }
 }
