@@ -1,0 +1,117 @@
+===========
+ChangeTrack
+===========
+
+The Qafoo ChangeTrack tool allows you to track changes in classes and methods
+throughout the history of a PHP project. One application for this analysis is
+to detect artifacts that are changed most frequently and especially most
+frequently due to bugs.
+
+The analysis is performed in multiples steps. Currently supported are:
+
+1. Analyze which classes/methods are affected by a revision.
+2. Analyze which classes/methods are most frequently affected by changes.
+
+The split into multiple steps allows you to
+
+a) Cache the result of a step to apply multiple other analysis steps on top.
+b) Easily apply analysis processes which are currently not supported by
+   ChangeTrack.
+
+The different analysis types are combined in the single ``track`` shell
+command. Executing it using::
+
+    $ src/bin/track
+
+Will provide you with a list of sub-commands to perform actual analysis.
+
+--------
+Commands
+--------
+
+In following, the currently implemented analysis commands are described in
+further detail.
+
+analyze
+=======
+
+The ``analyze`` command tracks changes of a PHP project throughout its version
+history (currently only Git is supported). The result is an XML document, that
+describes the version history in terms of class/method changes. For example,
+here is a part of the Twig__ project history::
+
+    <changes repository="https://github.com/fabpot/Twig">
+      <!-- ... -->
+      <changeSet revision="92bbc7ee405f5635f4647040d883dbd77d1ac7da" message="made a small optimization to for loop when no else clause exists&#10;git-svn-id: http://svn.twig-project.org/trunk@32 93ef8e89-cb99-4229-a87c-7fa0fa45744b&#10;">
+        <package name="">
+          <class name="Twig_Node_For">
+            <method name="compile">
+              <added>15</added>
+              <removed>3</removed>
+            </method>
+          </class>
+        </package>
+      </changeSet>
+      <!-- ... -->
+    </changes>
+
+Each revision (which contains a change to a class/method) is reflected in a
+``<changeSet />`` which gives you the version (hash) and the commit message.
+Contained is information about all method changes (structured by package and
+class name) and statistics on the number of added/removed lines.
+
+You can restrict the history to be analyzed by a start and end commit through
+command line parameters. This makes some sense, since analysis is quite
+expensive: Every revision needs to be checked out and static analysis is
+performed to detect which artifacts are affected by the change.
+
+The raw output of the ``analyze`` command is not really useful, yet. You should
+apply the ``calculate`` command to it.
+
+calculate
+=========
+
+The ``calculate`` command operates on the output of the ``analyze`` command. It
+calculates statistics on how often a certain method is affected by changes. In
+order to get meaningful statistics, you can provide your own mechanism to
+determine if a change fixed a bug or implemented a feature.
+
+Currently, regular expressions against the commit message are supported to
+provide a label for each commit. You can define this configuration through a
+dedicated ``config.yml`` file (``-c`` option), for example::
+
+    revision_label_provider:
+        chain:
+            - regex:
+                pattern: '(fixed)i'
+                label:   'fix'
+            - regex:
+                pattern: '(implemented)i'
+                label:   'implement'
+            - default:
+                label:   'misc'
+
+This is the default config, which lets the defined regex be applied
+sequentially and select the label of the first matching one. So, if the message
+of a commit matches ``(fixed)i``, the label ``fix`` is issued. If none of the
+regex matches, the default label ``misc`` is used.
+
+-------
+Roadmap
+-------
+
+The ChangeTrack tool is currently in a very early alpha state. It has only been
+run against a couple of repositories and it is expected that you find quite
+some bugs. However, here are some of the features which would make sense in the
+future:
+
+- Support different version control systems (e.g. SVN)
+- Further label providers (e.g. by Git issue classification, if referenced)
+- Additional analysis like frequent item sets
+
+..
+   Local Variables:
+   mode: rst
+   fill-column: 79
+   End: 
+   vim: et syn=rst tw=79
