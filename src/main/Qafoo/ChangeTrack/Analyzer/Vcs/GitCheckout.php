@@ -5,6 +5,20 @@ namespace Qafoo\ChangeTrack\Analyzer\Vcs;
 class GitCheckout extends \Arbit\VCSWrapper\GitCli\Checkout
 {
     /**
+     * @var string
+     */
+    private $currentRevision;
+
+    public function update($version = null)
+    {
+        if ($this->currentRevision === null || $this->currentRevision !== $version) {
+            $this->currentRevision = $version;
+            return parent::update($version);
+        }
+        return false;
+    }
+
+    /**
      * Returns the diff that was applied in the given $revision
      *
      * @param string $revision
