@@ -2,11 +2,9 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
-use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet;
+use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\LineFeed\ChunksLineFeedIterator;
-
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class DiffChangeSet extends ChangeSet

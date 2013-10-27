@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeFeedFactory
@@ -13,11 +14,17 @@ class ChangeFeedFactory
     private $observer;
 
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory
+     */
+    private $changeSetFactory;
+
+    /**
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
      */
-    public function __construct(ChangeFeedObserver $observer)
+    public function __construct(ChangeFeedObserver $observer, ChangeSetFactory $changeSetFactory)
     {
         $this->observer = $observer;
+        $this->changeSetFactory = $changeSetFactory;
     }
 
     /**
@@ -30,6 +37,7 @@ class ChangeFeedFactory
     {
         return new ChangeFeed(
             $checkout,
+            $this->changeSetFactory,
             $this->observer,
             $startRevision,
             $endRevision

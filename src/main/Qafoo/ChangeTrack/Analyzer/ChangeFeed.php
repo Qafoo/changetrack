@@ -4,11 +4,16 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
-use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffChangeSet;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class ChangeFeed implements \Iterator
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory
+     */
+    private $changeSetFactory;
+
     /**
      * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
      */
@@ -47,11 +52,13 @@ class ChangeFeed implements \Iterator
      */
     public function __construct(
         GitCheckout $checkout,
+        ChangeSetFactory $changeSetFactory,
         ChangeFeedObserver $observer,
         $startRevision = null,
         $endRevision = null
     ) {
         $this->checkout = $checkout;
+        $this->changeSetFactory = $changeSetFactory;
         $this->observer = $observer;
         $this->revisions = $this->checkout->getVersions();
 
@@ -113,7 +120,7 @@ class ChangeFeed implements \Iterator
             $currentRevision
         );
 
-        return new DiffChangeSet(
+        return $this->changeSetFactory->createDiffChangeSet(
             $this->checkout,
             $currentRevision,
             $this->checkout->getLogEntry($currentRevision)->message
