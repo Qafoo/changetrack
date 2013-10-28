@@ -96,6 +96,28 @@ sequentially and select the label of the first matching one. So, if the message
 of a commit matches ``(fixed)i``, the label ``fix`` is issued. If none of the
 regex matches, the default label ``misc`` is used.
 
+An example output gathered using the default regex configuration from
+above from the Twig repository is shown below::
+
+    <stats  repository="https://github.com/fabpot/Twig">
+      <package name="">
+        <!-- ... -->
+        <class name="Twig_Environment">
+          <!-- ... -->
+          <method name="loadTemplate">
+            <stats>
+              <count label="misc">17</count>
+              <count label="fix">1</count>
+            </stats>
+          </method>
+        </class>
+      </package>
+    </stats>
+
+As you can see, each method that occurrs in the history is listed together
+with the number of changes with a specific label. You can now easily e.g. check
+for the methods which are most frequently affected by bugs.
+
 -------
 Roadmap
 -------
@@ -106,8 +128,12 @@ some bugs. However, here are some of the features which would make sense in the
 future:
 
 - Support different version control systems (e.g. SVN)
-- Further label providers (e.g. by Git issue classification, if referenced)
-- Additional analysis like frequent item sets
+- Performance improvements
+- Further label providers (e.g. by Git/Jira issue labels)
+- Additional analysis, e.g. frequent item sets to determine coupling
+
+Please add your ideas for additional features to the Github issue tracker and
+possibly provide a pull request.
 
 ..
    Local Variables:
