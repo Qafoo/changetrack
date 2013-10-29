@@ -34,6 +34,11 @@ class LocalChange
         );
     }
 
+    public function getFileChange()
+    {
+        return $this->fileChange;
+    }
+
     public function getLineChange()
     {
         return $this->lineChange;

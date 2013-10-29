@@ -24,8 +24,10 @@ class DiffChangeSet extends ChangeSet
 
     public function recordChanges(ChangeRecorder $changeRecorder)
     {
-        $diffIterator = new Diff\DiffIterator(
-            $this->checkout->getRevisionDiff($this->revision)
+        $diffIterator = new Diff\SortingDiffIterator(
+            new Diff\DiffIterator(
+                $this->checkout->getRevisionDiff($this->revision)
+            )
         );
 
         foreach ($diffIterator as $localChange) {
