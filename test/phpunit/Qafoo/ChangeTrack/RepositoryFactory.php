@@ -2,6 +2,8 @@
 
 namespace Qafoo\ChangeTrack;
 
+use Symfony\Component\Filesystem\Filesystem;
+
 class RepositoryFactory
 {
     /**
@@ -70,21 +72,9 @@ class RepositoryFactory
 
     protected function removeRecursively($dir)
     {
-        $directory = dir($dir);
-        while (($path = $directory->read()) !== false) {
-            if (($path === '.') || ($path === '..')) {
-                continue;
-            }
-            $path = $dir . '/' . $path;
-
-            if (is_dir($path)) {
-                $this->removeRecursively($path);
-            } else {
-                unlink($path);
-            }
+        $fsTools = new Filesystem();
+        if (is_dir($dir)) {
+            $fsTools->remove($dir);
         }
-        $directory->close();
-
-        rmdir($dir);
     }
 }

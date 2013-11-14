@@ -9,11 +9,6 @@ class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    private $repositoryUrl = 'https://github.com/tobyS/Daemon.git';
-
-    /**
-     * @var string
-     */
     private $checkoutPath;
 
     /**
@@ -21,12 +16,23 @@ class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
      */
     private $cachePath;
 
+    /**
+     * @var \Qafoo\ChangeTrack\RepositoryFactory
+     */
+    private static $repositoryFactory;
+
+    public static function setUpBeforeClass()
+    {
+        self::$repositoryFactory = new RepositoryFactory();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        self::$repositoryFactory->cleanup();
+    }
+
     public function setup()
     {
-        if (isset($_ENV['repositoryUrl'])) {
-            $this->repositoryUrl = $_ENV['repositoryUrl'];
-        }
-
         $this->cachePath = __DIR__ . '/../../../../src/var/tmp/cache';
         $this->checkoutPath =  __DIR__ . '/../../../../src/var/tmp/checkout';
 
@@ -39,7 +45,7 @@ class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
      */
     protected function getRepositoryUrl()
     {
-        return $this->repositoryUrl;
+        return self::$repositoryFactory->getRepositoryUrl();
     }
 
     /**

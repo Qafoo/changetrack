@@ -5,24 +5,10 @@ namespace Qafoo\ChangeTrack;
 /**
  * @group regression
  */
-class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
+class AnalyzerRegressionTest extends CheckoutAwareTestBase
 {
-    /**
-     * @var \Qafoo\ChangeTrack\RepositoryFactory
-     */
-    private static $repositoryFactory;
 
     private $resultFile = 'test/temp_result.xml';
-
-    public static function setUpBeforeClass()
-    {
-        self::$repositoryFactory = new RepositoryFactory();
-    }
-
-    public static function tearDownAfterClass()
-    {
-        self::$repositoryFactory->cleanup();
-    }
 
     public function setUp()
     {
@@ -37,7 +23,7 @@ class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
 
     public function testAnalyzerRegressionDaemonRepository()
     {
-        $repositoryUrl = self::$repositoryFactory->getRepositoryUrl();
+        $repositoryUrl = $this->getRepositoryUrl();
         $resultFile = $this->resultFile;
 
         `src/bin/track analyze -o $resultFile -v $repositoryUrl`;
