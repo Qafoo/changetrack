@@ -2,19 +2,19 @@
 
 namespace Qafoo\ChangeTrack\Analyzer;
 
-use pdepend\reflection\queries\ReflectionFileQuery;
+use Qafoo\ChangeTrack\Analyzer\Reflection\FileQuery;
 
 class ReflectionLookup
 {
     /**
-     * @var \pdepend\reflection\queries\ReflectionFileQuery
+     * @var \Qafoo\ChangeTrack\Analyzer\Reflection\FileQuery
      */
     private $reflectionQuery;
 
     /**
-     * @param \pdepend\reflection\queries\ReflectionFileQuery $reflectionQuery
+     * @param \Qafoo\ChangeTrack\Analyzer\Reflection\FileQuery $reflectionQuery
      */
-    public function __construct(ReflectionFileQuery $reflectionQuery)
+    public function __construct(FileQuery $reflectionQuery)
     {
         $this->reflectionQuery = $reflectionQuery;
     }
@@ -22,11 +22,12 @@ class ReflectionLookup
     /**
      * @param string $file
      * @param int $line
+     * @param string $revision
      * @return \ReflectionMethod|null
      */
-    public function getAffectedMethod($file, $line)
+    public function getAffectedMethod($file, $line, $revision)
     {
-        $classes = $this->reflectionQuery->find($file);
+        $classes = $this->reflectionQuery->find($file, $revision);
         foreach ($classes as $class) {
             foreach ($class->getMethods() as $method) {
                 if ($line >= $method->getStartLine() && $line <= $method->getEndLine()) {
@@ -35,6 +36,5 @@ class ReflectionLookup
             }
         }
         return null;
-
     }
 }

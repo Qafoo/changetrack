@@ -5,6 +5,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
 
 use Qafoo\ChangeTrack\CheckoutAwareTestBase;
 
@@ -31,7 +32,20 @@ class ChangeFeedTest extends CheckoutAwareTestBase
         $this->checkout = new GitCheckout($this->getCheckoutPath());
         $this->checkout->initialize($this->getRepositoryUrl());
 
+        $this->changeSetFactory = new ChangeSetFactory();
+
         $this->observerDummy = new NullObserver();
+    }
+
+    private function createChangeFeed($startRevision = null, $endRevision = null)
+    {
+        return new ChangeFeed(
+            $this->checkout,
+            $this->changeSetFactory,
+            $this->observerDummy,
+            $startRevision,
+            $endRevision
+        );
     }
 
     /**
@@ -39,7 +53,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     public function can_iterate_full_log()
     {
-        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
+        $changeFeed = $this->createChangeFeed();
 
         $counter = 0;
         foreach ($changeFeed as $changeSet) {
@@ -54,7 +68,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     public function always_returns_changeset()
     {
-        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
+        $changeFeed = $this->createChangeFeed();
 
         foreach ($changeFeed as $changeSet) {
             $this->assertInstanceOf(
@@ -69,7 +83,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     public function first_change_set_is_no_more_initial()
     {
-        $changeFeed = new ChangeFeed($this->checkout, $this->observerDummy);
+        $changeFeed = $this->createChangeFeed();
 
         $this->assertInstanceOf(
             'Qafoo\\ChangeTrack\\Analyzer\\ChangeSet\\DiffChangeSet',
@@ -82,9 +96,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     public function starts_iteration_from_later_revision_if_provided()
     {
-        $changeFeed = new ChangeFeed(
-            $this->checkout,
-            $this->observerDummy,
+        $changeFeed = $this->createChangeFeed(
             'bb6f4f102ebaad2b8151bb44929eadce298e8ec9'
         );
 
@@ -99,9 +111,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     public function ends_iteration_at_earlier_revision_if_provided()
     {
-        $changeFeed = new ChangeFeed(
-            $this->checkout,
-            $this->observerDummy,
+        $changeFeed = $this->createChangeFeed(
             null,
             'bb6f4f102ebaad2b8151bb44929eadce298e8ec9'
         );

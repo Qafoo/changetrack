@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<changes repository="https://github.com/QafooLabs/Daemon.git">
+<changes repository="/home/dotxp/qafoo/projects/internal/Daemon">
   <changeSet revision="53b041d6cb921a9891a4d1fd750b372cdb8dfa13" message="Implemented: Abstract base class for a background daemon.&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
-        <method name="__construct">
-          <added>6</added>
-          <removed>0</removed>
-        </method>
-        <method name="run">
-          <added>1</added>
+        <method name="doStart">
+          <added>47</added>
           <removed>0</removed>
         </method>
         <method name="start">
           <added>8</added>
-          <removed>0</removed>
-        </method>
-        <method name="doStart">
-          <added>47</added>
           <removed>0</removed>
         </method>
         <method name="setOutputLog">
@@ -25,6 +17,14 @@
         </method>
         <method name="setErrorLog">
           <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="__construct">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="run">
+          <added>1</added>
           <removed>0</removed>
         </method>
       </class>
@@ -37,40 +37,28 @@
           <added>0</added>
           <removed>6</removed>
         </method>
-        <method name="start">
-          <added>3</added>
-          <removed>1</removed>
-        </method>
-        <method name="initialize">
-          <added>17</added>
-          <removed>0</removed>
-        </method>
         <method name="doStart">
           <added>2</added>
           <removed>2</removed>
         </method>
-        <method name="setScript">
-          <added>4</added>
-          <removed>0</removed>
+        <method name="start">
+          <added>3</added>
+          <removed>1</removed>
         </method>
-        <method name="setDaemonId">
-          <added>4</added>
+        <method name="setDefaultScript">
+          <added>6</added>
           <removed>0</removed>
         </method>
         <method name="setArguments">
           <added>4</added>
           <removed>0</removed>
         </method>
-        <method name="setQuietPeriod">
-          <added>4</added>
-          <removed>0</removed>
-        </method>
-        <method name="setDefaultScript">
-          <added>6</added>
-          <removed>0</removed>
-        </method>
         <method name="setDefaultDaemonId">
           <added>6</added>
+          <removed>0</removed>
+        </method>
+        <method name="setQuietPeriod">
+          <added>4</added>
           <removed>0</removed>
         </method>
         <method name="setDefaultArguments">
@@ -81,12 +69,32 @@
           <added>6</added>
           <removed>0</removed>
         </method>
+        <method name="setScript">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
+        <method name="initialize">
+          <added>17</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDaemonId">
+          <added>4</added>
+          <removed>0</removed>
+        </method>
       </class>
     </package>
   </changeSet>
   <changeSet revision="166d2b3c3fa93027ee75cfd7be67347439e791f9" message="Implemented: Daemon ramp up time&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
+        <method name="waitRampUpTime">
+          <added>13</added>
+          <removed>0</removed>
+        </method>
+        <method name="setDefaultRampUpTime">
+          <added>6</added>
+          <removed>0</removed>
+        </method>
         <method name="initialize">
           <added>1</added>
           <removed>0</removed>
@@ -97,14 +105,6 @@
         </method>
         <method name="setRampUpTime">
           <added>4</added>
-          <removed>0</removed>
-        </method>
-        <method name="setDefaultRampUpTime">
-          <added>6</added>
-          <removed>0</removed>
-        </method>
-        <method name="waitRampUpTime">
-          <added>13</added>
           <removed>0</removed>
         </method>
       </class>
@@ -123,13 +123,13 @@
   <changeSet revision="57732459b4b44e6752437788136c58f9c0f90d6b" message="Quiet period should be part of the sub process.&#10;This change allows runtime configuration of the quiet period.&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
-        <method name="start">
-          <added>2</added>
-          <removed>0</removed>
-        </method>
         <method name="doStart">
           <added>0</added>
           <removed>1</removed>
+        </method>
+        <method name="start">
+          <added>2</added>
+          <removed>0</removed>
         </method>
       </class>
     </package>
@@ -137,13 +137,13 @@
   <changeSet revision="de6bbebd2b0a8f70af2182c47fe3cca106dcd072" message="Fixed: Superfluous debug output removed.&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
-        <method name="start">
-          <added>1</added>
-          <removed>1</removed>
-        </method>
         <method name="waitRampUpTime">
           <added>1</added>
           <removed>6</removed>
+        </method>
+        <method name="start">
+          <added>1</added>
+          <removed>1</removed>
         </method>
       </class>
     </package>
@@ -161,13 +161,9 @@
   <changeSet revision="467e73436e65eb4470553ebb206a4791763790e4" message="Use fix --spawn cli option to flag a spawned process&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
-        <method name="start">
-          <added>1</added>
-          <removed>1</removed>
-        </method>
-        <method name="initialize">
+        <method name="setDefaultDaemonId">
           <added>0</added>
-          <removed>1</removed>
+          <removed>6</removed>
         </method>
         <method name="doStart">
           <added>1</added>
@@ -177,9 +173,13 @@
           <added>0</added>
           <removed>1</removed>
         </method>
-        <method name="setDefaultDaemonId">
+        <method name="start">
+          <added>1</added>
+          <removed>1</removed>
+        </method>
+        <method name="initialize">
           <added>0</added>
-          <removed>6</removed>
+          <removed>1</removed>
         </method>
       </class>
     </package>

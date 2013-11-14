@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer;
 
 use pdepend\reflection\ReflectionSession;
+use Qafoo\ChangeTrack\Analyzer\Reflection\FileQuery;
 use Qafoo\ChangeTrack\Analyzer\Reflection\NullSourceResolver;
 
 class ReflectionLookupFactory
@@ -11,7 +12,7 @@ class ReflectionLookupFactory
     {
         $sourceResolver = new NullSourceResolver();
         $session = ReflectionSession::createDefaultSession($sourceResolver);
-        $query = $session->createFileQuery();
+        $query = new FileQuery($session->createFileQuery());
 
         return new ReflectionLookup($query);
     }

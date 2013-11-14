@@ -19,6 +19,6 @@ class LineAddedChange extends LineChange
 
         $affectedFilePath = $checkout->getLocalPath() . '/' . $fileChange->getToFile();
 
-        return $this->reflectionLookup->getAffectedMethod($affectedFilePath, $this->affectedLine);
+        return $this->reflectionLookup->getAffectedMethod($affectedFilePath, $this->affectedLine, $revision);
     }
 }
