@@ -10,6 +10,7 @@ use Behat\Gherkin\Node\PyStringNode,
 use Qafoo\ChangeTrack\Bootstrap;
 use Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Calculator;
+use Qafoo\ChangeTrack\RepositoryFactory;
 use Qafoo\ChangeTrack\Analyzer\Change;
 
 require __DIR__ . '/../../../vendor/autoload.php';
@@ -77,18 +78,15 @@ class FeatureContext extends BehatContext
         );
 
         $this->container->compile();
-
-        if (isset($parameters['repositoryUrl'])) {
-            $this->repositoryUrlOverride = $parameters['repositoryUrl'];
-        }
     }
 
     /**
-     * @Given /^I have the repository "([^"]*)"$/
+     * @Given /^I have the repository$/
      */
-    public function iHaveTheRepository($repositoryUrl)
+    public function iHaveTheRepository()
     {
-        $this->repositoryUrl = $repositoryUrl;
+        $repositoryFactory = new RepositoryFactory();
+        $this->repositoryUrl = $repositoryFactory->getRepositoryUrl();
     }
 
     /**
@@ -132,9 +130,6 @@ class FeatureContext extends BehatContext
 
     private function getRepositoryUrl()
     {
-        if (isset($this->repositoryUrlOverride)) {
-            return $this->repositoryUrlOverride;
-        }
         return $this->repositoryUrl;
     }
 

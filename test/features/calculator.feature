@@ -3,7 +3,7 @@ Feature: The Calculator calculates which methods are most affected by bugs.
     type of change, most interestingly by bug fixing.
 
     Scenario: Assert calculation of bug statistics
-        Given I have the repository "https://github.com/QafooLabs/Daemon.git"
+        Given I have the repository
          When I analyze the changes
           And I calculate the stats
          Then I have the following stats
