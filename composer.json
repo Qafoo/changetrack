@@ -23,7 +23,8 @@
         "arbit/vcs-wrapper": "@dev",
         "jms/serializer": "@stable",
         "symfony/dependency-injection": "@stable",
-        "symfony/console": "@stable"
+        "symfony/console": "@stable",
+        "symfony/finder": "@stable"
     },
     "require-dev": {
         "behat/behat" : "2.4.*@stable",
