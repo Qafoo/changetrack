@@ -7,6 +7,23 @@ namespace Qafoo\ChangeTrack;
  */
 class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Qafoo\ChangeTrack\RepositoryFactory
+     */
+    private static $repositoryFactory;
+
+    private $resultFile = 'test/temp_result.xml';
+
+    public static function setUpBeforeClass()
+    {
+        self::$repositoryFactory = new RepositoryFactory();
+    }
+
+    public static function tearDownAfterClass()
+    {
+        self::$repositoryFactory->cleanup();
+    }
+
     public function setUp()
     {
         `rm -rf src/var/tmp/*`;
@@ -15,15 +32,34 @@ class AnalyzerRegressionTest extends \PHPUnit_Framework_TestCase
     public function tearDown()
     {
         unlink('test/temp_result.xml');
+        `rm -rf src/var/tmp/*`;
     }
 
     public function testAnalyzerRegressionDaemonRepository()
     {
-        `src/bin/track analyze -o test/temp_result.xml -v https://github.com/QafooLabs/Daemon.git`;
+        $repositoryUrl = self::$repositoryFactory->getRepositoryUrl();
+        $resultFile = $this->resultFile;
 
-        $this->assertXmlFileEqualsXmlFile(
-            __DIR__ . '/../../_fixtures/regression_analysis_daemon.xml',
-            'test/temp_result.xml'
+        `src/bin/track analyze -o $resultFile -v $repositoryUrl`;
+
+        $expectedXml = $this->loadExpectedXml($repositoryUrl);
+
+        $this->assertXmlStringEqualsXmlString(
+            $this->loadExpectedXml($repositoryUrl),
+            file_get_contents($resultFile)
         );
+    }
+
+    /**
+     * @param string $repositoryUrl
+     * @return string
+     */
+    private function loadExpectedXml($repositoryUrl)
+    {
+        $referenceXml = file_get_contents(
+            __DIR__ . '/../../_fixtures/regression_analysis_daemon.xml'
+        );
+
+        return str_replace('{repoUrl}', $repositoryUrl, $referenceXml);
     }
 }

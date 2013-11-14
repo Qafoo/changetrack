@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<changes repository="/home/dotxp/qafoo/projects/internal/Daemon">
+<changes repository="{repoUrl}">
   <changeSet revision="53b041d6cb921a9891a4d1fd750b372cdb8dfa13" message="Implemented: Abstract base class for a background daemon.&#10;">
     <package name="QafooLabs\Daemon">
       <class name="Daemon">
