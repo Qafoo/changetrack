@@ -12,13 +12,13 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
 
     public function setUp()
     {
-        `rm -rf src/var/tmp/*`;
+        // `rm -rf src/var/tmp/*`;
     }
 
     public function tearDown()
     {
         unlink('test/temp_result.xml');
-        `rm -rf src/var/tmp/*`;
+        // `rm -rf src/var/tmp/*`;
     }
 
     public function testAnalyzerRegressionDaemonRepository()

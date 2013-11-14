@@ -24,21 +24,21 @@ class Analyzer
     /**
      * @var string
      */
-    private $workingPath;
+    private $workingDir;
 
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory $changeFeedFactory
-     * @param string $workingPath
+     * @param \Qafoo\ChangeTrack\TemporaryDirectory $workingDir
      */
     public function __construct(
         CheckoutFactory $checkoutFactory,
         ChangeFeedFactory $changeFeedFactory,
-        $workingPath
+        TemporaryDirectory $workingDir
     ) {
         $this->checkoutFactory = $checkoutFactory;
         $this->changeFeedFactory = $changeFeedFactory;
-        $this->workingPath = $workingPath;
+        $this->workingDir = $workingDir;
     }
 
     public function analyze($repositoryUrl, $startRevision = null, $endRevision = null)
@@ -56,6 +56,9 @@ class Analyzer
         foreach ($changeFeed as $changeSet) {
             $changeSet->recordChanges($changeRecorder);
         }
+
+        $this->workingDir->cleanup();
+
         return $resultBuilder->buildResult();
     }
 
@@ -64,11 +67,8 @@ class Analyzer
      */
     private function createCheckout($repositoryUrl)
     {
-        $checkoutPath = $this->workingPath . '/checkout';
-        $cachePath = $this->workingPath . '/cache';
-
-        mkdir($checkoutPath);
-        mkdir($cachePath);
+        $checkoutPath = $this->workingDir->createDirectory('checkout');
+        $cachePath = $this->workingDir->createDirectory('cache');
 
         return $this->checkoutFactory->createCheckout(
             $repositoryUrl,

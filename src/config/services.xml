@@ -18,7 +18,11 @@
                 <service class="Qafoo\ChangeTrack\Analyzer\CheckoutFactory" />
             </argument>
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" />
-            <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
+            <argument type="service">
+                <service class="Qafoo\ChangeTrack\TemporaryDirectory">
+                    <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
+                </service>
+            </argument>
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory">
