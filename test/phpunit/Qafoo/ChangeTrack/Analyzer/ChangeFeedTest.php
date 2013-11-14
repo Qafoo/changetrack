@@ -60,7 +60,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
             $counter++;
         }
 
-        $this->assertEquals(10, $counter);
+        $this->assertEquals(11, $counter);
     }
 
     /**
