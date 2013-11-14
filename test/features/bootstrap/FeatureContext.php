@@ -70,11 +70,9 @@ class FeatureContext extends BehatContext
         $bootstrap = new Bootstrap();
         $this->container = $bootstrap->createContainer();
 
-        $this->workingDir = __DIR__ . '/../../../src/var/tmp';
-
         $this->container->setParameter(
             'Qafoo.ChangeTrack.Analyzer.WorkingPath',
-            $this->workingDir
+            __DIR__ . '/../../../src/var/tmp'
         );
 
         $this->container->compile();
@@ -102,8 +100,6 @@ class FeatureContext extends BehatContext
      */
     public function iAnalyzeTheChangesFromTo($startRevision, $endRevision)
     {
-        $this->cleanupDirectory($this->workingDir);
-
         $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
 
         $this->analyzedChanges = $analyzer->analyze(
@@ -255,29 +251,6 @@ class FeatureContext extends BehatContext
                     )
                 );
             }
-        }
-    }
-
-    protected function cleanupDirectory($directory)
-    {
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(
-                $directory,
-                \FilesystemIterator::KEY_AS_PATHNAME | \FilesystemIterator::CURRENT_AS_FILEINFO | \FilesystemIterator::SKIP_DOTS
-            ),
-            \RecursiveIteratorIterator::CHILD_FIRST
-        );
-
-        foreach ($iterator as $path => $fileSystemNode) {
-            if ($fileSystemNode->isDir()) {
-                rmdir($path);
-            } else {
-                unlink($path);
-            }
-        }
-
-        if (!is_dir($directory)) {
-            mkdir($directory);
         }
     }
 }
