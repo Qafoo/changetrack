@@ -2,8 +2,6 @@
 
 namespace Qafoo\ChangeTrack\Calculator;
 
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider;
-
 class StatsCollectorFactory
 {
     /**

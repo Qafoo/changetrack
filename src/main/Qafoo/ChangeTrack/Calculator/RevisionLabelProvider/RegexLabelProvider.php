@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider;
+namespace Qafoo\ChangeTrack\Calculator\RevisionLabelProvider;
 
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\SelectableLabelProvider;
+use Qafoo\ChangeTrack\Calculator\RevisionLabelProvider\SelectableLabelProvider;
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 
 class RegexLabelProvider implements SelectableLabelProvider

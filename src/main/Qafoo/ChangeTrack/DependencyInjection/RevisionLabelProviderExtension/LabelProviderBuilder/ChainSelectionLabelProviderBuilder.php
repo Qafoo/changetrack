@@ -43,7 +43,7 @@ class ChainSelectionLabelProviderBuilder extends LabelProviderBuilder
 
         return $this->serviceGenerator->registerAnonymousService(
             new Definition(
-                'Qafoo\\ChangeTrack\\Calculator\\StatsCollector\\RevisionLabelProvider\\ChainSelectionLabelProvider',
+                'Qafoo\\ChangeTrack\\Calculator\\RevisionLabelProvider\\ChainSelectionLabelProvider',
                 array('chainedLabelProviders' => $chainedProviders)
             )
         );

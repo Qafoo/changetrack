@@ -2,7 +2,6 @@
 
 namespace Qafoo\ChangeTrack\Calculator;
 
-use Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider;
 use Qafoo\ChangeTrack\Calculator\StatsCollector\PackageStatsCollector;
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 

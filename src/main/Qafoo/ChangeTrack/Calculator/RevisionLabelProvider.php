@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Calculator\StatsCollector;
+namespace Qafoo\ChangeTrack\Calculator;
 
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 

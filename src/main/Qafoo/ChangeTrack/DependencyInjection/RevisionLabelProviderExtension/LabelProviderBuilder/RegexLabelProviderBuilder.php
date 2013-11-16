@@ -31,7 +31,7 @@ class RegexLabelProviderBuilder extends LabelProviderBuilder
     {
         return $this->serviceGenerator->registerAnonymousService(
             new Definition(
-                'Qafoo\\ChangeTrack\\Calculator\\StatsCollector\\RevisionLabelProvider\\RegexLabelProvider',
+                'Qafoo\\ChangeTrack\\Calculator\\RevisionLabelProvider\\RegexLabelProvider',
                 array($providerConfig['pattern'], $providerConfig['label'])
             )
         );

@@ -31,7 +31,7 @@ class DefaultLabelProviderBuilder extends LabelProviderBuilder
     {
         return $this->serviceGenerator->registerAnonymousService(
             new Definition(
-                'Qafoo\\ChangeTrack\\Calculator\\StatsCollector\\RevisionLabelProvider\\DefaultLabelProvider',
+                'Qafoo\\ChangeTrack\\Calculator\\RevisionLabelProvider\\DefaultLabelProvider',
                 array($providerConfig['label'])
             )
         );
