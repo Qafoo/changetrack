@@ -41,7 +41,9 @@ class GithubIssueLabelProvider implements RevisionLabelProvider
      */
     public function provideLabel(RevisionChanges $revisionChanges)
     {
-        if (preg_match('(#([0-9]+))', $revisionChanges->commitMessage, $matches) < 1) {
+        $issueId = $this->extractRevisionReference($revisionChanges->commitMessage);
+
+        if ($issueId === null) {
             throw new \RuntimeException(
                 sprintf(
                     'No issue reference found in commit message "%s" of revision "%s"',
@@ -50,8 +52,48 @@ class GithubIssueLabelProvider implements RevisionLabelProvider
                 )
             );
         }
-        $issueId = $matches[1];
 
+        $labels = $this->fetchGithubIssueLabels($issueId);
+
+        $mappedLabel = $this->mapALabel($labels);
+
+        if ($mappedLabel === null) {
+            throw new \RuntimeException(
+                'No mapping label found for issue "%s". Issue labels were: "%s"',
+                $issueId,
+                implode(
+                    '", "',
+                    array_map(
+                        function ($labelData) {
+                            return $labelData->name;
+                        },
+                        $labels
+                    )
+                )
+            );
+        }
+
+        return $mappedLabel;
+    }
+
+    /**
+     * @param string $commitMessage
+     * @return string|null
+     */
+    private function extractRevisionReference($commitMessage)
+    {
+        if (preg_match('(#([0-9]+))', $commitMessage, $matches) < 1) {
+            return null;
+        }
+        return $matches[1];
+    }
+
+    /**
+     * @param string $issueId
+     * @return string
+     */
+    private function fetchGithubIssueLabels($issueId)
+    {
         $url = str_replace(':id', $issueId, $this->issueUrlTemplate);
 
         $response = $this->httpClient->get($url);
@@ -73,25 +115,21 @@ class GithubIssueLabelProvider implements RevisionLabelProvider
             );
         }
 
-        foreach ($labels as $label) {
+        return $labels;
+    }
+
+    /**
+     * @param array $githubLabels
+     * @return string|null
+     */
+    private function mapALabel(array $githubLabels)
+    {
+        foreach ($githubLabels as $label) {
             if (isset($this->labelMap[$label->name])) {
                 return $this->labelMap[$label->name];
             }
         }
-
-        throw new \RuntimeException(
-            'No mapping label found for issue "%s". Issue labels were: "%s"',
-            $issueId,
-            implode(
-                '", "',
-                array_map(
-                    function ($labelData) {
-                        return $labelData->name;
-                    },
-                    $labels
-                )
-            )
-        );
+        return null;
     }
 
     /**
