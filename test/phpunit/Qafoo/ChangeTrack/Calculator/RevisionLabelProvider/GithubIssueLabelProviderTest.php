@@ -24,6 +24,8 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
             json_encode(array($gitHubLabel))
         );
 
+        $this->labelMap = array('bug' => 'fix');
+
         $this->httpClientMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\HttpClient')
             ->disableOriginalConstructor()
             ->getMock();
@@ -58,6 +60,66 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals('fix', $actualLabel);
+    }
+
+    public function testCanProvideLabelIfAvailable()
+    {
+        $labelProvider = $this->createLabelProvider();
+
+        $this->assertTrue(
+            $labelProvider->canProvideLabel(
+                new RevisionChanges('abcd', 'Fixed #23 finally.', array())
+            )
+        );
+    }
+
+    public function testCanProvideLabelThrowsExceptionIfGithubFails()
+    {
+        $this->httpClientMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\HttpClient')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->httpClientMock->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue(new HttpClient\Response(500)));
+
+        $labelProvider = $this->createLabelProvider();
+
+        $this->setExpectedException('\\RuntimeException');
+
+        $labelProvider->canProvideLabel(
+            new RevisionChanges('abcd', 'Fixed #23 finally.', array())
+        );
+    }
+
+    public function testCanProvideLabelThrowsExceptionIfGithubReturnsInvalidJSON()
+    {
+        $this->httpClientMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\HttpClient')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->httpClientMock->expects($this->any())
+            ->method('get')
+            ->will($this->returnValue(new HttpClient\Response(500)));
+
+        $labelProvider = $this->createLabelProvider();
+
+        $this->setExpectedException('\\RuntimeException');
+
+        $labelProvider->canProvideLabel(
+            new RevisionChanges('abcd', 'Fixed #23 finally.', array())
+        );
+    }
+
+    public function testCannotProvideLabelIfNoReferenceInCommitMessage()
+    {
+        $labelProvider = $this->createLabelProvider();
+
+        $this->assertFalse(
+            $labelProvider->canProvideLabel(
+                new RevisionChanges('abcd', 'Fixed no reference.', array())
+            )
+        );
     }
 
     private function createLabelProvider()

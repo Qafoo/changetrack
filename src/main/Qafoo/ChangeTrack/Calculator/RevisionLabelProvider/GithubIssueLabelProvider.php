@@ -77,6 +77,28 @@ class GithubIssueLabelProvider implements RevisionLabelProvider
     }
 
     /**
+     * @param \Qafoo\Analyzer\Result\RevisionChanges $revisionChanges
+     * @return bool
+     */
+    public function canProvideLabel(RevisionChanges $revisionChanges)
+    {
+        $issueId = $this->extractRevisionReference($revisionChanges->commitMessage);
+
+        if ($issueId === null) {
+            return false;
+        }
+
+        $labels = $this->fetchGithubIssueLabels($issueId);
+        $mappedLabel = $this->mapALabel($labels);
+
+        if ($mappedLabel === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $commitMessage
      * @return string|null
      */
@@ -130,14 +152,5 @@ class GithubIssueLabelProvider implements RevisionLabelProvider
             }
         }
         return null;
-    }
-
-    /**
-     * @param \Qafoo\Analyzer\Result\RevisionChanges $revisionChanges
-     * @return bool
-     */
-    public function canProvideLabel(RevisionChanges $revisionChanges)
-    {
-        throw new \RuntimeException("Not implemented, yet.");
     }
 }
