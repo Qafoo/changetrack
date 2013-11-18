@@ -59,15 +59,17 @@ class GithubIssueLabelProvider implements SelectableLabelProvider
 
         if ($mappedLabel === null) {
             throw new \RuntimeException(
-                'No mapping label found for issue "%s". Issue labels were: "%s"',
-                $issueId,
-                implode(
-                    '", "',
-                    array_map(
-                        function ($labelData) {
-                            return $labelData->name;
-                        },
-                        $labels
+                sprintf(
+                    'No mapping label found for issue "%s". Issue labels were: "%s"',
+                    $issueId,
+                    implode(
+                        '", "',
+                        array_map(
+                            function ($labelData) {
+                                return $labelData->name;
+                            },
+                            $labels
+                        )
                     )
                 )
             );
