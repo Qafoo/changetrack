@@ -5,6 +5,7 @@ namespace Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension;
 use Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator;
 use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\ChainSelectionLabelProviderBuilder;
 use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\RegexLabelProviderBuilder;
+use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\GithubIssueLabelProviderBuilder;
 use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\DefaultLabelProviderBuilder;
 
 class BuilderDispatcher
@@ -25,6 +26,7 @@ class BuilderDispatcher
         $this->builderMap = array(
             'chain' => new ChainSelectionLabelProviderBuilder($serviceGenerator),
             'regex' => new RegexLabelProviderBuilder($serviceGenerator),
+            'github' => new GithubIssueLabelProviderBuilder($serviceGenerator),
             'default' => new DefaultLabelProviderBuilder($serviceGenerator)
         );
     }

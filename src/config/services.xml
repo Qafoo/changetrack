@@ -63,6 +63,12 @@
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" />
         </service>
 
+        <service id="Qafoo.ChangeTrack.HttpClient" class="Qafoo\ChangeTrack\HttpClient\GuzzleHttpClient">
+            <argument type="service">
+                <service class="Guzzle\Http\Client" />
+            </argument>
+        </service>
+
         <!--
         <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
             <argument type="string">Please configure label providers!</argument>

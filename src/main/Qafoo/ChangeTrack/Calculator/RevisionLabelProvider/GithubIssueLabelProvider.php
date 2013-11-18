@@ -6,7 +6,7 @@ use Qafoo\ChangeTrack\Calculator\RevisionLabelProvider;
 use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
 use Qafoo\ChangeTrack\HttpClient;
 
-class GithubIssueLabelProvider implements RevisionLabelProvider
+class GithubIssueLabelProvider implements SelectableLabelProvider
 {
     /**
      * @var \Qafoo\ChangeTrack\HttpClient
