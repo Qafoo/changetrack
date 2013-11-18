@@ -12,7 +12,7 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
      */
     private $httpClientMock;
 
-    private $labelMap = array('bug' => 'fix');
+    private $labelMap;
 
     public function setUp()
     {
@@ -24,11 +24,10 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
             json_encode(array($gitHubLabel))
         );
 
-        $this->labelMap = array('bug' => 'fix');
+        $this->labelMap = array('bug' => 'fix', 'feature' => 'implement');
 
-        $this->httpClientMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\HttpClient')
-            ->disableOriginalConstructor()
-            ->getMock();
+
+        $this->httpClientMock = $this->createHttpClientMock();
 
         $this->httpClientMock->expects($this->any())
             ->method('get')
@@ -60,6 +59,30 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertEquals('fix', $actualLabel);
+    }
+
+    public function testProvideLabelReturnsOtherMappedLabel()
+    {
+        $gitHubLabel = new \stdClass();
+        $gitHubLabel->name = 'feature';
+
+        $labelResponse = new HttpClient\Response(
+            200,
+            json_encode(array($gitHubLabel))
+        );
+
+        $this->httpClientMock = $this->createHttpClientMock();
+        $this->httpClientMock->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue($labelResponse));
+
+        $labelProvider = $this->createLabelProvider();
+
+        $actualLabel = $labelProvider->provideLabel(
+            new RevisionChanges('abcd', 'Fixed #23 finally.', array())
+        );
+
+        $this->assertEquals('implement', $actualLabel);
     }
 
     public function testCanProvideLabelIfAvailable()
@@ -129,5 +152,12 @@ class GithubIssueLabelProviderTest extends \PHPUnit_Framework_TestCase
             'https://api.github.com/repos/vendor/project/issues/:id/labels',
             $this->labelMap
         );
+    }
+
+    private function createHttpClientMock()
+    {
+        return $this->getMockBuilder('Qafoo\\ChangeTrack\\HttpClient')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }
