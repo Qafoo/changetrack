@@ -1,0 +1,106 @@
+commit c61de7fffc3f9c8817fd0c95c6ec9a1365411294
+Author: Tobias Schlitt <toby@php.net>
+Date:   Mon Nov 18 18:49:42 2013 +0100
+
+    Implemented: Building GithubIssueLabelProvider from config.
+
+diff --git a/src/config/services.xml b/src/config/services.xml
+index 7ad31bf..4fe9994 100644
+--- a/src/config/services.xml
++++ b/src/config/services.xml
+@@ -63,6 +63,12 @@
+             <argument type="service" id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" />
+         </service>
+ 
++        <service id="Qafoo.ChangeTrack.HttpClient" class="Qafoo\ChangeTrack\HttpClient\GuzzleHttpClient">
++            <argument type="service">
++                <service class="Guzzle\Http\Client" />
++            </argument>
++        </service>
++
+         <!--
+         <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
+             <argument type="string">Please configure label providers!</argument>
+diff --git a/src/main/Qafoo/ChangeTrack/Calculator/RevisionLabelProvider/GithubIssueLabelProvider.php b/src/main/Qafoo/ChangeTrack/Calculator/RevisionLabelProvider/GithubIssueLabelProvider.php
+index cb5b6fc..56596e9 100644
+--- a/src/main/Qafoo/ChangeTrack/Calculator/RevisionLabelProvider/GithubIssueLabelProvider.php
++++ b/src/main/Qafoo/ChangeTrack/Calculator/RevisionLabelProvider/GithubIssueLabelProvider.php
+@@ -6,7 +6,7 @@ use Qafoo\ChangeTrack\Calculator\RevisionLabelProvider;
+ use Qafoo\ChangeTrack\Analyzer\Result\RevisionChanges;
+ use Qafoo\ChangeTrack\HttpClient;
+ 
+-class GithubIssueLabelProvider implements RevisionLabelProvider
++class GithubIssueLabelProvider implements SelectableLabelProvider
+ {
+     /**
+      * @var \Qafoo\ChangeTrack\HttpClient
+diff --git a/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/BuilderDispatcher.php b/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/BuilderDispatcher.php
+index e01e78f..5437e3e 100644
+--- a/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/BuilderDispatcher.php
++++ b/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/BuilderDispatcher.php
+@@ -5,6 +5,7 @@ namespace Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension;
+ use Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator;
+ use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\ChainSelectionLabelProviderBuilder;
+ use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\RegexLabelProviderBuilder;
++use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\GithubIssueLabelProviderBuilder;
+ use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder\DefaultLabelProviderBuilder;
+ 
+ class BuilderDispatcher
+@@ -25,6 +26,7 @@ class BuilderDispatcher
+         $this->builderMap = array(
+             'chain' => new ChainSelectionLabelProviderBuilder($serviceGenerator),
+             'regex' => new RegexLabelProviderBuilder($serviceGenerator),
++            'github' => new GithubIssueLabelProviderBuilder($serviceGenerator),
+             'default' => new DefaultLabelProviderBuilder($serviceGenerator)
+         );
+     }
+diff --git a/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/LabelProviderBuilder/GithubIssueLabelProviderBuilder.php b/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/LabelProviderBuilder/GithubIssueLabelProviderBuilder.php
+new file mode 100644
+index 0000000..e7b5670
+--- /dev/null
++++ b/src/main/Qafoo/ChangeTrack/DependencyInjection/RevisionLabelProviderExtension/LabelProviderBuilder/GithubIssueLabelProviderBuilder.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder;
++
++use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder;
++use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\BuilderDispatcher;
++
++use Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator;
++use Symfony\Component\DependencyInjection\Definition;
++use Symfony\Component\DependencyInjection\Reference;
++
++class GithubIssueLabelProviderBuilder extends LabelProviderBuilder
++{
++    /**
++     * @var \Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator
++     */
++    private $serviceGenerator;
++
++    /**
++     * @param \Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator $serviceGenerator
++     */
++    public function __construct(AnonymouseServiceGenerator $serviceGenerator)
++    {
++        $this->serviceGenerator = $serviceGenerator;
++    }
++
++    /**
++     * @param array $providerConfig
++     * @param \Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\BuilderDispatcher $builderDispatcher
++     */
++    public function buildProvider(array $providerConfig, BuilderDispatcher $builderDispatcher)
++    {
++        return $this->serviceGenerator->registerAnonymousService(
++            new Definition(
++                'Qafoo\\ChangeTrack\\Calculator\\RevisionLabelProvider\\GithubIssueLabelProvider',
++                array(
++                    new Reference('Qafoo.ChangeTrack.HttpClient'),
++                    $providerConfig['issue_url_template'],
++                    $providerConfig['label_map']
++                )
++            )
++        );
++    }
++}

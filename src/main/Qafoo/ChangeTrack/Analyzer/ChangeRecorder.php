@@ -19,16 +19,6 @@ class ChangeRecorder
 
     public function recordChange(Change $change, GitCheckout $checkout)
     {
-        /*
-         * TODO: Integrate
-         *
-        if (substr($fileName, -3, 3) !== 'php') {
-            // Skip all non-PHP files
-            // @TODO: Make configurable
-            continue;
-        }
-        */
-
         $affectedMethod = $change->determineAffectedArtifact($checkout);
 
         if ($affectedMethod !== null) {

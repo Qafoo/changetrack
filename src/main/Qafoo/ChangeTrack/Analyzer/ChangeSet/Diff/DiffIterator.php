@@ -26,6 +26,10 @@ class DiffIterator implements \IteratorAggregate
     public function getIterator()
     {
         foreach ($this->diffs as $diffCollection) {
+            if (substr($diffCollection->from, -3, 3) !== 'php' && substr($diffCollection->to, -3, 3) !== 'php') {
+                continue;
+            }
+
             $chunksIterator = new LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
 
             $fileChange = new FileChange(
