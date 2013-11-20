@@ -25,6 +25,18 @@ command. Executing it using::
 
 Will provide you with a list of sub-commands to perform actual analysis.
 
+------------
+Installation
+------------
+
+To install the tool obtain a copy from Github, get Composer__ and execute::
+
+    $ composer install
+
+After that, you can use ChangeTrack from ``src/bin/track``.
+
+__ http://getcomposer.org/doc/00-intro.md
+
 --------
 Commands
 --------
