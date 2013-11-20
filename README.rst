@@ -118,6 +118,40 @@ As you can see, each method that occurrs in the history is listed together
 with the number of changes with a specific label. You can now easily e.g. check
 for the methods which are most frequently affected by bugs.
 
+Besides the *regex* and *default* label providers, there's a *Github issue*
+label provider available, which uses your projects issue labels to determine a
+change label. An example configuration for vfsStream__ project looks like
+this::
+
+    revision_label_provider:
+        chain:
+            - github:
+                issue_url_template: https://api.github.com/repos/mikey179/vfsStream/issues/:id/labels?access_token=<github_oauth_token>
+                label_map:
+                    bug:        bug
+                    feature:    feature
+            - regex:
+                pattern: '(implemented)i'
+                label:   'feature'
+            - regex:
+                pattern: '(fix)i'
+                label:   'bug'
+            - regex:
+                pattern: '(merged)i'
+                label:   'merge'
+            - default:
+                label:   'misc'
+   
+This configuration defines a chain of label providers, which chooses the first
+one that can provide a label for a given commit. The first provider in the
+chain tries to extract a Github issue reference from the commit message. If
+that is available, the Github API is used to determine labels. The labels
+provded by Github are then mapped to local labels (which are the same here).
+
+If that provider does not find a label, 3 regexes are tried after each other.
+Finally, if none of the previous providers found a label, the default provider
+sets the *misc* label.
+
 -------
 Roadmap
 -------
@@ -129,7 +163,7 @@ future:
 
 - Support different version control systems (e.g. SVN)
 - Performance improvements
-- Further label providers (e.g. by Git/Jira issue labels)
+- Further label providers (e.g. by Jira issue labels)
 - Additional analysis, e.g. frequent item sets to determine coupling
 
 Please add your ideas for additional features to the Github issue tracker and
