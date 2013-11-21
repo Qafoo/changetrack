@@ -23,7 +23,6 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
         "manuelpichler/staticreflection": "@dev",
         "arbit/vcs-wrapper": "@dev",
         "jms/serializer": "@stable",
@@ -31,6 +30,7 @@
         "symfony/console": "@stable",
         "symfony/finder": "@stable",
         "symfony/config": "@stable",
+        "symfony/yaml": "@stable",
         "guzzle/guzzle": "@stable"
     },
     "require-dev": {
