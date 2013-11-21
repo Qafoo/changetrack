@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-(@include __DIR__ . '/../../vendor/autoload.php') ||
+(@include __DIR__ . '/../../../../autoload.php') ||
     fwrite(
         STDERR,
         'ERROR: Composer not properly set up! Run "composer install" or see README.rst for more details' . PHP_EOL
