@@ -1,10 +1,29 @@
 #!/usr/bin/env php
 <?php
-(@include __DIR__ . '/../../../../autoload.php') ||
+
+$autoloaderPaths = [
+    __DIR__ . '/../../../../autoload.php',
+    __DIR__ . '/../../vendor/autoload.php'
+];
+$found = false;
+
+foreach ($autoloaderPaths as $autoloaderPath) {
+    if (file_exists($autoloaderPath)) {
+        require_once $autoloaderPath;
+        $found = true;
+    }
+}
+
+if (false === $found) {
     fwrite(
         STDERR,
-        'ERROR: Composer not properly set up! Run "composer install" or see README.rst for more details' . PHP_EOL
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
     ) && exit(1);
+}
+
+unset($autoloaderPaths, $found, $autoloaderPath);
 
 use Qafoo\ChangeTrack\Bootstrap;
 use Symfony\Component\Console\Input\ArgvInput;
