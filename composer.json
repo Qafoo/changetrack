@@ -41,7 +41,7 @@
             "Qafoo\\ChangeTrack": ["src/main", "test/phpunit"]
         }
     },
-    "bin": ["bin/track"],
+    "bin": ["src/bin/track"],
     "config": {
         "bin-dir": "vendor/bin/"
     }

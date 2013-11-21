@@ -1,13 +1,12 @@
 #!/usr/bin/env php
 <?php
-(@include __DIR__ . '/../vendor/autoload.php') ||
+(@include __DIR__ . '/../../vendor/autoload.php') ||
     fwrite(
         STDERR,
         'ERROR: Composer not properly set up! Run "composer install" or see README.rst for more details' . PHP_EOL
     ) && exit(1);
 
 use Qafoo\ChangeTrack\Bootstrap;
-use Qafoo\ChangeTrack\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
 $bootstrap = new Bootstrap();
