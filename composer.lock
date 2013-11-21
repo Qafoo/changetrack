@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "fca70501032e9f4991e8cbc912e66b73",
+    "hash": "d68a6735679ce840c2cc28a7a5cad9f9",
     "packages": [
         {
             "name": "arbit/system-process",
@@ -941,9 +941,9 @@
         "phpunit/phpunit": 0,
         "mikey179/vfsstream": 0
     },
-    "platform": [
-
-    ],
+    "platform": {
+        "php": ">=5.5"
+    },
     "platform-dev": [
 
     ]
