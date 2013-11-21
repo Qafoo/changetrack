@@ -30,6 +30,7 @@
         "symfony/dependency-injection": "@stable",
         "symfony/console": "@stable",
         "symfony/finder": "@stable",
+        "symfony/config": "@stable",
         "guzzle/guzzle": "@stable"
     },
     "require-dev": {
