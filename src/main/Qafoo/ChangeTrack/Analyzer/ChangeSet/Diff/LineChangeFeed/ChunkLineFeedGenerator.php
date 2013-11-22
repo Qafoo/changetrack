@@ -57,6 +57,5 @@ class ChunkLineFeedGenerator extends LineChangeFeed
                     break;
             }
         }
-
     }
 }
