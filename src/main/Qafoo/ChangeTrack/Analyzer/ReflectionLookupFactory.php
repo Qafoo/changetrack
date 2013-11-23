@@ -8,12 +8,20 @@ use Qafoo\ChangeTrack\Analyzer\Reflection\NullSourceResolver;
 
 class ReflectionLookupFactory
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
+     */
+    private $reflectionLookup;
+
     public function createReflectionLookup()
     {
-        $sourceResolver = new NullSourceResolver();
-        $session = ReflectionSession::createDefaultSession($sourceResolver);
-        $query = new FileQuery($session->createFileQuery());
+        if (!isset($this->reflectionLookup)) {
+            $sourceResolver = new NullSourceResolver();
+            $session = ReflectionSession::createDefaultSession($sourceResolver);
+            $query = new FileQuery($session->createFileQuery());
 
-        return new ReflectionLookup($query);
+            $this->reflectionLookup = new ReflectionLookup($query);
+        }
+        return $this->reflectionLookup;
     }
 }

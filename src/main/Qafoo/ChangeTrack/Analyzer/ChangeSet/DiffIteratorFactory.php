@@ -27,6 +27,7 @@ class DiffIteratorFactory
     {
         return new Diff\SortingDiffIterator(
             new Diff\DiffIterator(
+                $this->reflectionLookup,
                 $diffs
             )
         );

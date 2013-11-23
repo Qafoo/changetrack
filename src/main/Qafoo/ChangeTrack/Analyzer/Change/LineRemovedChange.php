@@ -15,10 +15,11 @@ class LineRemovedChange extends LineChange
      */
     public function determineAffectedArtifact(GitCheckout $checkout, $revision, FileChange $fileChange)
     {
-        $checkout->update($checkout->getPredecessor($revision));
+        $previousRevision = $checkout->getPredecessor($revision);
+        $checkout->update($previousRevision);
 
         $affectedFilePath = $checkout->getLocalPath() . '/' . $fileChange->getFromFile();
 
-        return $this->reflectionLookup->getAffectedMethod($affectedFilePath, $this->affectedLine, $revision);
+        return $this->reflectionLookup->getAffectedMethod($affectedFilePath, $this->affectedLine, $previousRevision);
     }
 }
