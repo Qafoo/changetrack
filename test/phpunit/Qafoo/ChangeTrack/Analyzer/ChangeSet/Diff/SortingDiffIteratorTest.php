@@ -6,6 +6,18 @@ use Qafoo\ChangeTrack\Analyzer\Change;
 
 class SortingDiffIteratorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
+     */
+    private $reflectionLookupMock;
+
+    public function setUp()
+    {
+        $this->reflectionLookupMock = $this->getMockBuilder(
+            'Qafoo\\ChangeTrack\\Analyzer\\ReflectionLookup'
+        )->disableOriginalConstructor()->getMock();
+    }
+
     public function testSortChangesByType()
     {
         $sortIterator = new SortingDiffIterator(
@@ -13,15 +25,15 @@ class SortingDiffIteratorTest extends \PHPUnit_Framework_TestCase
                 array(
                     ($a = new Change\LocalChange(
                         new Change\FileChange('/foo', '/foo'),
-                        new Change\LineRemovedChange(3)
+                        $this->createLineRemovedChange(3)
                     )),
                     ($b = new Change\LocalChange(
                         new Change\FileChange('/foo', '/foo'),
-                        new Change\LineAddedChange(3)
+                        $this->createLineAddedChange(3)
                     )),
                     ($c = new Change\LocalChange(
                         new Change\FileChange('/foo', '/foo'),
-                        new Change\LineRemovedChange(4)
+                        $this->createLineRemovedChange(4)
                     )),
                 )
             )
@@ -40,11 +52,11 @@ class SortingDiffIteratorTest extends \PHPUnit_Framework_TestCase
                 array(
                     ($a = new Change\LocalChange(
                         new Change\FileChange('/foo', '/foo'),
-                        new Change\LineRemovedChange(3)
+                        $this->createLineRemovedChange(3)
                     )),
                     ($b = new Change\LocalChange(
                         new Change\FileChange('/bar', '/bar'),
-                        new Change\LineRemovedChange(3)
+                        $this->createLineRemovedChange(3)
                     )),
                 )
             )
@@ -79,5 +91,21 @@ class SortingDiffIteratorTest extends \PHPUnit_Framework_TestCase
             );
 
         return $iteratorMock;
+    }
+
+    protected function createLineRemovedChange($lineNo)
+    {
+        return new Change\LineRemovedChange(
+            $this->reflectionLookupMock,
+            $lineNo
+        );
+    }
+
+    protected function createLineAddedChange($lineNo)
+    {
+        return new Change\LineAddedChange(
+            $this->reflectionLookupMock,
+            $lineNo
+        );
     }
 }
