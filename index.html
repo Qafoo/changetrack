@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Changetrack by Qafoo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Changetrack</h1>
+        <p>Track changes through the history of PHP projects</p>
+
+        <p class="view"><a href="https://github.com/Qafoo/changetrack">View the Project on GitHub <small>Qafoo/changetrack</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Qafoo/changetrack/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Qafoo/changetrack/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Qafoo/changetrack">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="changetrack" class="anchor" href="#changetrack"><span class="octicon octicon-link"></span></a>ChangeTrack</h1>
+
+<p><a href="https://travis-ci.org/Qafoo/changetrack"><img src="https://travis-ci.org/Qafoo/changetrack.png" alt="image"></a></p>
+
+<p><a href="https://scrutinizer-ci.com/g/Qafoo/changetrack/"><img src="https://scrutinizer-ci.com/g/Qafoo/changetrack/badges/quality-score.png?s=15cd5a7c521b0e59db4c537ff8525381039cf013" alt="image"></a></p>
+
+<p>The Qafoo ChangeTrack tool allows you to track changes in classes and
+methods throughout the history of a PHP project. One application for
+this analysis is to detect artifacts that are changed most frequently
+and especially most frequently due to bugs.</p>
+
+<p>The analysis is performed in multiples steps. Currently supported are:</p>
+
+<ol>
+<li> Analyze which classes/methods are affected by a revision.</li>
+<li> Analyze which classes/methods are most frequently affected by
+changes.</li>
+</ol><p>The split into multiple steps allows you to</p>
+
+<p>a)  Cache the result of a step to apply multiple other analysis steps on
+    top.
+b)  Easily apply analysis processes which are currently not supported by
+    ChangeTrack.</p>
+
+<p>The different analysis types are combined in the single <code>track</code> shell
+command. Executing it using:</p>
+
+<pre><code>$ src/bin/track
+</code></pre>
+
+<p>Will provide you with a list of sub-commands to perform actual analysis.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>To install the tool obtain a copy from Github, get
+<a href="http://getcomposer.org/doc/00-intro.md">Composer</a> and execute:</p>
+
+<pre><code>$ composer install
+</code></pre>
+
+<p>After that, you can use ChangeTrack from <code>src/bin/track</code>.</p>
+
+<h2>
+<a name="commands" class="anchor" href="#commands"><span class="octicon octicon-link"></span></a>Commands</h2>
+
+<p>In following, the currently implemented analysis commands are described
+in further detail.</p>
+
+<h3>
+<a name="analyze" class="anchor" href="#analyze"><span class="octicon octicon-link"></span></a>analyze</h3>
+
+<p>The <code>analyze</code> command tracks changes of a PHP project throughout its
+version history (currently only Git is supported). The result is an XML
+document, that describes the version history in terms of class/method
+changes. For example, here is a part of the
+<a href="https://github.com/fabpot/Twig">Twig</a> project history:</p>
+
+<pre><code>&lt;changes repository="https://github.com/fabpot/Twig"&gt;
+  &lt;!-- ... --&gt;
+  &lt;changeSet revision="92bbc7ee405f5635f4647040d883dbd77d1ac7da" message="made a small optimization to for loop when no else clause exists&amp;#10;git-svn-id: http://svn.twig-project.org/trunk@32 93ef8e89-cb99-4229-a87c-7fa0fa45744b&amp;#10;"&gt;
+    &lt;package name=""&gt;
+      &lt;class name="Twig_Node_For"&gt;
+        &lt;method name="compile"&gt;
+          &lt;added&gt;15&lt;/added&gt;
+          &lt;removed&gt;3&lt;/removed&gt;
+        &lt;/method&gt;
+      &lt;/class&gt;
+    &lt;/package&gt;
+  &lt;/changeSet&gt;
+  &lt;!-- ... --&gt;
+&lt;/changes&gt;
+</code></pre>
+
+<p>Each revision (which contains a change to a class/method) is reflected
+in a <code>&lt;changeSet /&gt;</code> which gives you the version (hash) and the commit
+message. Contained is information about all method changes (structured
+by package and class name) and statistics on the number of added/removed
+lines.</p>
+
+<p>You can restrict the history to be analyzed by a start and end commit
+through command line parameters. This makes some sense, since analysis
+is quite expensive: Every revision needs to be checked out and static
+analysis is performed to detect which artifacts are affected by the
+change.</p>
+
+<p>The raw output of the <code>analyze</code> command is not really useful, yet. You
+should apply the <code>calculate</code> command to it.</p>
+
+<h3>
+<a name="calculate" class="anchor" href="#calculate"><span class="octicon octicon-link"></span></a>calculate</h3>
+
+<p>The <code>calculate</code> analyzes, how often an artifact (i.e. method) is
+affected by what kind of change (e.g. <em>bug</em> or <em>feature</em>). To do so, it
+attempts to assign a <em>label</em> to each commit in the project history and
+counts per method, how often a specifically labeled commit touched it.
+To do this, the <code>calculate</code> command operates on the output of the
+<code>analyze</code> command (either by specifying the input file as an argument on
+the shell or by just piping it from STDIN).</p>
+
+<p>In order to find a label for a commit, <code>calculate</code> commonly analyzes the
+commit message for keywords (e.g. "implemented" or "fixed"), but can
+also utilize other methods (e.g. checking for a Github issue reference
+and looking up its assigned labels through the Github API). The label
+for a commit is then assigned to each artifact that was changed in that
+commit.</p>
+
+<p>Since every project has a different style of crafting its commit
+messages, you can define how labels are determined through a dedicated
+<code>config.yml</code> file (<code>-c</code> option), for example. The default configuration
+(chosen if now <code>-c</code> option is present) looks like this:</p>
+
+<pre><code>revision_label_provider:
+    chain:
+        - regex:
+            pattern: '(fixed)i'
+            label:   'fix'
+        - regex:
+            pattern: '(implemented)i'
+            label:   'implement'
+        - default:
+            label:   'misc'
+</code></pre>
+
+<p>This specific <code>config.yml</code> defines a chain of label providers. For a
+commit, each of the defined label providers (2 x <code>regex</code>, 1 x <code>default</code>)
+is asked to provide a label. If a provider can provide a label, this one
+is chosen.</p>
+
+<p>The <code>regex</code> label provider tries to match <code>pattern</code> against the commit
+message and returns the defined <code>label</code> if it found a match. The
+<code>default</code> provider always returns the defined <code>label</code> and therefore
+finishes the chain.</p>
+
+<p>An example output gathered using the default regex configuration (from
+above) for the <a href="https://github.com/fabpot/Twig">Twig</a> repository is
+shown below:</p>
+
+<pre><code>&lt;stats  repository="https://github.com/fabpot/Twig"&gt;
+  &lt;package name=""&gt;
+    &lt;!-- ... --&gt;
+    &lt;class name="Twig_Environment"&gt;
+      &lt;!-- ... --&gt;
+      &lt;method name="loadTemplate"&gt;
+        &lt;stats&gt;
+          &lt;count label="misc"&gt;17&lt;/count&gt;
+          &lt;count label="fix"&gt;1&lt;/count&gt;
+        &lt;/stats&gt;
+      &lt;/method&gt;
+    &lt;/class&gt;
+  &lt;/package&gt;
+&lt;/stats&gt;
+</code></pre>
+
+<p>As you can see, each method that occurrs in the history is listed
+together with the number of changes with a specific label. So, the
+<code>calculate</code> command found <em>17</em> commits with the label <em>misc</em> and <em>1</em>
+commit with the label <em>fix</em> for the method
+<code>Twig_Environment::loadTemplate()</code>.</p>
+
+<p>Besides the <em>regex</em> and <em>default</em> label providers, there's a <em>Github
+issue</em> label provider available, which uses your projects issue labels
+to determine a change label. An example configuration for
+<a href="https://github.com/mikey179/vfsStream">vfsStream</a> project looks like
+this:</p>
+
+<pre><code>revision_label_provider:
+    chain:
+        - github:
+            issue_url_template: https://api.github.com/repos/mikey179/vfsStream/issues/:id/labels?access_token=&lt;github_oauth_token&gt;
+            label_map:
+                bug:        bug
+                feature:    feature
+        - regex:
+            pattern: '(implemented)i'
+            label:   'feature'
+        - regex:
+            pattern: '(fix)i'
+            label:   'bug'
+        - regex:
+            pattern: '(merged)i'
+            label:   'merge'
+        - default:
+            label:   'misc'
+</code></pre>
+
+<p>The first provider in the chain tries to extract a Github issue
+reference (e.g. <code>#23</code>) from the commit message. If that is available,
+the Github API is used to determine labels for that issue. The labels
+provded by Github are then mapped to local labels (which are the same
+here).</p>
+
+<p>If that provider does not find a label, 3 regexes are tried after each
+other. Finally, if none of the previous providers found a label, the
+default provider sets the <em>misc</em> label.</p>
+
+<h2>
+<a name="roadmap" class="anchor" href="#roadmap"><span class="octicon octicon-link"></span></a>Roadmap</h2>
+
+<p>The ChangeTrack tool is currently in a very early alpha state. It has
+only been run against a couple of repositories and it is expected that
+you find quite some bugs. However, here are some of the features which
+would make sense in the future:</p>
+
+<ul>
+<li>  Support different version control systems (e.g. SVN)</li>
+<li>  Performance improvements</li>
+<li>  Further label providers (e.g. by Jira issue labels)</li>
+<li>  Additional analysis, e.g. frequent item sets to determine coupling</li>
+</ul><p>Please add your ideas for additional features to the Github issue
+tracker and possibly provide a pull request.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Qafoo">Qafoo</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
