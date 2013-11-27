@@ -34,7 +34,7 @@ Installation
 
 To install the tool obtain a copy from Github, get Composer_ and execute::
 
-    $ composer install
+    $ composer install --no-dev
 
 After that, you can use ChangeTrack from ``src/bin/track``.
 
