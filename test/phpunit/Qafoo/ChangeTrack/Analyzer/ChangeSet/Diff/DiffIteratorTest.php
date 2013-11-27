@@ -15,7 +15,12 @@ class DiffIteratorTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $diffIterator = new DiffIterator($diffCollection);
+        $diffIterator = new DiffIterator(
+            $this->getMockBuilder('Qafoo\\ChangeTrack\\Analyzer\\ReflectionLookup')
+                ->disableOriginalConstructor()
+                ->getMock(),
+            $diffCollection
+        );
 
         $containedFiles = array();
         foreach ($diffIterator as $change) {

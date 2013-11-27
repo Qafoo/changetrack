@@ -2,6 +2,9 @@
 ChangeTrack
 ===========
 
+.. image::  https://travis-ci.org/Qafoo/changetrack.png
+   :target: https://travis-ci.org/Qafoo/changetrack
+
 The Qafoo ChangeTrack tool allows you to track changes in classes and methods
 throughout the history of a PHP project. One application for this analysis is
 to detect artifacts that are changed most frequently and especially most
@@ -81,14 +84,23 @@ apply the ``calculate`` command to it.
 calculate
 =========
 
-The ``calculate`` command operates on the output of the ``analyze`` command. It
-calculates statistics on how often a certain method is affected by changes. In
-order to get meaningful statistics, you can provide your own mechanism to
-determine if a change fixed a bug or implemented a feature.
+The ``calculate`` analyzes, how often an artifact (i.e. method) is affected by
+what kind of change (e.g. *bug* or *feature*). To do so, it attempts to assign
+a *label* to each commit in the project history and counts per method, how
+often a specifically labeled commit touched it. To do this, the ``calculate``
+command operates on the output of the ``analyze`` command (either by specifying
+the input file as an argument on the shell or by just piping it from STDIN).
 
-Currently, regular expressions against the commit message are supported to
-provide a label for each commit. You can define this configuration through a
-dedicated ``config.yml`` file (``-c`` option), for example::
+In order to find a label for a commit, ``calculate`` commonly analyzes the
+commit message for keywords (e.g. "implemented" or "fixed"), but can also
+utilize other methods (e.g. checking for a Github issue reference and looking
+up its assigned labels through the Github API). The label for a commit is then
+assigned to each artifact that was changed in that commit.
+
+Since every project has a different style of crafting its commit messages, you
+can define how labels are determined through a dedicated ``config.yml`` file
+(``-c`` option), for example. The default configuration (chosen if now ``-c``
+option is present) looks like this::
 
     revision_label_provider:
         chain:
@@ -101,13 +113,16 @@ dedicated ``config.yml`` file (``-c`` option), for example::
             - default:
                 label:   'misc'
 
-This is the default config, which lets the defined regex be applied
-sequentially and select the label of the first matching one. So, if the message
-of a commit matches ``(fixed)i``, the label ``fix`` is issued. If none of the
-regex matches, the default label ``misc`` is used.
+This specific ``config.yml`` defines a chain of label providers. For a commit,
+each of the defined label providers (2 x ``regex``, 1 x ``default``) is asked
+to provide a label. If a provider can provide a label, this one is chosen.
 
-An example output gathered using the default regex configuration from
-above from the Twig repository is shown below::
+The ``regex`` label provider tries to match ``pattern`` against the commit
+message and returns the defined ``label`` if it found a match. The ``default``
+provider always returns the defined ``label`` and therefore finishes the chain.
+
+An example output gathered using the default regex configuration (from
+above) for the Twig__ repository is shown below::
 
     <stats  repository="https://github.com/fabpot/Twig">
       <package name="">
@@ -124,9 +139,12 @@ above from the Twig repository is shown below::
       </package>
     </stats>
 
+__ https://github.com/fabpot/Twig
+
 As you can see, each method that occurrs in the history is listed together
-with the number of changes with a specific label. You can now easily e.g. check
-for the methods which are most frequently affected by bugs.
+with the number of changes with a specific label. So, the ``calculate`` command
+found *17* commits with the label *misc* and *1* commit with the label *fix*
+for the method ``Twig_Environment::loadTemplate()``.
 
 Besides the *regex* and *default* label providers, there's a *Github issue*
 label provider available, which uses your projects issue labels to determine a
@@ -152,11 +170,10 @@ this::
             - default:
                 label:   'misc'
    
-This configuration defines a chain of label providers, which chooses the first
-one that can provide a label for a given commit. The first provider in the
-chain tries to extract a Github issue reference from the commit message. If
-that is available, the Github API is used to determine labels. The labels
-provded by Github are then mapped to local labels (which are the same here).
+The first provider in the chain tries to extract a Github issue reference (e.g.
+``#23``) from the commit message. If that is available, the Github API is used
+to determine labels for that issue. The labels provded by Github are then
+mapped to local labels (which are the same here).
 
 If that provider does not find a label, 3 regexes are tried after each other.
 Finally, if none of the previous providers found a label, the default provider

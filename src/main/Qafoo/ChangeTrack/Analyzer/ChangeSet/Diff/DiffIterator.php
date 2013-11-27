@@ -2,11 +2,17 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
+use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 use Qafoo\ChangeTrack\Analyzer\Change\FileChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
 
 class DiffIterator implements \IteratorAggregate
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
+     */
+    private $reflectionLookup;
+
     /**
      * @var \Arbit\VCSWrapper\Diff\Collection[]
      */
@@ -15,8 +21,9 @@ class DiffIterator implements \IteratorAggregate
     /**
      * @param \Arbit\VCSWrapper\Diff\Collection[] $diffs
      */
-    public function __construct(array $diffs)
+    public function __construct(ReflectionLookup $reflectionLookup, array $diffs)
     {
+        $this->reflectionLookup = $reflectionLookup;
         $this->diffs = $diffs;
     }
 
@@ -30,7 +37,10 @@ class DiffIterator implements \IteratorAggregate
                 continue;
             }
 
-            $chunksIterator = new LineChangeFeed\ChunksLineFeedIterator($diffCollection->chunks);
+            $chunksIterator = new LineChangeFeed\ChunksLineFeedIterator(
+                $this->reflectionLookup,
+                $diffCollection->chunks
+            );
 
             $fileChange = new FileChange(
                 substr($diffCollection->from, 1),

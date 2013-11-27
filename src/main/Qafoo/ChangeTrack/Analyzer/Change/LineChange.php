@@ -5,7 +5,7 @@ namespace Qafoo\ChangeTrack\Analyzer\Change;
 use Arbit\VCSWrapper\Diff;
 
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
-use Qafoo\ChangeTrack\Analyzer\ReflectionLookupFactory;
+use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 
 abstract class LineChange
 {
@@ -22,12 +22,10 @@ abstract class LineChange
     /**
      * @param int $affectedLine
      */
-    public function __construct($affectedLine)
+    public function __construct(ReflectionLookup $reflectionLookup, $affectedLine)
     {
+        $this->reflectionLookup = $reflectionLookup;
         $this->affectedLine = $affectedLine;
-
-        $lookupFactory = new ReflectionLookupFactory();
-        $this->reflectionLookup = $lookupFactory->createReflectionLookup();
     }
 
     /**

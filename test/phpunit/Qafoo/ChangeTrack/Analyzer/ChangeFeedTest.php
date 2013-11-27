@@ -6,6 +6,7 @@ use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
+use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory;
 
 use Qafoo\ChangeTrack\CheckoutAwareTestBase;
 
@@ -32,7 +33,11 @@ class ChangeFeedTest extends CheckoutAwareTestBase
         $this->checkout = new GitCheckout($this->getCheckoutPath());
         $this->checkout->initialize($this->getRepositoryUrl());
 
-        $this->changeSetFactory = new ChangeSetFactory();
+        $reflectionLookupFactory = new ReflectionLookupFactory();
+
+        $this->changeSetFactory = new ChangeSetFactory(
+            new DiffIteratorFactory($reflectionLookupFactory->createReflectionLookup())
+        );
 
         $this->observerDummy = new NullObserver();
     }

@@ -31,7 +31,20 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver" />
-        <service id="Qafoo.ChangeTrack.Analyzer.ChangeSetFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory" />
+        <service id="Qafoo.ChangeTrack.Analyzer.ChangeSetFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory">
+            <argument type="service">
+                <service class="Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory">
+                    <argument type="service">
+                        <service
+                            class="Qafoo\ChangeTrack\Analyzer\ReflectionLookup"
+                            factory-service="Qafoo.ChangeTrack.Analyzer.ReflectionLookupFactory"
+                            factory-method="createReflectionLookup" />
+                    </argument>
+                </service>
+            </argument>
+        </service>
+
+        <service id="Qafoo.ChangeTrack.Analyzer.ReflectionLookupFactory" class="Qafoo\ChangeTrack\Analyzer\ReflectionLookupFactory" />
 
         <service id="Qafoo.ChangeTrack.Analyzer.Renderer" class="Qafoo\ChangeTrack\Analyzer\Renderer\JmsSerializerRenderer">
             <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
