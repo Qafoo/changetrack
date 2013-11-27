@@ -1,3 +1,7 @@
+---
+layout: main
+---
+
 ChangeTrack
 ===========
 
