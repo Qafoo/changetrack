@@ -1,11 +1,33 @@
 #!/usr/bin/env php
 <?php
 
-use Qafoo\ChangeTrack\Bootstrap;
-use Qafoo\ChangeTrack\Application;
-use Symfony\Component\Console\Input\ArgvInput;
+$autoloaderPaths = [
+    __DIR__ . '/../../../../autoload.php',
+    __DIR__ . '/../../vendor/autoload.php'
+];
+$found = false;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+foreach ($autoloaderPaths as $autoloaderPath) {
+    if (file_exists($autoloaderPath)) {
+        require_once $autoloaderPath;
+        $found = true;
+        break;
+    }
+}
+
+if (false === $found) {
+    fwrite(
+        STDERR,
+        'You need to set up the project dependencies using the following commands:' . PHP_EOL .
+        'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
+        'php composer.phar install' . PHP_EOL
+    ) && exit(1);
+}
+
+unset($autoloaderPaths, $found, $autoloaderPath);
+
+use Qafoo\ChangeTrack\Bootstrap;
+use Symfony\Component\Console\Input\ArgvInput;
 
 $bootstrap = new Bootstrap();
 
