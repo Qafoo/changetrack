@@ -1,9 +1,13 @@
 {
+    "name": "qafoo/changetrack",
+    "description": "ChangeTrack allows you to track changes in classes and methods throughout the history of a PHP project.",
+    "homepage": "https://github.com/Qafoo/changetrack",
+    "licence": "MIT",
     "repositories": [
         {
             "type": "package",
             "package": {
-                "name": "manuelpichler/staticReflection",
+                "name": "manuelpichler/staticreflection",
                 "version": "@dev",
                 "source": {
                     "url": "https://github.com/manuelpichler/staticReflection.git",
@@ -19,26 +23,28 @@
         }
     ],
     "require": {
-        "manuelpichler/staticReflection": "@dev",
+        "php": ">=5.5",
+        "manuelpichler/staticreflection": "@dev",
         "arbit/vcs-wrapper": "@dev",
         "jms/serializer": "@stable",
         "symfony/dependency-injection": "@stable",
         "symfony/console": "@stable",
         "symfony/finder": "@stable",
+        "symfony/config": "@stable",
+        "symfony/yaml": "@stable",
         "guzzle/guzzle": "@stable"
     },
     "require-dev": {
-        "behat/behat" : "2.4.*@stable",
+        "behat/behat": "2.4.*@stable",
         "phpunit/phpunit": "3.7.*@stable",
         "mikey179/vfsStream": "1.2.*@stable"
     },
-
     "autoload": {
         "psr-0": {
-            "Qafoo\\ChangeTrack": [ "src/main", "test/phpunit" ]
+            "Qafoo\\ChangeTrack": ["src/main", "test/phpunit"]
         }
     },
-
+    "bin": ["src/bin/track"],
     "config": {
         "bin-dir": "vendor/bin/"
     }
