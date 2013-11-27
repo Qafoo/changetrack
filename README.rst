@@ -5,6 +5,9 @@ ChangeTrack
 .. image::  https://travis-ci.org/Qafoo/changetrack.png
    :target: https://travis-ci.org/Qafoo/changetrack
 
+.. image::  https://scrutinizer-ci.com/g/Qafoo/changetrack/badges/quality-score.png?s=15cd5a7c521b0e59db4c537ff8525381039cf013
+   :target: https://scrutinizer-ci.com/g/Qafoo/changetrack/
+
 The Qafoo ChangeTrack tool allows you to track changes in classes and methods
 throughout the history of a PHP project. One application for this analysis is
 to detect artifacts that are changed most frequently and especially most
