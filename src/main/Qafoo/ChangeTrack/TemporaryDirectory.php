@@ -21,6 +21,16 @@ class TemporaryDirectory
      */
     public function __construct($path)
     {
+        if (!is_dir($path)) {
+            throw new \InvalidArgumentException(
+                sprintf('Temporary directory "%s" does not exist.', $path)
+            );
+        }
+        if (!is_writable($path)) {
+            throw new \InvalidArgumentException(
+                sprintf('Temporary directory "%s" is not writable.', $path)
+            );
+        }
         $this->path = $path;
     }
 
