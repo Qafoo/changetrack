@@ -19,7 +19,14 @@
             </argument>
             <argument type="service" id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" />
             <argument type="service">
-                <service class="Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory" />
+                <service class="Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory">
+                    <argument type="service">
+                        <service
+                            class="Qafoo\ChangeTrack\Analyzer\ReflectionLookup"
+                            factory-service="Qafoo.ChangeTrack.Analyzer.ReflectionLookupFactory"
+                            factory-method="createReflectionLookup" />
+                    </argument>
+                </service>
             </argument>
             <argument type="service">
                 <service class="Qafoo\ChangeTrack\TemporaryDirectory">
@@ -37,6 +44,7 @@
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeSetFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory">
             <argument type="service">
                 <service class="Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory">
+                    <!-- TODO: Remove! -->
                     <argument type="service">
                         <service
                             class="Qafoo\ChangeTrack\Analyzer\ReflectionLookup"

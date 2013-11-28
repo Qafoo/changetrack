@@ -5,6 +5,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
+use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
@@ -12,9 +13,17 @@ class ChangeRecorder
 {
     private $resultBuilder;
 
-    public function __construct(ResultBuilder $resultBuilder)
-    {
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup $reflectionLookup
+     */
+    private $reflectionLookup;
+
+    public function __construct(
+        ResultBuilder $resultBuilder,
+        ReflectionLookup $reflectionLookup
+    ) {
         $this->resultBuilder = $resultBuilder;
+        $this->reflectionLookup = $reflectionLookup;
     }
 
     public function recordChange(Change $change, GitCheckout $checkout)
