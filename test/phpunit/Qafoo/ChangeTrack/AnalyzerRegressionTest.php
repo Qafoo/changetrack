@@ -10,8 +10,11 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
 
     private $resultFile = 'test/temp_result.xml';
 
+    private $applicationBasePath;
+
     public function setUp()
     {
+        $this->applicationBasePath = __DIR__ . '/../../../../';
         // Overwrite to disable
     }
 
@@ -25,9 +28,7 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
         $repositoryUrl = $this->getRepositoryUrl();
         $resultFile = $this->resultFile;
 
-        `src/bin/track analyze -o $resultFile -v $repositoryUrl`;
-
-        $expectedXml = $this->loadExpectedXml($repositoryUrl);
+        `{$this->applicationBasePath}/src/bin/track analyze -o $resultFile -v $repositoryUrl`;
 
         $this->assertXmlStringEqualsXmlString(
             $this->loadExpectedXml($repositoryUrl),
