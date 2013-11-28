@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack;
 
 use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
+use Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory;
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
@@ -51,7 +52,9 @@ class Analyzer
             $endRevision
         );
         $resultBuilder = new ResultBuilder($repositoryUrl);
-        $changeRecorder = new ChangeRecorder($resultBuilder);
+
+        $changeRecorderFactory = new ChangeRecorderFactory();
+        $changeRecorder = $changeRecorderFactory->createChangeRecorder($resultBuilder);
 
         foreach ($changeFeed as $changeSet) {
             $changeSet->recordChanges($changeRecorder);
