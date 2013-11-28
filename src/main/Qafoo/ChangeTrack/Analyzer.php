@@ -23,6 +23,11 @@ class Analyzer
     private $changeFeedFactory;
 
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory
+     */
+    private $changeRecorderFactory;
+
+    /**
      * @var string
      */
     private $workingDir;
@@ -30,15 +35,18 @@ class Analyzer
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory $changeFeedFactory
+     * @param \Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory $changeRecorderFactory
      * @param \Qafoo\ChangeTrack\TemporaryDirectory $workingDir
      */
     public function __construct(
         CheckoutFactory $checkoutFactory,
         ChangeFeedFactory $changeFeedFactory,
+        ChangeRecorderFactory $changeRecorderFactory,
         TemporaryDirectory $workingDir
     ) {
         $this->checkoutFactory = $checkoutFactory;
         $this->changeFeedFactory = $changeFeedFactory;
+        $this->changeRecorderFactory = $changeRecorderFactory;
         $this->workingDir = $workingDir;
     }
 
@@ -53,8 +61,7 @@ class Analyzer
         );
         $resultBuilder = new ResultBuilder($repositoryUrl);
 
-        $changeRecorderFactory = new ChangeRecorderFactory();
-        $changeRecorder = $changeRecorderFactory->createChangeRecorder($resultBuilder);
+        $changeRecorder = $this->changeRecorderFactory->createChangeRecorder($resultBuilder);
 
         foreach ($changeFeed as $changeSet) {
             $changeSet->recordChanges($changeRecorder);
