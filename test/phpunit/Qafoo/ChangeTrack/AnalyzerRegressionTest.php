@@ -8,19 +8,20 @@ namespace Qafoo\ChangeTrack;
 class AnalyzerRegressionTest extends CheckoutAwareTestBase
 {
 
-    private $resultFile = 'test/temp_result.xml';
+    private $resultFile;
 
     private $applicationBasePath;
 
     public function setUp()
     {
         $this->applicationBasePath = __DIR__ . '/../../../../';
+        $this->resultFile = $this->applicationBasePath . '/test/temp_result.xml';
         // Overwrite to disable
     }
 
     public function tearDown()
     {
-        unlink('test/temp_result.xml');
+        unlink($this->resultFile);
     }
 
     public function testAnalyzerRegressionDaemonRepository()
@@ -28,7 +29,10 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
         $repositoryUrl = $this->getRepositoryUrl();
         $resultFile = $this->resultFile;
 
-        `{$this->applicationBasePath}/src/bin/track analyze -o $resultFile -v $repositoryUrl`;
+        $command = $this->applicationBasePath . '/src/bin/track';
+        $workingDir = $this->applicationBasePath . '/src/var/tmp';
+
+        `$command analyze -w $workingDir -o $resultFile -v $repositoryUrl`;
 
         $this->assertXmlStringEqualsXmlString(
             $this->loadExpectedXml($repositoryUrl),
