@@ -1,10 +1,11 @@
-[![Stories in Ready](https://badge.waffle.io/Qafoo/changetrack.png?label=ready)](https://waffle.io/Qafoo/changetrack)  
 ChangeTrack
 ===========
 
 [![image](https://travis-ci.org/Qafoo/changetrack.png)](https://travis-ci.org/Qafoo/changetrack)
 
 [![image](https://scrutinizer-ci.com/g/Qafoo/changetrack/badges/quality-score.png?s=15cd5a7c521b0e59db4c537ff8525381039cf013)](https://scrutinizer-ci.com/g/Qafoo/changetrack/)
+
+[![Stories in Ready](https://badge.waffle.io/Qafoo/changetrack.png?label=ready)](https://waffle.io/Qafoo/changetrack)
 
 The Qafoo ChangeTrack tool allows you to track changes in classes and
 methods throughout the history of a PHP project. One application for
