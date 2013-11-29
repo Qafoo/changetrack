@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Change;
 
+use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class LocalChange
@@ -25,10 +26,11 @@ class LocalChange
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
      */
-    public function determineAffectedArtifact(GitCheckout $checkout, $revision)
+    public function determineAffectedArtifact(GitCheckout $checkout, ReflectionLookup $reflectionLookup, $revision)
     {
         return $this->lineChange->determineAffectedArtifact(
             $checkout,
+            $reflectionLookup,
             $revision,
             $this->fileChange
         );

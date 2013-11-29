@@ -60,9 +60,9 @@ class Change
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
      */
-    public function determineAffectedArtifact(GitCheckout $checkout)
+    public function determineAffectedArtifact(GitCheckout $checkout, ReflectionLookup $reflectionLookup)
     {
-        return $this->localChange->determineAffectedArtifact($checkout, $this->revision);
+        return $this->localChange->determineAffectedArtifact($checkout, $reflectionLookup, $this->revision);
     }
 
     /**

@@ -36,6 +36,7 @@ class ChunkLineFeedGenerator extends LineChangeFeed
      */
     public function __construct(ReflectionLookup $reflectionLookup, Diff\Chunk $diffChunk)
     {
+        // TODO: Not needed anymore, cleanup!
         $this->reflectionLookup = $reflectionLookup;
         $this->diffChunk = $diffChunk;
     }
@@ -51,11 +52,11 @@ class ChunkLineFeedGenerator extends LineChangeFeed
         foreach ($this->diffChunk->lines as $line) {
             switch ($line->type) {
                 case Diff\Line::ADDED:
-                    yield new LineAddedChange($this->reflectionLookup, $this->afterLineIndex);
+                    yield new LineAddedChange($this->afterLineIndex);
                     $this->afterLineIndex++;
                     break;
                 case Diff\Line::REMOVED:
-                    yield new LineRemovedChange($this->reflectionLookup, $this->beforeLineIndex);
+                    yield new LineRemovedChange($this->beforeLineIndex);
                     $this->beforeLineIndex++;
                     break;
                 case Diff\Line::UNCHANGED:

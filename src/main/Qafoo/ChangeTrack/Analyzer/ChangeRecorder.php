@@ -28,7 +28,10 @@ class ChangeRecorder
 
     public function recordChange(Change $change, GitCheckout $checkout)
     {
-        $affectedMethod = $change->determineAffectedArtifact($checkout);
+        $affectedMethod = $change->determineAffectedArtifact(
+            $checkout,
+            $this->reflectionLookup
+        );
 
         if ($affectedMethod !== null) {
             $affectedClass = $affectedMethod->getDeclaringClass();
