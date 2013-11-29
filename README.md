@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Qafoo/changetrack.png?label=ready)](https://waffle.io/Qafoo/changetrack)  
 ChangeTrack
 ===========
 
