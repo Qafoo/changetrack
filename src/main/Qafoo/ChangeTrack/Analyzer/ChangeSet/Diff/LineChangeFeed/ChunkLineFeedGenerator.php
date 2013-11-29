@@ -12,11 +12,6 @@ use Arbit\VCSWrapper\Diff;
 class ChunkLineFeedGenerator extends LineChangeFeed
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
-     */
-    private $reflectionLookup;
-
-    /**
      * @var \Arbit\VCSWrapper\Diff\Chunk
      */
     private $diffChunk;
@@ -34,10 +29,8 @@ class ChunkLineFeedGenerator extends LineChangeFeed
     /**
      * @param \Arbit\VCSWrapper\Diff\Chunk $diffChunk
      */
-    public function __construct(ReflectionLookup $reflectionLookup, Diff\Chunk $diffChunk)
+    public function __construct(Diff\Chunk $diffChunk)
     {
-        // TODO: Not needed anymore, cleanup!
-        $this->reflectionLookup = $reflectionLookup;
         $this->diffChunk = $diffChunk;
     }
 

@@ -7,19 +7,6 @@ use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 class DiffIteratorFactory
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
-     */
-    private $reflectionLookup;
-
-    /**
-     * @param \Qafoo\ChangeTrack\Analyzer\ReflectionLookup $reflectionLookup
-     */
-    public function __construct(ReflectionLookup $reflectionLookup)
-    {
-        $this->reflectionLookup = $reflectionLookup;
-    }
-
-    /**
      * @param array $diffs
      * @return \Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\DiffIterator
      */
@@ -27,7 +14,6 @@ class DiffIteratorFactory
     {
         return new Diff\SortingDiffIterator(
             new Diff\DiffIterator(
-                $this->reflectionLookup,
                 $diffs
             )
         );

@@ -26,7 +26,7 @@ class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
 
     private function createLineFeedGenerator($diff)
     {
-        return new ChunkLineFeedGenerator($this->reflectionLookupMock, $diff);
+        return new ChunkLineFeedGenerator($diff);
     }
 
     public function testIteratePureAddedDiff()

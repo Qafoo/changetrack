@@ -43,15 +43,7 @@
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedObserver" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver" />
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeSetFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory">
             <argument type="service">
-                <service class="Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory">
-                    <!-- TODO: Remove! -->
-                    <argument type="service">
-                        <service
-                            class="Qafoo\ChangeTrack\Analyzer\ReflectionLookup"
-                            factory-service="Qafoo.ChangeTrack.Analyzer.ReflectionLookupFactory"
-                            factory-method="createReflectionLookup" />
-                    </argument>
-                </service>
+                <service class="Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory" />
             </argument>
         </service>
 

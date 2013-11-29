@@ -9,11 +9,6 @@ use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
 class DiffIterator implements \IteratorAggregate
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\ReflectionLookup
-     */
-    private $reflectionLookup;
-
-    /**
      * @var \Arbit\VCSWrapper\Diff\Collection[]
      */
     private $diffs;
@@ -21,9 +16,8 @@ class DiffIterator implements \IteratorAggregate
     /**
      * @param \Arbit\VCSWrapper\Diff\Collection[] $diffs
      */
-    public function __construct(ReflectionLookup $reflectionLookup, array $diffs)
+    public function __construct(array $diffs)
     {
-        $this->reflectionLookup = $reflectionLookup;
         $this->diffs = $diffs;
     }
 
@@ -38,7 +32,6 @@ class DiffIterator implements \IteratorAggregate
             }
 
             $chunksIterator = new LineChangeFeed\ChunksLineFeedIterator(
-                $this->reflectionLookup,
                 $diffCollection->chunks
             );
 
