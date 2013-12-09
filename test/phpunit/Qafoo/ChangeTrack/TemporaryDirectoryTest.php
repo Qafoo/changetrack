@@ -24,4 +24,72 @@ class TemporaryDirectoryTest extends \PHPUnit_Framework_TestCase
 
         $tempDir = new TemporaryDirectory(vfsStream::url(self::VFS) . '/not/exists');
     }
+
+    public function testCreateDirectory()
+    {
+        $vfsDir = vfsStream::url(self::VFS) . '/temp';
+        mkdir($vfsDir);
+
+        $tempDir = new TemporaryDirectory($vfsDir);
+
+        $createdDir = $tempDir->createDirectory('some');
+
+        $expectedDir = $vfsDir . '/some';
+
+        $this->assertTrue(is_dir($expectedDir));
+        $this->assertEquals($expectedDir, $createdDir);
+    }
+
+    public function testDirectoriesCleanedUp()
+    {
+        $vfsDir = vfsStream::url(self::VFS) . '/temp';
+        mkdir($vfsDir);
+
+        $tempDir = new TemporaryDirectory($vfsDir);
+
+        $firstDir = $tempDir->createDirectory('some');
+        $secondDir = $tempDir->createDirectory('thing');
+
+        mkdir($firstDir . '/foo');
+        touch($firstDir . '/foo/bar');
+
+        $tempDir->cleanup();
+
+        $this->asserFalse(is_dir($firstDir));
+        $this->asserFalse(is_dir($secondDir));
+    }
+
+    public function testCreateDirectoryExceptionOnDuplicate()
+    {
+        $vfsDir = vfsStream::url(self::VFS) . '/temp';
+        mkdir($vfsDir);
+
+        $tempDir = new TemporaryDirectory($vfsDir);
+
+        $createdDir = $tempDir->createDirectory('some');
+
+        $this->setExpectedException('RuntimeException');
+        $createdDir = $tempDir->createDirectory('some');
+    }
+
+    public function testCreateDirectoryRemovesPrevious()
+    {
+        $this->markTestIncomplete('Needs implementation.');
+
+        $vfsDir = vfsStream::url(self::VFS) . '/temp';
+        mkdir($vfsDir);
+
+        $previousDir = $vfsDir . '/some';
+        mkdir($previousDir);
+        touch($previousDir . '/file');
+        mkdir($previousDir . '/dir');
+
+        $tempDir = new TemporaryDirectory($vfsDir);
+
+        $createdDir = $tempDir->createDirectory('some');
+
+        $this->assertEquals($previousDir, $createdDir);
+        $this->assertFalse(file_exists($previousDir . '/file'));
+        $this->assertFalse(is_dir($previousDir . '/dir'));
+    }
 }
