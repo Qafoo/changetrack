@@ -55,8 +55,8 @@ class TemporaryDirectoryTest extends \PHPUnit_Framework_TestCase
 
         $tempDir->cleanup();
 
-        $this->asserFalse(is_dir($firstDir));
-        $this->asserFalse(is_dir($secondDir));
+        $this->assertFalse(is_dir($firstDir));
+        $this->assertFalse(is_dir($secondDir));
     }
 
     public function testCreateDirectoryExceptionOnDuplicate()
@@ -74,8 +74,6 @@ class TemporaryDirectoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateDirectoryRemovesPrevious()
     {
-        $this->markTestIncomplete('Needs implementation.');
-
         $vfsDir = vfsStream::url(self::VFS) . '/temp';
         mkdir($vfsDir);
 

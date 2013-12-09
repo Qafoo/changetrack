@@ -42,8 +42,19 @@ class TemporaryDirectory
     {
         $dirPath = $this->path . '/' . $dirName;
 
+        if (in_array($dirPath, $this->createdDirectories)) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Temporary directory "%s" is already in use and cannot be created.',
+                    $dirPath
+                )
+            );
+        }
+
         if (is_dir($dirPath)) {
-            throw new \RuntimeException("Could not create '$dirPath', already exists.");
+            // Cleanup directory from previous run
+            $fsTools = new Filesystem();
+            $fsTools->remove($dirPath);
         }
 
         mkdir($dirPath);
