@@ -59,6 +59,18 @@ class Analyze extends BaseCommand
                 'p',
                 InputOption::VALUE_NONE,
                 'Display progress bar (requires output file to be specified).'
+            )->addOption(
+                'path',
+                null,
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'The path pattern to analyze (passed to fnmatch()).',
+                array()
+            )->addOption(
+                'excluded-path',
+                null,
+                InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+                'The path pattern to exclude from analysis (passed to fnmatch()).',
+                array()
             );
     }
 
@@ -108,7 +120,9 @@ class Analyze extends BaseCommand
             ->analyze(
                 $url,
                 $input->getOption('start-revision'),
-                $input->getOption('end-revision')
+                $input->getOption('end-revision'),
+                $input->getOption('path'),
+                $input->getOption('excluded-path')
             );
 
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.Renderer');
