@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
+use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
@@ -48,8 +49,7 @@ class ChangeFeedTest extends CheckoutAwareTestBase
             $this->checkout,
             $this->changeSetFactory,
             $this->observerDummy,
-            $startRevision,
-            $endRevision
+            new RevisionBoundaries($startRevision, $endRevision)
         );
     }
 

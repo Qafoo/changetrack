@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer;
 
+use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
@@ -46,23 +47,22 @@ class ChangeFeed implements \Iterator
 
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory $changeSetFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
-     * @param string $startRevision
-     * @param string $endRevision
+     * @param \Qafoo\ChangeTrack\Analyzer\RevisionBoundaries $revisionBoundaries
      */
     public function __construct(
         GitCheckout $checkout,
         ChangeSetFactory $changeSetFactory,
         ChangeFeedObserver $observer,
-        $startRevision = null,
-        $endRevision = null
+        RevisionBoundaries $revisionBoundaries
     ) {
         $this->checkout = $checkout;
         $this->changeSetFactory = $changeSetFactory;
         $this->observer = $observer;
         $this->revisions = $this->checkout->getVersions();
 
-        $this->determineEdgeIndexes($startRevision, $endRevision);
+        $this->determineEdgeIndexes($revisionBoundaries);
         $this->rewind();
     }
 
@@ -70,16 +70,16 @@ class ChangeFeed implements \Iterator
      * @param string $startRevision
      * @param string $endRevision
      */
-    private function determineEdgeIndexes($startRevision, $endRevision)
+    private function determineEdgeIndexes(RevisionBoundaries $boundaries)
     {
         $startIndex = 0;
         $endIndex = count($this->revisions) - 1;
 
         foreach ($this->revisions as $index => $revision) {
-            if ($startRevision !== null && $revision === $startRevision) {
+            if ($boundaries->startNotNullAndEquals($revision)) {
                 $startIndex = $index;
             }
-            if ($endRevision !== null && $revision === $endRevision) {
+            if ($boundaries->endNotNullAndEquals($revision)) {
                 $endIndex = $index;
             }
         }
