@@ -12,8 +12,6 @@ use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
  * 1) A file must match at least one path defined in the paths setting. If the paths setting is empty, this will be
  *    treated like if it would contain a single path *; that is it would always match.
  * 2) A file must not match a single path defined in the excluded_paths setting.
- *
- * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 class FilteringDiffIterator implements \IteratorAggregate
 {
