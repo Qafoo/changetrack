@@ -20,7 +20,7 @@
         <exec executable="${commons.executable.php}" failonerror="true">
             <arg value="${-temp:scrutinizer:ocular}" />
             <arg value="code-coverage:upload" />
-            <arg value="--format=php-clover coverage.clover" />
+            <arg value="--format=php-clover" />
             <arg value="${commons:builddir}/coverage/clover.xml" />
         </exec>
         
