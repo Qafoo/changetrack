@@ -1,6 +1,6 @@
 language: php
 before_script:
 script: 
-  - ant verify
+  - ant travis
 php:
   - 5.5

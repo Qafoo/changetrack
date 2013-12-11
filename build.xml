@@ -6,6 +6,8 @@
     <!-- Import the build commons framework -->
     <import file="setup/src/main/xml/base.xml" />
 
+    <target name="travis" depends="verify, scrutinizer:upload-code-coverage" />
+
     <target name="scrutinizer:upload-code-coverage"
         depends="phpunit:coverage">
 
