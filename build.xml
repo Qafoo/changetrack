@@ -5,4 +5,23 @@
 
     <!-- Import the build commons framework -->
     <import file="setup/src/main/xml/base.xml" />
+
+    <target name="scrutinizer:upload-code-coverage"
+        depends="phpunit:coverage">
+
+        <tempfile property="-temp:scrutinizer:ocular"
+                  destdir="${basedir}"
+                  deleteonexit="true" />
+
+        <get src="${scrutinizer.ocular.download.uri}" dest="${-temp:scrutinizer:ocular}" />
+
+        <exec executable="${commons.executable.php}" failonerror="true">
+            <arg value="${-temp:scrutinizer:ocular}" />
+            <arg value="code-coverage:upload" />
+            <arg value="--format=php-clover coverage.clover" />
+            <arg value="${commons:builddir}/coverage/clover.xml" />
+        </exec>
+        
+    </target>
+
 </project>
