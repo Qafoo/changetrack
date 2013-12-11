@@ -96,16 +96,27 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @When /^I analyze the changes of paths "([^"]*)"$/
+     */
+    public function iAnalyzeTheChangesOfPaths($pathsStr)
+    {
+        $paths = preg_split('/\s*,\s*/', $pathsStr);
+
+        $this->iAnalyzeTheChangesFromTo(null, null, $paths);
+    }
+
+    /**
      * @When /^I analyze the changes from "([^"]*)" to "([^"]*)"$/
      */
-    public function iAnalyzeTheChangesFromTo($startRevision, $endRevision)
+    public function iAnalyzeTheChangesFromTo($startRevision, $endRevision, array $paths = array())
     {
         $analyzer = $this->container->get('Qafoo.ChangeTrack.Analyzer');
 
         $this->analyzedChanges = $analyzer->analyze(
             $this->getRepositoryUrl(),
             $startRevision,
-            $endRevision
+            $endRevision,
+            $paths
         );
     }
 

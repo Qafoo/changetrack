@@ -6,21 +6,15 @@ use Qafoo\ChangeTrack\Analyzer\Change;
 
 class SortingDiffIterator implements \IteratorAggregate
 {
-    /**
-     * @var \Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\DiffIterator
-     */
     private $innerIterator;
 
-    /**
-     * @param \Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\DiffIterator $innerIterator
-     */
-    public function __construct(DiffIterator $innerIterator)
+    public function __construct(\Traversable $innerIterator)
     {
         $this->innerIterator = $innerIterator;
     }
 
     /**
-     * @var \Iterator(Qafoo\ChangeTrack\Analyzer\Change\LocalChange)
+     * @return \Iterator(Qafoo\ChangeTrack\Analyzer\Change\LocalChange)
      */
     public function getIterator()
     {

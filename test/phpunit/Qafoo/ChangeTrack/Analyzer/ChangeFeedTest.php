@@ -25,6 +25,8 @@ class ChangeFeedTest extends CheckoutAwareTestBase
      */
     private $observerDummy;
 
+    private $changeSetFactory;
+
     public function setup()
     {
         parent::setup();
@@ -33,10 +35,8 @@ class ChangeFeedTest extends CheckoutAwareTestBase
         $this->checkout = new GitCheckout($this->getCheckoutPath());
         $this->checkout->initialize($this->getRepositoryUrl());
 
-        $reflectionLookupFactory = new ReflectionLookupFactory();
-
         $this->changeSetFactory = new ChangeSetFactory(
-            new DiffIteratorFactory($reflectionLookupFactory->createReflectionLookup())
+            new DiffIteratorFactory()
         );
 
         $this->observerDummy = new NullObserver();

@@ -2,19 +2,21 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
-use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
-
 class DiffIteratorFactory
 {
     /**
      * @param array $diffs
      * @return \Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\DiffIterator
      */
-    public function createDiffIterator(array $diffs)
+    public function createDiffIterator(array $diffs, array $paths = array(), array $excludedPaths = array())
     {
         return new Diff\SortingDiffIterator(
-            new Diff\DiffIterator(
-                $diffs
+            new Diff\FilteringDiffIterator(
+                new Diff\DiffIterator(
+                    $diffs
+                ),
+                $paths,
+                $excludedPaths
             )
         );
     }
