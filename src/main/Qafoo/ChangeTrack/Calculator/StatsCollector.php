@@ -81,13 +81,4 @@ class StatsCollector
             }
         }
     }
-
-    private function recordChangesForMethod($packageName, $className, $methodName, $label)
-    {
-        if (!isset($this->stats[$packageName][$className][$methodName][$label])) {
-            $this->stats[$packageName][$className][$methodName][$label] = 0;
-        }
-
-        $this->stats[$packageName][$className][$methodName][$label]++;
-    }
 }

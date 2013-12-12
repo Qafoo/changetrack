@@ -11,12 +11,6 @@ use Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelPr
 class BuilderDispatcher
 {
     /**
-     * @var \Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator
-     */
-    private $serviceGenerator;
-
-    /**
-     * @pram \Qafoo\ChangeTrack\DependencyInjection\AnonymouseServiceGenerator $serviceGenerator
      * @var array(string => \Qafoo\ChangeTrack\DependencyInjection\RevisionLabelProviderExtension\LabelProviderBuilder)
      */
     private $builderMap;

@@ -52,8 +52,12 @@ class Analyzer
         $this->workingDir = $workingDir;
     }
 
-    public function analyze($repositoryUrl, RevisionBoundaries $boundaries, array $paths = array(), array $excludedPaths = array())
-    {
+    public function analyze(
+        $repositoryUrl,
+        RevisionBoundaries $boundaries,
+        array $paths = array(),
+        array $excludedPaths = array()
+    ) {
         $checkout = $this->createCheckout($repositoryUrl);
 
         $changeFeed = $this->changeFeedFactory->createChangeFeed(

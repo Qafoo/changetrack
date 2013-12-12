@@ -17,7 +17,7 @@ class NullSourceResolver implements SourceResolver
      * @param string $className
      * @return boolean
      */
-    function hasPathnameForClass($className)
+    public function hasPathnameForClass($className)
     {
         return false;
     }
@@ -28,7 +28,7 @@ class NullSourceResolver implements SourceResolver
      * @throws \pdepend\reflection\exceptions\PathnameNotFoundException When
      *         not match can be found for the given class name.
      */
-    function getPathnameForClass($className)
+    public function getPathnameForClass($className)
     {
         throw new PathnameNotFoundException($className);
     }
