@@ -56,6 +56,38 @@ class ReflectionLookupTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($reflectionMethod);
     }
 
+    public function testGetAffectedMethodCaches()
+    {
+        $fileQueryMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\Analyzer\\Reflection\\FileQuery')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fileQueryMock->expects($this->once())
+            ->method('find')
+            ->will($this->returnValue(array()));
+
+        $lookup = new ReflectionLookup($fileQueryMock);
+
+        $reflectionMethod = $lookup->getAffectedMethod($this->testFile, 57, 'rev-abc');
+        $reflectionMethod = $lookup->getAffectedMethod($this->testFile, 57, 'rev-abc');
+    }
+
+    public function testGetAffectedMethodClearsCache()
+    {
+        $fileQueryMock = $this->getMockBuilder('Qafoo\\ChangeTrack\\Analyzer\\Reflection\\FileQuery')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $fileQueryMock->expects($this->exactly(2))
+            ->method('find')
+            ->will($this->returnValue(array()));
+
+        $lookup = new ReflectionLookup($fileQueryMock);
+
+        $reflectionMethod = $lookup->getAffectedMethod($this->testFile, 57, 'rev-abc');
+        $reflectionMethod = $lookup->getAffectedMethod($this->testFile, 57, 'rev-def');
+    }
+
     private function createLookup()
     {
         $factory = new ReflectionLookupFactory();
