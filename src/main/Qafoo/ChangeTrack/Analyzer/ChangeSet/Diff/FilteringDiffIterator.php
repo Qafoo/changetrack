@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
 
 /**
@@ -16,14 +17,16 @@ use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
 class FilteringDiffIterator implements \IteratorAggregate
 {
     private $delegate;
-    private $paths;
-    private $excludedPaths;
+
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\PathFilter
+     */
+    private $pathFilter;
 
     public function __construct(\Traversable $iterator, array $paths = array(), array $excludedPaths = array())
     {
         $this->delegate = $iterator;
-        $this->paths = $paths;
-        $this->excludedPaths = $excludedPaths;
+        $this->pathFilter = new PathFilter($paths, $excludedPaths);
     }
 
     public function getIterator()
@@ -31,35 +34,11 @@ class FilteringDiffIterator implements \IteratorAggregate
         foreach ($this->delegate as $localChange) {
             /** @var LocalChange $localChange */
 
-            if ($this->isFiltered($localChange->getFileChange()->getToFile())) {
+            if ($this->pathFilter->isFiltered($localChange->getFileChange()->getToFile())) {
                 continue;
             }
 
             yield $localChange;
         }
-    }
-
-    private function isFiltered($path)
-    {
-        if ( ! empty($this->paths) && ! $this->matches($path, $this->paths)) {
-            return true;
-        }
-
-        if ( ! empty($this->excludedPaths) && $this->matches($path, $this->excludedPaths)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function matches($path, array $patterns)
-    {
-        foreach ($patterns as $pattern) {
-            if (fnmatch($pattern, $path)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
