@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeSet;
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory;
@@ -70,7 +71,10 @@ class Analyzer
 
         foreach ($changeFeed as $changeSet) {
             /** @var ChangeSet $changeSet */
-            $changeSet->recordChanges($changeRecorder, $paths, $excludedPaths);
+            $changeSet->recordChanges(
+                $changeRecorder,
+                new PathFilter($paths, $excludedPaths)
+            );
         }
 
         $this->workingDir->cleanup();

@@ -29,14 +29,11 @@ class DiffChangeSet extends ChangeSet
         $this->message = $message;
     }
 
-    public function recordChanges(ChangeRecorder $changeRecorder, array $paths, array $excludedPaths)
+    public function recordChanges(ChangeRecorder $changeRecorder, PathFilter $pathFilter)
     {
         $diffIterator = $this->diffIteratorFactory->createDiffIterator(
             $this->checkout->getRevisionDiff($this->revision),
-            new PathFilter(
-                $paths,
-                $excludedPaths
-            )
+            $pathFilter
         );
 
         foreach ($diffIterator as $localChange) {
