@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\AnalyzerFactory;
 use Qafoo\ChangeTrack\Analyzer\Renderer;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\ProgressObserver;
@@ -124,8 +125,10 @@ class Analyze extends BaseCommand
                     $input->getOption('start-revision'),
                     $input->getOption('end-revision')
                 ),
-                $input->getOption('path'),
-                $input->getOption('excluded-path')
+                new PathFilter(
+                    $input->getOption('path'),
+                    $input->getOption('excluded-path')
+                )
             );
 
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Analyzer.Renderer');

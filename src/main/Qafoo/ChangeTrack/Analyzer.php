@@ -56,8 +56,7 @@ class Analyzer
     public function analyze(
         $repositoryUrl,
         RevisionBoundaries $boundaries,
-        array $paths = array(),
-        array $excludedPaths = array()
+        PathFilter $pathFilter
     ) {
         $checkout = $this->createCheckout($repositoryUrl);
 
@@ -73,7 +72,7 @@ class Analyzer
             /** @var ChangeSet $changeSet */
             $changeSet->recordChanges(
                 $changeRecorder,
-                new PathFilter($paths, $excludedPaths)
+                $pathFilter
             );
         }
 
