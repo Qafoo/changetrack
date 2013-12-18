@@ -11,7 +11,8 @@ use Qafoo\ChangeTrack\Bootstrap;
 use Qafoo\ChangeTrack\Analyzer;
 use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\RepositoryFactory;
-use Qafoo\ChangeTrack\Analyzer\Change;
+use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -114,9 +115,8 @@ class FeatureContext extends BehatContext
 
         $this->analyzedChanges = $analyzer->analyze(
             $this->getRepositoryUrl(),
-            $startRevision,
-            $endRevision,
-            $paths
+            new RevisionBoundaries($startRevision, $endRevision),
+            new PathFilter($paths)
         );
     }
 
