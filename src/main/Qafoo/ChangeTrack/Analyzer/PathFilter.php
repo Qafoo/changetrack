@@ -20,7 +20,7 @@ class PathFilter
      * @param string[] $paths
      * @param string[] $excludedPaths
      */
-    public function __construct($paths, $excludedPaths)
+    public function __construct(array $paths = array(), array $excludedPaths = array())
     {
         $this->paths = $paths;
         $this->excludedPaths = $excludedPaths;

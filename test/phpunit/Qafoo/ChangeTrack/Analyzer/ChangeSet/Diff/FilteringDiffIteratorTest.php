@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\Change\FileChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LocalChange;
@@ -13,7 +14,10 @@ class FilteringDiffIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatches($path, array $patterns, $expectedOutcome)
     {
-        $filter = new FilteringDiffIterator($this->createDummyIterator(array($path)), $patterns);
+        $filter = new FilteringDiffIterator(
+            $this->createDummyIterator(array($path)),
+            new PathFilter($patterns)
+        );
         $this->assertSame($expectedOutcome, count(iterator_to_array($filter)) > 0);
     }
 
@@ -30,7 +34,10 @@ class FilteringDiffIteratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testIsFiltered($path, array $includedPaths, array $excludedPaths, $expectedOutcome)
     {
-        $filter = new FilteringDiffIterator($this->createDummyIterator(array($path)), $includedPaths, $excludedPaths);
+        $filter = new FilteringDiffIterator(
+            $this->createDummyIterator(array($path)),
+            new PathFilter($includedPaths, $excludedPaths)
+        );
         $this->assertSame($expectedOutcome, count(iterator_to_array($filter)) === 0);
     }
 

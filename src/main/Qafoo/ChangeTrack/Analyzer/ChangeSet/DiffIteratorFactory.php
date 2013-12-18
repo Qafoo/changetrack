@@ -2,6 +2,8 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
+
 class DiffIteratorFactory
 {
     /**
@@ -15,8 +17,10 @@ class DiffIteratorFactory
                 new Diff\DiffIterator(
                     $diffs
                 ),
-                $paths,
-                $excludedPaths
+                new PathFilter(
+                    $paths,
+                    $excludedPaths
+                )
             )
         );
     }

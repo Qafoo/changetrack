@@ -23,10 +23,10 @@ class FilteringDiffIterator implements \IteratorAggregate
      */
     private $pathFilter;
 
-    public function __construct(\Traversable $iterator, array $paths = array(), array $excludedPaths = array())
+    public function __construct(\Traversable $iterator, PathFilter $pathFilter)
     {
         $this->delegate = $iterator;
-        $this->pathFilter = new PathFilter($paths, $excludedPaths);
+        $this->pathFilter = $pathFilter;
     }
 
     public function getIterator()
