@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer\ChangeSet;
 
 use Qafoo\ChangeTrack\Analyzer\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\Change;
+use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
@@ -32,8 +33,10 @@ class DiffChangeSet extends ChangeSet
     {
         $diffIterator = $this->diffIteratorFactory->createDiffIterator(
             $this->checkout->getRevisionDiff($this->revision),
-            $paths,
-            $excludedPaths
+            new PathFilter(
+                $paths,
+                $excludedPaths
+            )
         );
 
         foreach ($diffIterator as $localChange) {

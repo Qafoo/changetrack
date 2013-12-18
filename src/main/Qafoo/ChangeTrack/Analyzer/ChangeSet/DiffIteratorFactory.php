@@ -10,17 +10,14 @@ class DiffIteratorFactory
      * @param array $diffs
      * @return \Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\DiffIterator
      */
-    public function createDiffIterator(array $diffs, array $paths = array(), array $excludedPaths = array())
+    public function createDiffIterator(array $diffs, PathFilter $pathFilter)
     {
         return new Diff\SortingDiffIterator(
             new Diff\FilteringDiffIterator(
                 new Diff\DiffIterator(
                     $diffs
                 ),
-                new PathFilter(
-                    $paths,
-                    $excludedPaths
-                )
+                $pathFilter
             )
         );
     }
