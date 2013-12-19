@@ -8,6 +8,32 @@
 
     <target name="travis" depends="verify, scrutinizer:upload-code-coverage" />
 
+    <!-- <target name="release" depends="verify"> -->
+    <target name="release">
+        <tempfile property="-temp:phar-composer:binary"
+                  destdir="${basedir}"
+                  deleteonexit="true" />
+        <property name="phar.readonly" value="off" />
+
+        <!-- Remove dev dependencies for release -->
+        <delete file="${composer.up2date.file}" />
+        <antcall target="composer:dependencies-install-or-update">
+            <param name="commons.env" value="release" />
+        </antcall>
+
+        <get src="http://www.lueck.tv/phar-composer/phar-composer.phar" dest="${-temp:phar-composer:binary}" />
+        <exec executable="${commons.executable.php}" failonerror="true">
+            <arg value="${-temp:phar-composer:binary}" />
+            <arg value="build" />
+            <arg value="${commons.basedir}" />
+        </exec>
+
+        <!-- Update composer deps to normal (dev?) mode -->
+        <delete file="${composer.up2date.file}" />
+        <antcall target="composer:dependencies-install-or-update" />
+    </target>
+
+
     <target name="scrutinizer:upload-code-coverage"
         depends="phpunit:coverage">
 
