@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-class TemporaryDirectory
+class WorkingDirectory
 {
     /**
      * @var string

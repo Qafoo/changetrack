@@ -39,13 +39,13 @@ class Analyzer
      * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory $changeFeedFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory $changeRecorderFactory
-     * @param \Qafoo\ChangeTrack\TemporaryDirectory $workingDir
+     * @param \Qafoo\ChangeTrack\WorkingDirectory $workingDir
      */
     public function __construct(
         CheckoutFactory $checkoutFactory,
         ChangeFeedFactory $changeFeedFactory,
         ChangeRecorderFactory $changeRecorderFactory,
-        TemporaryDirectory $workingDir
+        WorkingDirectory $workingDir
     ) {
         $this->checkoutFactory = $checkoutFactory;
         $this->changeFeedFactory = $changeFeedFactory;

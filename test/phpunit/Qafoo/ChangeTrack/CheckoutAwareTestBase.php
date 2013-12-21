@@ -7,7 +7,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Qafoo\ChangeTrack\TemporaryDirectory
+     * @var \Qafoo\ChangeTrack\WorkingDirectory
      */
     private $tempDir;
 
@@ -38,7 +38,7 @@ class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->tempDir = new TemporaryDirectory(__DIR__ . '/../../../../src/var/tmp');
+        $this->tempDir = new WorkingDirectory(__DIR__ . '/../../../../src/var/tmp');
 
         $this->cachePath = $this->tempDir->createDirectory('cache');
         $this->checkoutPath =  $this->tempDir->createDirectory('checkout');

@@ -29,7 +29,7 @@
                 </service>
             </argument>
             <argument type="service">
-                <service class="Qafoo\ChangeTrack\TemporaryDirectory">
+                <service class="Qafoo\ChangeTrack\WorkingDirectory">
                     <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
                 </service>
             </argument>
