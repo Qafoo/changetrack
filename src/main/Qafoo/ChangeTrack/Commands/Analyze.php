@@ -36,8 +36,8 @@ class Analyze extends BaseCommand
                 'working-path',
                 'w',
                 InputArgument::OPTIONAL,
-                'Path to use for checkouts, temp files, etc. (must be empty dir)',
-                'src/var/tmp'
+                'Path to use for temporary files. (sys_get_temp_dir() if not specified)',
+                null
             )->addOption(
                 'start-revision',
                 's',

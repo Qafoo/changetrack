@@ -7,8 +7,9 @@
     <parameters>
         <parameter key="Qafoo.ChangeTrack.ApplicationName">Qafoo ChangeTrack</parameter>
         <parameter key="Qafoo.ChangeTrack.JmsSerializer.MetaDataDir">%Qafoo.ChangeTrack.BaseDir%/src/config/jmsserializer</parameter>
-        <!-- Set through commands from parameters/config file: -->
-        <parameter key="Qafoo.ChangeTrack.Analyzer.WorkingPath">Please specify this through configuration!</parameter>
+        <!-- Set through command options or left null to use system temp dir -->
+        <!-- @todo: So ugly to leave that here, should be refactored -->
+        <parameter key="Qafoo.ChangeTrack.Analyzer.WorkingPath">null</parameter>
     </parameters>
     <services>
         <service id="Qafoo.ChangeTrack.ResultOutputFactory" class="Qafoo\ChangeTrack\ResultOutputFactory" />
@@ -29,10 +30,14 @@
                 </service>
             </argument>
             <argument type="service">
-                <service class="Qafoo\ChangeTrack\WorkingDirectory\ConfigurableDirectory">
-                    <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
-                </service>
+                <service class="Qafoo\ChangeTrack\WorkingDirectory"
+                    factory-service="Qafoo.ChangeTrack.WorkingDirectoryFactory"
+                    factory-method="createWorkingDirectory" />
             </argument>
+        </service>
+
+        <service id="Qafoo.ChangeTrack.WorkingDirectoryFactory" class="Qafoo\ChangeTrack\WorkingDirectory\WorkingDirectoryFactory">
+            <argument>%Qafoo.ChangeTrack.Analyzer.WorkingPath%</argument>
         </service>
 
         <service id="Qafoo.ChangeTrack.Analyzer.ChangeFeedFactory" class="Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory">
