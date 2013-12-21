@@ -1,10 +1,10 @@
 <?php
 
-namespace Qafoo\ChangeTrack;
+namespace Qafoo\ChangeTrack\WorkingDirectory;
 
 use org\bovigo\vfs\vfsStream;
 
-class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
+class ConfigurableDirectoryTest extends \PHPUnit_Framework_TestCase
 {
     const VFS = 'temp';
 
@@ -22,7 +22,7 @@ class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('InvalidArgumentException');
 
-        $tempDir = new WorkingDirectory(vfsStream::url(self::VFS) . '/not/exists');
+        $tempDir = new ConfigurableDirectory(vfsStream::url(self::VFS) . '/not/exists');
     }
 
     public function testCreateDirectory()
@@ -30,7 +30,7 @@ class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
         $vfsDir = vfsStream::url(self::VFS) . '/temp';
         mkdir($vfsDir);
 
-        $tempDir = new WorkingDirectory($vfsDir);
+        $tempDir = new ConfigurableDirectory($vfsDir);
 
         $createdDir = $tempDir->createDirectory('some');
 
@@ -45,7 +45,7 @@ class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
         $vfsDir = vfsStream::url(self::VFS) . '/temp';
         mkdir($vfsDir);
 
-        $tempDir = new WorkingDirectory($vfsDir);
+        $tempDir = new ConfigurableDirectory($vfsDir);
 
         $firstDir = $tempDir->createDirectory('some');
         $secondDir = $tempDir->createDirectory('thing');
@@ -64,7 +64,7 @@ class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
         $vfsDir = vfsStream::url(self::VFS) . '/temp';
         mkdir($vfsDir);
 
-        $tempDir = new WorkingDirectory($vfsDir);
+        $tempDir = new ConfigurableDirectory($vfsDir);
 
         $createdDir = $tempDir->createDirectory('some');
 
@@ -82,7 +82,7 @@ class WorkingDirectoryTest extends \PHPUnit_Framework_TestCase
         touch($previousDir . '/file');
         mkdir($previousDir . '/dir');
 
-        $tempDir = new WorkingDirectory($vfsDir);
+        $tempDir = new ConfigurableDirectory($vfsDir);
 
         $createdDir = $tempDir->createDirectory('some');
 

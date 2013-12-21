@@ -2,12 +2,13 @@
 
 namespace Qafoo\ChangeTrack;
 
+use Qafoo\ChangeTrack\WorkingDirectory\ConfigurableDirectory;
 use Symfony\Component\Filesystem\Filesystem;
 
 class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Qafoo\ChangeTrack\WorkingDirectory
+     * @var \Qafoo\ChangeTrack\WorkingDirectory\ConfigurableDirectory
      */
     private $tempDir;
 
@@ -38,7 +39,7 @@ class CheckoutAwareTestBase extends \PHPUnit_Framework_TestCase
 
     public function setup()
     {
-        $this->tempDir = new WorkingDirectory(__DIR__ . '/../../../../src/var/tmp');
+        $this->tempDir = new ConfigurableDirectory(__DIR__ . '/../../../../src/var/tmp');
 
         $this->cachePath = $this->tempDir->createDirectory('cache');
         $this->checkoutPath =  $this->tempDir->createDirectory('checkout');
