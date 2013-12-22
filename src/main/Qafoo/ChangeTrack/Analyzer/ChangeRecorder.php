@@ -6,6 +6,7 @@ use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
+use Qafoo\ChangeTrack\Analyzer\Reflection\ReflectionException;
 
 use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
@@ -28,10 +29,16 @@ class ChangeRecorder
 
     public function recordChange(Change $change, GitCheckout $checkout)
     {
-        $affectedMethod = $change->determineAffectedArtifact(
-            $checkout,
-            $this->reflectionLookup
-        );
+        $affectedMethod = null;
+        try {
+            $affectedMethod = $change->determineAffectedArtifact(
+                $checkout,
+                $this->reflectionLookup
+            );
+        } catch (ReflectionException $e) {
+            // TODO: Implement sensible logging
+            return null;
+        }
 
         if ($affectedMethod !== null) {
             $affectedClass = $affectedMethod->getDeclaringClass();
