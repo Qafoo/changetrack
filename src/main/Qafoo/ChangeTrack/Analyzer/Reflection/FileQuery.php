@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer\Reflection;
 
 use pdepend\reflection\queries\ReflectionFileQuery;
+use pdepend\reflection\exceptions\ParserException;
 
 class FileQuery
 {
@@ -25,6 +26,11 @@ class FileQuery
      */
     public function find($file)
     {
-        return $this->innerFileQuery->find($file);
+        try {
+            $result = $this->innerFileQuery->find($file);
+        } catch (ParserException $e) {
+            throw new ReflectionException($file, $e);
+        }
+        return $result;
     }
 }
