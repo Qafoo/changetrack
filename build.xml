@@ -6,6 +6,7 @@
     <!-- Import the build commons framework -->
     <import file="setup/src/main/xml/base.xml" />
 
+
     <target name="travis" depends="verify, scrutinizer:upload-code-coverage" />
 
     <!-- <target name="release" depends="verify"> -->
@@ -33,7 +34,6 @@
         <antcall target="composer:dependencies-install-or-update" />
     </target>
 
-
     <target name="scrutinizer:upload-code-coverage"
         depends="phpunit:coverage">
 
@@ -50,6 +50,18 @@
             <arg value="${commons:builddir}/coverage/clover.xml" />
         </exec>
         
+    </target>
+
+    <target name="behat"
+        extensionOf="-test:after~hook">
+        <exec executable="${commons.executable.php}" failonerror="true" dir="${basedir}">
+            <arg value="vendor/bin/behat" />
+
+            <arg value="--format" />
+            <arg value="junit,progress" />
+            <arg value="--out" />
+            <arg value="${commons:logsdir}," />
+        </exec>
     </target>
 
 </project>
