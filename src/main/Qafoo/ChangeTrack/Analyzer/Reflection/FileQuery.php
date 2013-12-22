@@ -12,16 +12,6 @@ class FileQuery
     private $innerFileQuery;
 
     /**
-     * @var string
-     */
-    private $currentRevision;
-
-    /**
-     * @var array(string => \ArrayIterator)
-     */
-    private $cache = array();
-
-    /**
      * @param \pdepend\reflection\queries\ReflectionFileQuery $innerFileQuery
      */
     public function __construct(ReflectionFileQuery $innerFileQuery)
@@ -31,26 +21,10 @@ class FileQuery
 
     /**
      * @param string $file
-     * @param string $revision
+     * @return \ReflectionClass[]
      */
-    public function find($file, $revision)
+    public function find($file)
     {
-        $this->resetIfNecessary($revision);
-
-        if (!isset($this->cache[$file])) {
-            $this->cache[$file] = $this->innerFileQuery->find($file);
-        }
-        return $this->cache[$file];
-    }
-
-    /**
-     * @param string $revision
-     */
-    private function resetIfNecessary($revision)
-    {
-        if ($this->currentRevision !== $revision) {
-            $this->cache = array();
-            $this->currentRevision = $revision;
-        }
+        return $this->innerFileQuery->find($file);
     }
 }

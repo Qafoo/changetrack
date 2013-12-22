@@ -44,7 +44,7 @@ class ReflectionLookup
         }
 
         if (!isset($this->cache[$file])) {
-            $this->cache[$file] = $this->reflectionQuery->find($file, $revision);
+            $this->cache[$file] = $this->reflectionQuery->find($file);
         }
         $classes = $this->cache[$file];
 
