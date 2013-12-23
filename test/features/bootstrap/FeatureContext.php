@@ -22,11 +22,6 @@ require __DIR__ . '/../../../vendor/autoload.php';
 class FeatureContext extends BehatContext
 {
     /**
-     * @var \Qafoo\ChangeTrack\Calculator\Stats
-     */
-    private $calculatedStats;
-
-    /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
     private $container;
@@ -65,6 +60,7 @@ class FeatureContext extends BehatContext
         $this->container->compile();
 
         $this->useContext('analyzer', new AnalyzerContext($this->container));
+        $this->useContext('calculator', new CalculatorContext($this->container));
     }
 
     /**
@@ -73,51 +69,5 @@ class FeatureContext extends BehatContext
     public function getAnalyzedChanges()
     {
         return $this->getMainContext()->getSubContext('analyzer')->getAnalyzedChanges();
-    }
-
-    /**
-     * @When /^I calculate the stats$/
-     */
-    public function iCalculateTheStats()
-    {
-        $calculator = $this->container->get('Qafoo.ChangeTrack.Calculator');
-        $this->calculatedStats = $calculator->calculateStats($this->getAnalyzedChanges());
-    }
-
-    /**
-     * @Then /^I have the following stats$/
-     */
-    public function iHaveTheFollowingStats(TableNode $table)
-    {
-        foreach ($table->getHash() as $row) {
-            $package = $row['Package'];
-            $class = $row['Class'];
-            $method = $row['Method'];
-            $changeType = $row['Change Type'];
-            $value = (int) $row['Value'];
-
-            if (!isset($this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType])) {
-                throw new \RuntimeException(
-                    sprintf(
-                        'No stats found for change type "%s", class "%s" and method "%s"',
-                        $changeType,
-                        $class,
-                        $method
-                    )
-                );
-            }
-            if ($this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType] != $value) {
-                throw new \RuntimeException(
-                    sprintf(
-                        'Stats value for change type "%s", class "%s" and method "%s" is %s, expected %s',
-                        $changeType,
-                        $class,
-                        $method,
-                        $this->calculatedStats->packageStats[$package]->classStats[$class]->methodStats[$method]->labelStats[$changeType],
-                        $value
-                    )
-                );
-            }
-        }
     }
 }
