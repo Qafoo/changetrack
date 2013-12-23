@@ -29,10 +29,13 @@ require __DIR__ . '/../../../vendor/autoload.php';
 class FeatureContext extends BehatContext
 {
     /**
-     * @var Qafoo\ChangeTrack\Analyzes
+     * @var \Qafoo\ChangeTrack\Analyzer
      */
     private $analyzer;
 
+    /**
+     * @var \Qafoo\ChangeTrack\Calculator\Stats
+     */
     private $calculatedStats;
 
     /**
