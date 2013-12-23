@@ -94,9 +94,9 @@ class AnalyzerContext extends BehatContext
     }
 
     /**
-     * @Then /^there are no stats for revision "([^"]*)"$/
+     * @Then /^there are no changes for revision "([^"]*)"$/
      */
-    public function thereAreNoStatsForRevision($revision)
+    public function thereAreNoChangesForRevision($revision)
     {
         if (isset($this->analyzedChanges->revisionChanges[$revision])) {
             throw new \RuntimeException(
@@ -109,9 +109,9 @@ class AnalyzerContext extends BehatContext
     }
 
     /**
-     * @Then /^there are the following stats in revision "([^"]*)"$/
+     * @Then /^there are the following changes in revision "([^"]*)"$/
      */
-    public function thereAreTheFollowingStatsInRevision($revision, TableNode $table)
+    public function thereAreTheFollowingChangesInRevision($revision, TableNode $table)
     {
         foreach ($table->getHash() as $rows) {
             $package = $rows['Package'];
