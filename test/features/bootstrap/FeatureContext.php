@@ -1,15 +1,10 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface,
-    Behat\Behat\Context\TranslatedContextInterface,
-    Behat\Behat\Context\BehatContext,
+use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
-use Behat\Gherkin\Node\PyStringNode,
-    Behat\Gherkin\Node\TableNode;
+use Behat\Gherkin\Node\TableNode;
 
 use Qafoo\ChangeTrack\Bootstrap;
-use Qafoo\ChangeTrack\Analyzer;
-use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\RepositoryFactory;
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\PathFilter;
