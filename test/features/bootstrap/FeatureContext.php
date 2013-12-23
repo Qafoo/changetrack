@@ -6,7 +6,9 @@ use Behat\Gherkin\Node\TableNode;
 
 use Qafoo\ChangeTrack\Bootstrap;
 use Qafoo\ChangeTrack\RepositoryFactory;
+
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
+use Qafoo\ChangeTrack\FISCalculator;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -84,11 +86,14 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @When /^I calculate frequent item sets$/
+     * @When /^I calculate frequent item sets with min support "([^"]*)"$/
      */
-    public function iCalculateFrequentItemSets()
+    public function iCalculateFrequentItemSetsWithMinSupport($minSupport)
     {
-        throw new PendingException();
+        $minSupport = (float) $minSupport;
+        $calculator = new FISCalculator();
+        $this->frequentItemSets = $calculator->calculateFrequentItemSets($this->analyzedChanges, $minSupport);
+
     }
 
     /**
