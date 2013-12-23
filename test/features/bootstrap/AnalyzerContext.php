@@ -28,6 +28,11 @@ class AnalyzerContext extends BehatContext
     private $repositoryUrl;
 
     /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Result
+     */
+    private $analyzedChanges;
+
+    /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)

@@ -27,21 +27,6 @@ class FeatureContext extends BehatContext
     private $container;
 
     /**
-     * @var string
-     */
-    private $repositoryUrlOverride;
-
-    /**
-     * @var string
-     */
-    private $checkoutDir;
-
-    /**
-     * @var string
-     */
-    private $cacheDir;
-
-    /**
      * Initializes context.
      * Every scenario gets it's own context object.
      *
