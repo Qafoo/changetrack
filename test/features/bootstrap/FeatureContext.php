@@ -55,4 +55,28 @@ class FeatureContext extends BehatContext
     {
         return $this->getMainContext()->getSubContext('analyzer')->getAnalyzedChanges();
     }
+
+    /**
+     * @Given /^I have analyzed the following changes$/
+     */
+    public function iHaveAnalyzedTheFollowingChanges(TableNode $table)
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @When /^I calculate frequent item sets$/
+     */
+    public function iCalculateFrequentItemSets()
+    {
+        throw new PendingException();
+    }
+
+    /**
+     * @Then /^I have the following frequent item sets$/
+     */
+    public function iHaveTheFollowingFrequentItemSets(TableNode $table)
+    {
+        throw new PendingException();
+    }
 }
