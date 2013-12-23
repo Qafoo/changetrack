@@ -6,6 +6,7 @@ use Behat\Gherkin\Node\TableNode;
 
 use Qafoo\ChangeTrack\Bootstrap;
 use Qafoo\ChangeTrack\RepositoryFactory;
+use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -57,11 +58,29 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * Creates a fake result from a table.
+     *
      * @Given /^I have analyzed the following changes$/
      */
     public function iHaveAnalyzedTheFollowingChanges(TableNode $table)
     {
-        throw new PendingException();
+        $resultBuilder = new ResultBuilder('irrelevant-repository');
+
+        foreach ($table->getHash() as $row) {
+            $methodChanges = $resultBuilder->revisionChanges($row['Revision'])
+                ->packageChanges($row['Package'])
+                ->classChanges($row['Class'])
+                ->methodChanges($row['Method']);
+
+            if ((int) $row['Added'] > 0) {
+                $methodChanges->lineAdded();
+            }
+            if ((int) $row['Removed'] > 0) {
+                $methodChanges->lineRemoved();
+            }
+        }
+
+        $this->analyzedChanges = $resultBuilder->buildResult();
     }
 
     /**
