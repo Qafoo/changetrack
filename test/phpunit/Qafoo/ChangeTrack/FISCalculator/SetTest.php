@@ -38,6 +38,18 @@ class SetTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testIntersect()
+    {
+        $firstSet = new Set(array('A', 'B', 'C'));
+        $secondSet = new Set(array('A', 'C', 'D'));
+
+        $expectedSet = new Set(array('A', 'C'));
+
+        $this->assertTrue(
+            $firstSet->intersect($secondSet)->equals($expectedSet)
+        );
+    }
+
     public function testCreateNMinusOnePermutationSets()
     {
         $set = new Set(array('A', 'B', 'C'));

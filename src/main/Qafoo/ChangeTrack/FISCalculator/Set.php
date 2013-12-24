@@ -2,7 +2,11 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-class Set
+use IteratorAggregate;
+use Countable;
+use ArrayIterator;
+
+class Set implements IteratorAggregate, Countable
 {
     /**
      * @var array
@@ -51,6 +55,11 @@ class Set
         return new self(array_merge($this->items, $otherSet->items));
     }
 
+    public function intersect(Set $otherSet)
+    {
+        return new self(array_intersect($this->items, $otherSet->items));
+    }
+
     /**
      * Returns an array of n-1 permutations sets from the current set
      *
@@ -65,5 +74,21 @@ class Set
             $permutationSets[] = new Set($permutation);
         }
         return $permutationSets;
+    }
+
+    /**
+     * @return array
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->items);
     }
 }
