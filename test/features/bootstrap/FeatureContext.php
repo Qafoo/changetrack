@@ -9,6 +9,8 @@ use Qafoo\ChangeTrack\RepositoryFactory;
 
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 use Qafoo\ChangeTrack\FISCalculator;
+use Qafoo\ChangeTrack\FISCalculator\Set;
+use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -93,7 +95,6 @@ class FeatureContext extends BehatContext
         $minSupport = (float) $minSupport;
         $calculator = new FISCalculator();
         $this->frequentItemSets = $calculator->calculateFrequentItemSets($this->analyzedChanges, $minSupport);
-
     }
 
     /**
@@ -101,6 +102,35 @@ class FeatureContext extends BehatContext
      */
     public function iHaveTheFollowingFrequentItemSets(TableNode $table)
     {
-        throw new PendingException();
+        $actualSets = $this->frequentItemSets;
+
+        foreach ($table->getHash() as $row) {
+            $expectedSet = new FrequentItemSet(
+                new Set(explode(', ', $row['Item set'])),
+                (float) $row['Support']
+            );
+
+            foreach ($actualSets as $index => $actualSet) {
+                if ($actualSet == $expectedSet) {
+                    unset($actualSets[$index]);
+                    continue 2;
+                }
+            }
+            throw new \RuntimeException(
+                sprintf(
+                    'Missing frequent item set: %s',
+                    $expectedSet
+                )
+            );
+        }
+
+        if (count($actualSets) > 0) {
+            throw new \RuntimeException(
+                sprintf(
+                    'Unexpected frequent item sets: %s',
+                    implode(', ', $actualSets)
+                )
+            );
+        }
     }
 }
