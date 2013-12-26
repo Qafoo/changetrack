@@ -11,14 +11,23 @@ class Set implements IteratorAggregate, Countable
     /**
      * @var array
      */
-    private $items;
+    protected $items;
 
     /**
      * @param array $items
      */
     public function __construct(array $items)
     {
-        $this->items = array_unique(array_values(($items)));
+        $this->items = $items;
+        $this->ensureSetProperties();
+    }
+
+    /**
+     * Ensures the items are unique and sorted.
+     */
+    protected function ensureSetProperties()
+    {
+        $this->items = array_unique($this->items);
         sort($this->items);
     }
 
@@ -55,6 +64,11 @@ class Set implements IteratorAggregate, Countable
         return new self(array_merge($this->items, $otherSet->items));
     }
 
+    /**
+     * Returns a new set which contains all items from this set which are also present in $otherSet.
+     *
+     * @param Set $otherSet
+     */
     public function intersect(Set $otherSet)
     {
         return new self(array_intersect($this->items, $otherSet->items));
@@ -90,5 +104,39 @@ class Set implements IteratorAggregate, Countable
     public function count()
     {
         return count($this->items);
+    }
+
+    /**
+     * Returns if $item is contained in the set.
+     *
+     * @param mixed $item
+     * @return bool
+     */
+    public function contains($item)
+    {
+        foreach ($this->items as $containedItem) {
+            if ($item == $containedItem) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns a copy of the Set as an array.
+     *
+     * @return array
+     */
+    public function getArrayCopy()
+    {
+        return $this->items;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return implode(', ', $this->items);
     }
 }
