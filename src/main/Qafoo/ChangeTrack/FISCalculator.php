@@ -6,6 +6,7 @@ use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
 use Qafoo\ChangeTrack\FISCalculator\TransactionDataBase;
+use Qafoo\ChangeTrack\FISCalculator\AprioriGenerator;
 use Qafoo\ChangeTrack\Analyzer\Result;
 
 class FISCalculator
@@ -20,6 +21,7 @@ class FISCalculator
     public function calculateFrequentItemSets(Result $analysisResult, $minSupport)
     {
         $transactionBase = $this->createTransactionBase($analysisResult);
+        $aprioriGen = new AprioriGenerator();
 
         $frequentItemSets = new MutableSet();
 
@@ -33,44 +35,9 @@ class FISCalculator
                     $setsForCandidates->add($itemSet);
                 }
             }
-            $currentItemSets = $this->aprioriGen($setsForCandidates->getImmutable());
+            $currentItemSets = $aprioriGen->aprioriGen($setsForCandidates->getImmutable());
         }
         return $frequentItemSets->getArrayCopy();
-    }
-
-    /**
-     * Generates candidate frequent item sets based on the Apriorigen algorithm
-     *
-     * @param \Qafoo\ChangeTrack\FISCalculator\Set[] $inItemSets
-     * @return \Qafoo\ChangeTrack\FISCalculator\Set[]
-     */
-    private function aprioriGen(Set $inItemSets)
-    {
-        $candidateSets = new MutableSet();
-        foreach ($inItemSets as $firstItemSet) {
-            foreach ($inItemSets as $secondItemSet) {
-                if ($firstItemSet->equals($secondItemSet)) {
-                    continue;
-                }
-
-                if (count($firstItemSet->intersect($secondItemSet)) == count($firstItemSet) - 1) {
-                    $candidateSet = $firstItemSet->merge($secondItemSet);
-
-                    $candidateHolds = true;
-                    foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
-                        if ( ! $inItemSets->contains($subset)) {
-                            $candidateHolds = false;
-                            break;
-                        }
-                    }
-
-                    if ($candidateHolds) {
-                        $candidateSets->add($candidateSet);
-                    }
-                }
-            }
-        }
-        return $candidateSets->getImmutable();
     }
 
     private function calculateOneItemSets(TransactionDataBase $transactionBase, $minSupport)
