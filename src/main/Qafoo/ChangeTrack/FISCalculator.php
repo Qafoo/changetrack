@@ -5,6 +5,7 @@ namespace Qafoo\ChangeTrack;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDataBase;
 use Qafoo\ChangeTrack\Analyzer\Result;
 
 class FISCalculator
@@ -26,7 +27,7 @@ class FISCalculator
         while (count($currentItemSets) > 0) {
             $setsForCandidates = new MutableSet();
             foreach ($currentItemSets as $itemSet) {
-                $currentSupport = $this->support($itemSet, $transactionBase);
+                $currentSupport = $transactionBase->support($itemSet);
                 if ($currentSupport >= $minSupport) {
                     $frequentItemSets->add(new FrequentItemSet($itemSet, $currentSupport));
                     $setsForCandidates->add($itemSet);
@@ -72,15 +73,14 @@ class FISCalculator
         return $candidateSets->getImmutable();
     }
 
-    private function calculateOneItemSets(array $transactionBase, $minSupport)
+    private function calculateOneItemSets(TransactionDataBase $transactionBase, $minSupport)
     {
-        $firstTransaction = reset($transactionBase);
-        $items = array_keys($firstTransaction);
+        $items = $transactionBase->getItems();
 
         $oneItemSets = array();
         foreach ($items as $item) {
             $itemSet = new Set(array($item));
-            if ($this->support($itemSet, $transactionBase) >= $minSupport) {
+            if ($transactionBase->support($itemSet) >= $minSupport) {
                 $oneItemSets[] = $itemSet;
             }
         }
@@ -88,36 +88,14 @@ class FISCalculator
     }
 
     /**
-     * Calculates the support for $itemSet in $transactionBase
-     *
-     * @param array $itemSet
-     * @param array $transactionBase
-     * @return float
-     */
-    private function support(Set $itemSet, array $transactionBase)
-    {
-        $occurrences = 0;
-        foreach ($transactionBase as $revision => $transaction) {
-            foreach ($itemSet as $item) {
-                if ( ! $transaction[$item]) {
-                    continue 2;
-                }
-            }
-            $occurrences++;
-        }
-        return $occurrences / count($transactionBase);
-    }
-
-    /**
      * Creates a transaction database from $analysisResult
      *
      * @param Result $analysisResult
-     * @return array
+     * @return \Qafoo\ChangeTrack\FISCalculator\TransactionDataBase
      */
     private function createTransactionBase(Result $analysisResult)
     {
-        $transactionBase = array();
-        $items = array();
+        $transactionBase = new TransactionDataBase();
 
         foreach ($analysisResult->revisionChanges as $revisionChange) {
             foreach ($revisionChange->packageChanges as $packageChange) {
@@ -126,10 +104,6 @@ class FISCalculator
 
                         $revision = $revisionChange->revision;
 
-                        if (!isset($transactionBase[$revision])) {
-                            $transactionBase[$revision] = array();
-                        }
-
                         $item = sprintf(
                             '%s::%s::%s',
                             $packageChange->packageName,
@@ -137,38 +111,12 @@ class FISCalculator
                             $methodChange->methodName
                         );
 
-                        $items[$item] = true;
-                        $transactionBase[$revision][$item] = true;
+                        $transactionBase->addItem($revision, $item);
                     }
                 }
             }
         }
 
-        $items = array_keys($items);
-
-        return $this->completeTransactionBase($transactionBase, $items);
-    }
-
-    /**
-     * Complete the given sparse $transactionBase
-     *
-     * @param array $transactionBase
-     * @param array $items
-     * @return array
-     */
-    private function completeTransactionBase(array $transactionBase, array $items)
-    {
-        sort($items);
-
-        $completedTransactionBase = array();
-
-        foreach ($transactionBase as $revision => $transaction) {
-            $completedTransactionBase[$revision] = array_fill_keys($items, false);
-            foreach ($transaction as $item => $dummy) {
-                $completedTransactionBase[$revision][$item] = true;
-            }
-        }
-
-        return $completedTransactionBase;
+        return $transactionBase;
     }
 }
