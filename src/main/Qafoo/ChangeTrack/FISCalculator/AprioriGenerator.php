@@ -32,11 +32,7 @@ class AprioriGenerator
     private function generateCandidatesWith(Set $baseItemSet, Set $inItemSets)
     {
         $candidateSets = new MutableSet();
-        foreach ($inItemSets as $combineItemSet) {
-            if ($baseItemSet->equals($combineItemSet)) {
-                continue;
-            }
-
+        foreach ($inItemSets->without($baseItemSet) as $combineItemSet) {
             if (count($baseItemSet->intersect($combineItemSet)) == count($baseItemSet) - 1) {
                 $candidateSet = $baseItemSet->merge($combineItemSet);
 
