@@ -40,19 +40,29 @@ class AprioriGenerator
             if (count($baseItemSet->intersect($combineItemSet)) == count($baseItemSet) - 1) {
                 $candidateSet = $baseItemSet->merge($combineItemSet);
 
-                $candidateHolds = true;
-                foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
-                    if ( ! $inItemSets->contains($subset)) {
-                        $candidateHolds = false;
-                        break;
-                    }
-                }
-
-                if ($candidateHolds) {
+                if ($this->candidateHolds($candidateSet, $inItemSets)) {
                     $candidateSets->add($candidateSet);
                 }
             }
         }
         return $candidateSets->getImmutable();
+    }
+
+    /**
+     * Checks if all subsets of $candidateSet are contained in $inItemSets
+     *
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $candidateSet
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $inItemSets
+     * @return bool
+     */
+    private function candidateHolds(Set $candidateSet, Set $inItemSets)
+    {
+        $candidateHolds = true;
+        foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
+            if ( ! $inItemSets->contains($subset)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
