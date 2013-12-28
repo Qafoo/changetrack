@@ -82,7 +82,7 @@ class Set implements IteratorAggregate, Countable
     public function createNMinusOnePermutationSets()
     {
         $permutationSets = array();
-        foreach ($this->items as $id => $item) {
+        foreach (array_keys($this->items) as $id) {
             $permutation = $this->items;
             unset($permutation[$id]);
             $permutationSets[] = new Set($permutation);
