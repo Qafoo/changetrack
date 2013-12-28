@@ -33,15 +33,30 @@ class AprioriGenerator
     {
         $candidateSets = new MutableSet();
         foreach ($inItemSets->without($baseItemSet) as $combineItemSet) {
-            if (count($baseItemSet->intersect($combineItemSet)) == count($baseItemSet) - 1) {
-                $candidateSet = $baseItemSet->merge($combineItemSet);
+            if ( ! $this->isPotentialCandidate($baseItemSet, $combineItemSet)) {
+                continue;
+            }
 
-                if ($this->candidateHolds($candidateSet, $inItemSets)) {
-                    $candidateSets->add($candidateSet);
-                }
+            $candidateSet = $baseItemSet->merge($combineItemSet);
+            if ($this->candidateHolds($candidateSet, $inItemSets)) {
+                $candidateSets->add($candidateSet);
             }
         }
         return $candidateSets->getImmutable();
+    }
+
+    /**
+     * Checks if $baseItemSet can be combined with $combineItemSet to form a
+     * candidate.
+     *
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $baseItemSet
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $candidateSet
+     * @return bool
+     */
+    private function isPotentialCandidate(Set $baseItemSet, Set $combineItemSet)
+    {
+        $insersectSet = $baseItemSet->intersect($combineItemSet);
+        return (count($insersectSet) == count($baseItemSet) - 1);
     }
 
     /**
