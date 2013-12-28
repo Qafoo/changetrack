@@ -12,27 +12,44 @@ class AprioriGenerator
      */
     public function aprioriGen(Set $inItemSets)
     {
-        $candidateSets = new MutableSet();
+        $candidateSets = new Set(array());
         foreach ($inItemSets as $firstItemSet) {
-            foreach ($inItemSets as $secondItemSet) {
-                if ($firstItemSet->equals($secondItemSet)) {
-                    continue;
+            $candidateSets = $candidateSets->merge(
+                $this->generateCandidatesWith($firstItemSet, $inItemSets)
+            );
+        }
+        return $candidateSets;
+    }
+
+    /**
+     * Generates a set of candidates on basis of $firstItemSet combined with
+     * $inItemSets
+     *
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $firstItemSet
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $inItemSets;
+     * @return \Qafoo\ChangeTrack\FISCalculator\Set[]
+     */
+    private function generateCandidatesWith(Set $firstItemSet, Set $inItemSets)
+    {
+        $candidateSets = new MutableSet();
+        foreach ($inItemSets as $secondItemSet) {
+            if ($firstItemSet->equals($secondItemSet)) {
+                continue;
+            }
+
+            if (count($firstItemSet->intersect($secondItemSet)) == count($firstItemSet) - 1) {
+                $candidateSet = $firstItemSet->merge($secondItemSet);
+
+                $candidateHolds = true;
+                foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
+                    if ( ! $inItemSets->contains($subset)) {
+                        $candidateHolds = false;
+                        break;
+                    }
                 }
 
-                if (count($firstItemSet->intersect($secondItemSet)) == count($firstItemSet) - 1) {
-                    $candidateSet = $firstItemSet->merge($secondItemSet);
-
-                    $candidateHolds = true;
-                    foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
-                        if ( ! $inItemSets->contains($subset)) {
-                            $candidateHolds = false;
-                            break;
-                        }
-                    }
-
-                    if ($candidateHolds) {
-                        $candidateSets->add($candidateSet);
-                    }
+                if ($candidateHolds) {
+                    $candidateSets->add($candidateSet);
                 }
             }
         }
