@@ -65,6 +65,16 @@ class SetTest extends \PHPUnit_Framework_TestCase
         $this->assertSetCollectionsEqual($expectedSets, $actualSets);
     }
 
+    public function testWithout()
+    {
+        $set = new Set(array('A', 'B', 'C'));
+
+        $this->assertEquals(
+            new Set(array('A', 'C')),
+            $set->without('B')
+        );
+    }
+
     private function assertSetCollectionsEqual(array $expectedSets, array $actualSets)
     {
         foreach ($actualSets as $actualIndex => $actualSet) {

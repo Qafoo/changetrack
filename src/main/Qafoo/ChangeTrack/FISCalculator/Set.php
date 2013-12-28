@@ -123,6 +123,23 @@ class Set implements IteratorAggregate, Countable
     }
 
     /**
+     * Returns a new set with all items except of $item
+     *
+     * @param mixed $item
+     * @return \Qafoo\ChangeTrack\FISCalculator\Set
+     */
+    public function without($item)
+    {
+        $newItems = array();
+        foreach ($this->items as $containedItem) {
+            if ($item != $containedItem) {
+                $newItems[] = $containedItem;
+            }
+        }
+        return new Set($newItems);
+    }
+
+    /**
      * Returns a copy of the Set as an array.
      *
      * @return array
