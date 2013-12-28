@@ -68,7 +68,6 @@ class AprioriGenerator
      */
     private function candidateHolds(Set $candidateSet, Set $inItemSets)
     {
-        $candidateHolds = true;
         foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
             if ( ! $inItemSets->contains($subset)) {
                 return false;
