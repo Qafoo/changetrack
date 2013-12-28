@@ -22,23 +22,23 @@ class AprioriGenerator
     }
 
     /**
-     * Generates a set of candidates on basis of $firstItemSet combined with
+     * Generates a set of candidates on basis of $baseItemSet combined with
      * $inItemSets
      *
-     * @param \Qafoo\ChangeTrack\FISCalculator\Set $firstItemSet
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $baseItemSet
      * @param \Qafoo\ChangeTrack\FISCalculator\Set $inItemSets;
      * @return \Qafoo\ChangeTrack\FISCalculator\Set[]
      */
-    private function generateCandidatesWith(Set $firstItemSet, Set $inItemSets)
+    private function generateCandidatesWith(Set $baseItemSet, Set $inItemSets)
     {
         $candidateSets = new MutableSet();
-        foreach ($inItemSets as $secondItemSet) {
-            if ($firstItemSet->equals($secondItemSet)) {
+        foreach ($inItemSets as $combineItemSet) {
+            if ($baseItemSet->equals($combineItemSet)) {
                 continue;
             }
 
-            if (count($firstItemSet->intersect($secondItemSet)) == count($firstItemSet) - 1) {
-                $candidateSet = $firstItemSet->merge($secondItemSet);
+            if (count($baseItemSet->intersect($combineItemSet)) == count($baseItemSet) - 1) {
+                $candidateSet = $baseItemSet->merge($combineItemSet);
 
                 $candidateHolds = true;
                 foreach ($candidateSet->createNMinusOnePermutationSets() as $subset) {
