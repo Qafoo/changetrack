@@ -94,7 +94,7 @@ class FeatureContext extends BehatContext
     public function iCalculateFrequentItemSetsWithMinSupport($minSupport)
     {
         $minSupport = (float) $minSupport;
-        $calculator = new FISCalculator();
+        $calculator = $this->container->get('Qafoo.ChangeTrack.FISCalculator');
         $this->frequentItemSets = $calculator->calculateFrequentItemSets($this->analyzedChanges, $minSupport);
     }
 

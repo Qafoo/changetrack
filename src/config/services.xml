@@ -90,6 +90,9 @@
             </argument>
         </service>
 
+        <service id="Qafoo.ChangeTrack.FISCalculator" class="Qafoo\ChangeTrack\FISCalculator">
+        </service>
+
         <!--
         <service id="Qafoo.ChangeTrack.Calculator.RevisionLabelProvider" class="Qafoo\ChangeTrack\Calculator\StatsCollector\RevisionLabelProvider\DefaultLabelProvider">
             <argument type="string">Please configure label providers!</argument>
