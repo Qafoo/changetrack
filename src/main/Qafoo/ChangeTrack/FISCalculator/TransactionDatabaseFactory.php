@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack\FISCalculator;
 
 use Qafoo\ChangeTrack\Analyzer\Result;
 
-class TransactionDataBaseFactory
+class TransactionDatabaseFactory
 {
     /**
      * Creates a transaction database from $analysisResult
@@ -14,7 +14,7 @@ class TransactionDataBaseFactory
      */
     public function createDatabase(Result $analysisResult)
     {
-        $transactionBase = new TransactionDataBase();
+        $transactionBase = new TransactionDatabase();
 
         foreach ($analysisResult->revisionChanges as $revisionChange) {
             foreach ($revisionChange->packageChanges as $packageChange) {

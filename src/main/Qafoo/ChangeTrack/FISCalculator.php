@@ -6,8 +6,8 @@ use Qafoo\ChangeTrack\FISCalculator\MethodItem;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
-use Qafoo\ChangeTrack\FISCalculator\TransactionDataBase;
-use Qafoo\ChangeTrack\FISCalculator\TransactionDataBaseFactory;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDatabase;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
 use Qafoo\ChangeTrack\FISCalculator\AprioriGenerator;
 use Qafoo\ChangeTrack\Analyzer\Result;
 

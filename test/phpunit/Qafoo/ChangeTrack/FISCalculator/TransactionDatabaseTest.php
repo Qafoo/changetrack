@@ -2,11 +2,11 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
+class TransactionDatabaseTest extends \PHPUnit_Framework_TestCase
 {
     public function testItemsRegisteredDuringConstruction()
     {
-        $database = new TransactionDataBase(
+        $database = new TransactionDatabase(
             array(
                 '1' => array(new StringItem('A'), new StringItem('C')),
                 '2' => array(new StringItem('B'), new StringItem('C')),
@@ -21,7 +21,7 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
 
     public function testItemsRegisteredOnAdd()
     {
-        $database = new TransactionDataBase();
+        $database = new TransactionDatabase();
 
         $database->addItem('1', new StringItem('A'));
         $database->addItem('1', new StringItem('C'));
@@ -41,7 +41,7 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
      */
     public function testSupport(array $items, $expectedSupport)
     {
-        $database = new TransactionDataBase(
+        $database = new TransactionDatabase(
             array(
                 '1' => array(new StringItem('A'), new StringItem('C')),
                 '2' => array(new StringItem('A')),

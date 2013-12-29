@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-class TransactionDataBase
+class TransactionDatabase
 {
     /**
      * Row based data set
