@@ -7,6 +7,7 @@ use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
 use Qafoo\ChangeTrack\FISCalculator\TransactionDataBase;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDataBaseFactory;
 use Qafoo\ChangeTrack\FISCalculator\AprioriGenerator;
 use Qafoo\ChangeTrack\Analyzer\Result;
 
@@ -21,7 +22,8 @@ class FISCalculator
      */
     public function calculateFrequentItemSets(Result $analysisResult, $minSupport)
     {
-        $transactionBase = $this->createTransactionBase($analysisResult);
+        $databaseFactory = new TransactionDataBaseFactory();
+        $transactionBase = $databaseFactory->createDatabase($analysisResult);
         $aprioriGen = new AprioriGenerator();
 
         $frequentItemSets = new MutableSet();
@@ -60,37 +62,5 @@ class FISCalculator
             }
         }
         return $oneItemSets;
-    }
-
-    /**
-     * Creates a transaction database from $analysisResult
-     *
-     * @param Result $analysisResult
-     * @return \Qafoo\ChangeTrack\FISCalculator\TransactionDataBase
-     */
-    private function createTransactionBase(Result $analysisResult)
-    {
-        $transactionBase = new TransactionDataBase();
-
-        foreach ($analysisResult->revisionChanges as $revisionChange) {
-            foreach ($revisionChange->packageChanges as $packageChange) {
-                foreach ($packageChange->classChanges as $classChange) {
-                    foreach ($classChange->methodChanges as $methodChange) {
-
-                        $revision = $revisionChange->revision;
-
-                        $item = new MethodItem(
-                            $packageChange->packageName,
-                            $classChange->className,
-                            $methodChange->methodName
-                        );
-
-                        $transactionBase->addItem($revision, $item);
-                    }
-                }
-            }
-        }
-
-        return $transactionBase;
     }
 }
