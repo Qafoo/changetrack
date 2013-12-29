@@ -87,8 +87,7 @@ class Set extends Item implements IteratorAggregate, Countable
     /**
      * Returns a new set which contains all items from this set which are also present in $otherSet.
      *
-     * @todo Fix docs
-     * @param Set $otherSet
+     * @param \Qafoo\ChangeTrack\FISCalculator\Set $otherSet
      */
     public function intersect(Set $otherSet)
     {
@@ -112,8 +111,7 @@ class Set extends Item implements IteratorAggregate, Countable
     }
 
     /**
-     * @todo Fix docs
-     * @return array
+     * @return \Iterator<\Qafoo\ChangeTrack\FISCalculator\Item>
      */
     public function getIterator()
     {
@@ -164,8 +162,7 @@ class Set extends Item implements IteratorAggregate, Countable
     /**
      * Returns a copy of the Set as an array.
      *
-     * @todo Fix docs
-     * @return array
+     * @return \Qafoo\ChangeTrack\FISCalculator\Item[]
      */
     public function getArrayCopy()
     {
