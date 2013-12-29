@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Commands;
 
 use Qafoo\ChangeTrack\Calculator;
-use Qafoo\ChangeTrack\Calculator\Parser;
+use Qafoo\ChangeTrack\Parser;
 use Qafoo\ChangeTrack\Calculator\Renderer;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -53,7 +53,7 @@ class Calculate extends BaseCommand
         }
         $inputXml = file_get_contents($inputFile);
 
-        $parser = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator.Parser');
+        $parser = $this->getContainer()->get('Qafoo.ChangeTrack.Parser');
         $calculator = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator');
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator.Renderer');
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Calculator\Parser;
+namespace Qafoo\ChangeTrack\Parser;
 
-use Qafoo\ChangeTrack\Calculator\Parser;
+use Qafoo\ChangeTrack\Parser;
 
 use JMS\Serializer\SerializerInterface;
 

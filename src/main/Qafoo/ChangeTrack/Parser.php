@@ -1,6 +1,6 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Calculator;
+namespace Qafoo\ChangeTrack;
 
 abstract class Parser
 {

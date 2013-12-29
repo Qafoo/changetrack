@@ -72,7 +72,7 @@
             <argument type="service" id="Qafoo.ChangeTrack.Calculator.StatsCollectorFactory" />
         </service>
 
-        <service id="Qafoo.ChangeTrack.Calculator.Parser" class="Qafoo\ChangeTrack\Calculator\Parser\JmsSerializerParser">
+        <service id="Qafoo.ChangeTrack.Parser" class="Qafoo\ChangeTrack\Parser\JmsSerializerParser">
             <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
         </service>
 
