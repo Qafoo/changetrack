@@ -6,20 +6,40 @@ use IteratorAggregate;
 use Countable;
 use ArrayIterator;
 
-class Set implements IteratorAggregate, Countable
+class Set extends Item implements IteratorAggregate, Countable
 {
     /**
      * @var array
      */
-    protected $items;
+    protected $items = array();
 
     /**
-     * @param array $items
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item[] $items
      */
     public function __construct(array $items)
     {
-        $this->items = $items;
+        foreach ($items as $item) {
+            $this->add($item);
+        }
         $this->ensureSetProperties();
+    }
+
+    /**
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item $item
+     */
+    protected function add(Item $item)
+    {
+        $this->items[] = $item;
+    }
+
+    /**
+     * Returns a hash that uniquely identifies the item.
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return implode(', ', $this->items);
     }
 
     /**
@@ -67,6 +87,7 @@ class Set implements IteratorAggregate, Countable
     /**
      * Returns a new set which contains all items from this set which are also present in $otherSet.
      *
+     * @todo Fix docs
      * @param Set $otherSet
      */
     public function intersect(Set $otherSet)
@@ -91,6 +112,7 @@ class Set implements IteratorAggregate, Countable
     }
 
     /**
+     * @todo Fix docs
      * @return array
      */
     public function getIterator()
@@ -109,10 +131,10 @@ class Set implements IteratorAggregate, Countable
     /**
      * Returns if $item is contained in the set.
      *
-     * @param mixed $item
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item $item
      * @return bool
      */
-    public function contains($item)
+    public function contains(Item $item)
     {
         foreach ($this->items as $containedItem) {
             if ($item == $containedItem) {
@@ -125,14 +147,14 @@ class Set implements IteratorAggregate, Countable
     /**
      * Returns a new set with all items except of $item
      *
-     * @param mixed $item
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item $item
      * @return \Qafoo\ChangeTrack\FISCalculator\Set
      */
     public function without($item)
     {
         $newItems = array();
         foreach ($this->items as $containedItem) {
-            if ($item != $containedItem) {
+            if ($item->getHash() != $containedItem->getHash()) {
                 $newItems[] = $containedItem;
             }
         }
@@ -142,18 +164,11 @@ class Set implements IteratorAggregate, Countable
     /**
      * Returns a copy of the Set as an array.
      *
+     * @todo Fix docs
      * @return array
      */
     public function getArrayCopy()
     {
         return $this->items;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return implode(', ', $this->items);
     }
 }

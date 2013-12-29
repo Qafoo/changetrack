@@ -9,6 +9,7 @@ use Qafoo\ChangeTrack\RepositoryFactory;
 
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 use Qafoo\ChangeTrack\FISCalculator;
+use Qafoo\ChangeTrack\FISCalculator\MethodItem;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
 
@@ -106,7 +107,15 @@ class FeatureContext extends BehatContext
 
         foreach ($table->getHash() as $row) {
             $expectedSet = new FrequentItemSet(
-                new Set(explode(', ', $row['Item set'])),
+                new Set(
+                    array_map(
+                        function ($serializedItem) {
+                            $parts = explode('::', $serializedItem);
+                            return new MethodItem($parts[0], $parts[1], $parts[2]);
+                        },
+                        explode(', ', $row['Item set'])
+                    )
+                ),
                 (float) $row['Support']
             );
 

@@ -6,44 +6,46 @@ class SetTest extends \PHPUnit_Framework_TestCase
 {
     public function testDifferentCreationOrderEquals()
     {
-        $firstSet = new Set(array('A', 'C', 'B'));
-        $secondSet = new Set(array('C', 'A', 'B'));
+        $firstSet = new Set(array(new StringItem('A'), new StringItem('C'), new StringItem('B')));
+        $secondSet = new Set(array(new StringItem('C'), new StringItem('A'), new StringItem('B')));
 
         $this->assertTrue($firstSet->equals($secondSet));
     }
 
     public function testIsSubsetOf()
     {
-        $set = new Set(array('A', 'B', 'C'));
-        $subSet = new Set(array('B', 'C'));
+        $set = new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')));
+        $subSet = new Set(array(new StringItem('B'), new StringItem('C')));
 
         $this->assertTrue($subSet->isSubSetOf($set));
     }
 
     public function testIsNotSubsetOf()
     {
-        $notSubSet = new Set(array('A', 'B', 'C'));
-        $set = new Set(array('B', 'C'));
+        $notSubSet = new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')));
+        $set = new Set(array(new StringItem('B'), new StringItem('C')));
 
         $this->assertFalse($notSubSet->isSubSetOf($set));
     }
 
     public function testMerge()
     {
-        $firstSet = new Set(array('A', 'B'));
-        $secondSet = new Set(array('B', 'C'));
+        $firstSet = new Set(array(new StringItem('A'), new StringItem('B')));
+        $secondSet = new Set(array(new StringItem('B'), new StringItem('C')));
 
         $this->assertTrue(
-            $firstSet->merge($secondSet)->equals(new Set(array('A', 'B', 'C')))
+            $firstSet->merge($secondSet)->equals(
+                new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')))
+            )
         );
     }
 
     public function testIntersect()
     {
-        $firstSet = new Set(array('A', 'B', 'C'));
-        $secondSet = new Set(array('A', 'C', 'D'));
+        $firstSet = new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')));
+        $secondSet = new Set(array(new StringItem('A'), new StringItem('C'), new StringItem('D')));
 
-        $expectedSet = new Set(array('A', 'C'));
+        $expectedSet = new Set(array(new StringItem('A'), new StringItem('C')));
 
         $this->assertTrue(
             $firstSet->intersect($secondSet)->equals($expectedSet)
@@ -52,12 +54,12 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateNMinusOnePermutationSets()
     {
-        $set = new Set(array('A', 'B', 'C'));
+        $set = new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')));
 
         $expectedSets = array(
-            new Set(array('A', 'B')),
-            new Set(array('A', 'C')),
-            new Set(array('B', 'C')),
+            new Set(array(new StringItem('A'), new StringItem('B'))),
+            new Set(array(new StringItem('A'), new StringItem('C'))),
+            new Set(array(new StringItem('B'), new StringItem('C'))),
         );
 
         $actualSets = $set->createNMinusOnePermutationSets();
@@ -67,11 +69,11 @@ class SetTest extends \PHPUnit_Framework_TestCase
 
     public function testWithout()
     {
-        $set = new Set(array('A', 'B', 'C'));
+        $set = new Set(array(new StringItem('A'), new StringItem('B'), new StringItem('C')));
 
         $this->assertEquals(
-            new Set(array('A', 'C')),
-            $set->without('B')
+            new Set(array(new StringItem('A'), new StringItem('C'))),
+            $set->without(new StringItem('B'))
         );
     }
 

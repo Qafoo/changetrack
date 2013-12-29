@@ -8,13 +8,13 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
     {
         $database = new TransactionDataBase(
             array(
-                '1' => array('A', 'C'),
-                '2' => array('B', 'C'),
+                '1' => array(new StringItem('A'), new StringItem('C')),
+                '2' => array(new StringItem('B'), new StringItem('C')),
             )
         );
 
         $this->assertEquals(
-            array('A', 'C', 'B'),
+            array(new StringItem('A'), new StringItem('C'), new StringItem('B')),
             $database->getItems()
         );
     }
@@ -23,13 +23,13 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
     {
         $database = new TransactionDataBase();
 
-        $database->addItem('1', 'A');
-        $database->addItem('1', 'C');
-        $database->addItem('2', 'B');
-        $database->addItem('2', 'C');
+        $database->addItem('1', new StringItem('A'));
+        $database->addItem('1', new StringItem('C'));
+        $database->addItem('2', new StringItem('B'));
+        $database->addItem('2', new StringItem('C'));
 
         $this->assertEquals(
-            array('A', 'C', 'B'),
+            array(new StringItem('A'), new StringItem('C'), new StringItem('B')),
             $database->getItems()
         );
     }
@@ -43,10 +43,10 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
     {
         $database = new TransactionDataBase(
             array(
-                '1' => array('A', 'C'),
-                '2' => array('A'),
-                '3' => array('A', 'B'),
-                '4' => array('A', 'C')
+                '1' => array(new StringItem('A'), new StringItem('C')),
+                '2' => array(new StringItem('A')),
+                '3' => array(new StringItem('A'), new StringItem('B')),
+                '4' => array(new StringItem('A'), new StringItem('C'))
             )
         );
 
@@ -60,28 +60,28 @@ class TransactionDataBaseTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-                array('A'), 1.0
+                array(new StringItem('A')), 1.0
             ),
             array(
-                array('B'), 0.25
+                array(new StringItem('B')), 0.25
             ),
             array(
-                array('C'), 0.5
+                array(new StringItem('C')), 0.5
             ),
             array(
-                array('A', 'B'), 0.25
+                array(new StringItem('A'), new StringItem('B')), 0.25
             ),
             array(
-                array('A', 'C'), 0.5
+                array(new StringItem('A'), new StringItem('C')), 0.5
             ),
             array(
-                array('B', 'C'), 0.0
+                array(new StringItem('B'), new StringItem('C')), 0.0
             ),
             array(
-                array('A', 'B', 'C'), 0.0
+                array(new StringItem('A'), new StringItem('B'), new StringItem('C')), 0.0
             ),
             array(
-                array('D'), 0.0
+                array(new StringItem('D')), 0.0
             ),
         );
     }

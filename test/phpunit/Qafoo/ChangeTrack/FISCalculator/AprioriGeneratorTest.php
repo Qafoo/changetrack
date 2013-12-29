@@ -25,14 +25,14 @@ class AprioriGeneratorTest extends \PHPUnit_Framework_TestCase
                 // Input
                 new Set(
                     array(
-                        new Set(array('A')),
-                        new Set(array('B')),
+                        $this->stringSet('A'),
+                        $this->stringSet('B'),
                     )
                 ),
                 // Expected output
                 new Set(
                     array(
-                        new Set(array('A', 'B'))
+                        $this->stringSet('A', 'B'),
                     )
                 )
             ),
@@ -40,15 +40,15 @@ class AprioriGeneratorTest extends \PHPUnit_Framework_TestCase
                 // Input
                 new Set(
                     array(
-                        new Set(array('A', 'B')),
-                        new Set(array('B', 'C')),
-                        new Set(array('A', 'C')),
+                        $this->stringSet('A', 'B'),
+                        $this->stringSet('B', 'C'),
+                        $this->stringSet('A', 'C'),
                     )
                 ),
                 // Expected output
                 new Set(
                     array(
-                        new Set(array('A', 'B', 'C'))
+                        $this->stringSet('A', 'B', 'C'),
                     )
                 )
             ),
@@ -56,14 +56,32 @@ class AprioriGeneratorTest extends \PHPUnit_Framework_TestCase
                 // Input
                 new Set(
                     array(
-                        new Set(array('A', 'B')),
-                        new Set(array('B', 'C')),
+                        $this->stringSet('A', 'B'),
+                        $this->stringSet('B', 'C'),
                     )
                 ),
                 // Expected output
                 // No candidate, since ('A', 'C') is not part of the input
                 new Set(array())
             ),
+        );
+    }
+
+    /**
+     * Creates a set of StringItem instances from a variable number of given
+     * arguments.
+     *
+     * @return \Qafoo\ChangeTrack\FISCalculator\Set
+     */
+    protected function stringSet()
+    {
+        return new Set(
+            array_map(
+                function ($string) {
+                    return new StringItem($string);
+                },
+                func_get_args()
+            )
         );
     }
 }

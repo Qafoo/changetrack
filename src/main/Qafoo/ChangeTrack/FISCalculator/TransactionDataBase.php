@@ -34,15 +34,15 @@ class TransactionDataBase
      * Adds $item to the transaction with $transactionIndex
      *
      * @param string $transactionIndex
-     * @param string $item
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item $item
      */
-    public function addItem($transactionIndex, $item)
+    public function addItem($transactionIndex, Item $item)
     {
         if (!isset($this->data[$transactionIndex])) {
             $this->data[$transactionIndex] = array();
         }
-        $this->data[$transactionIndex][$item] = true;
-        $this->items[$item] = true;
+        $this->data[$transactionIndex][$item->getHash()] = true;
+        $this->items[$item->getHash()] = $item;
     }
 
     /**
@@ -56,7 +56,7 @@ class TransactionDataBase
         $occurrences = 0;
         foreach ($this->data as $transaction) {
             foreach ($itemSet as $item) {
-                if (!isset($transaction[$item])) {
+                if (!isset($transaction[$item->getHash()])) {
                     continue 2;
                 }
             }
@@ -68,10 +68,10 @@ class TransactionDataBase
     /**
      * Returns the items used in this transaction data base.
      *
-     * @return string[]
+     * @return \Qafoo\ChangeTrack\FISCalculator\Item[]
      */
     public function getItems()
     {
-        return array_keys($this->items);
+        return array_values($this->items);
     }
 }

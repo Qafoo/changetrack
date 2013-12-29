@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack;
 
+use Qafoo\ChangeTrack\FISCalculator\MethodItem;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
@@ -40,6 +41,13 @@ class FISCalculator
         return $frequentItemSets->getArrayCopy();
     }
 
+    /**
+     * Calculate all item sets with only a single item that have $minSupport
+     *
+     * @param \Qafoo\ChangeTrack\FISCalculator\TransactionDataBase $transactionBase
+     * @param float $minSupport
+     * @return \Qafoo\ChangeTrack\FISCalculator\Set[]
+     */
     private function calculateOneItemSets(TransactionDataBase $transactionBase, $minSupport)
     {
         $items = $transactionBase->getItems();
@@ -71,8 +79,7 @@ class FISCalculator
 
                         $revision = $revisionChange->revision;
 
-                        $item = sprintf(
-                            '%s::%s::%s',
+                        $item = new MethodItem(
                             $packageChange->packageName,
                             $classChange->className,
                             $methodChange->methodName

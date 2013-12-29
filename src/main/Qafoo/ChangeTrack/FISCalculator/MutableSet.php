@@ -15,11 +15,11 @@ class MutableSet extends Set
     /**
      * Adds $item to the set, if it is not contained yet.
      *
-     * @param mixed $item
+     * @param \Qafoo\ChangeTrack\FISCalculator\Item $item
      */
-    public function add($item)
+    public function add(Item $item)
     {
-        $this->items[] = $item;
+        parent::add($item);
         $this->ensureSetProperties();
     }
 
