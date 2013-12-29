@@ -91,6 +91,9 @@
         </service>
 
         <service id="Qafoo.ChangeTrack.FISCalculator" class="Qafoo\ChangeTrack\FISCalculator">
+            <argument type="service">
+                <service class="Qafoo\ChangeTrack\FISCalculator\AprioriGenerator" />
+            </argument>
         </service>
 
         <!--

@@ -14,6 +14,19 @@ use Qafoo\ChangeTrack\Analyzer\Result;
 class FISCalculator
 {
     /**
+     * @var \Qafoo\ChangeTrack\FISCalculator\AprioriGenerator
+     */
+    private $aprioriGen;
+
+    /**
+     * @param \Qafoo\ChangeTrack\FISCalculator\AprioriGenerator $aprioriGen
+     */
+    public function __construct(AprioriGenerator $aprioriGen)
+    {
+        $this->aprioriGen = $aprioriGen;
+    }
+
+    /**
      * Calculates item sets with $minSupport on method changes in $analysisResult
      *
      * @param \Qafoo\ChangeTrack\Analyzer\Result $analysisResult
@@ -24,7 +37,6 @@ class FISCalculator
     {
         $databaseFactory = new TransactionDataBaseFactory();
         $transactionBase = $databaseFactory->createDatabase($analysisResult);
-        $aprioriGen = new AprioriGenerator();
 
         $frequentItemSets = new MutableSet();
 
@@ -38,7 +50,7 @@ class FISCalculator
                     $setsForCandidates->add($itemSet);
                 }
             }
-            $currentItemSets = $aprioriGen->aprioriGen($setsForCandidates->getImmutable());
+            $currentItemSets = $this->aprioriGen->aprioriGen($setsForCandidates->getImmutable());
         }
         return $frequentItemSets->getArrayCopy();
     }
