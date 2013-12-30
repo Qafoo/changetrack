@@ -5,7 +5,7 @@ namespace Qafoo\ChangeTrack;
 /**
  * @group regression
  */
-class AnalyzerRegressionTest extends CheckoutAwareTestBase
+class CalculatorRegressionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Qafoo\ChangeTrack\TestTools
@@ -27,18 +27,16 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
         unlink($this->resultFile);
     }
 
-    public function testAnalyzerRegressionDaemonRepository()
+    public function testCalculatorRegression()
     {
-        $repositoryUrl = $this->getRepositoryUrl();
+        $command = $this->testTools->getApplicationPath('src/bin/track');
+        $inputFile = $this->testTools->getApplicationPath('test/phpunit/_fixtures/regression_analysis_daemon.xml');
         $resultFile = $this->resultFile;
 
-        $command = $this->testTools->getApplicationPath('src/bin/track');
-        $workingDir = $this->testTools->getApplicationPath('src/var/tmp');
-
-        `$command analyze -w $workingDir -o $resultFile -v $repositoryUrl`;
+        `$command calculate $inputFile > $resultFile`;
 
         $this->assertXmlStringEqualsXmlString(
-            $this->loadExpectedXml($repositoryUrl),
+            $this->loadExpectedXml(),
             file_get_contents($resultFile)
         );
     }
@@ -47,12 +45,12 @@ class AnalyzerRegressionTest extends CheckoutAwareTestBase
      * @param string $repositoryUrl
      * @return string
      */
-    private function loadExpectedXml($repositoryUrl)
+    private function loadExpectedXml()
     {
         $referenceXml = file_get_contents(
-            __DIR__ . '/../../_fixtures/regression_analysis_daemon.xml'
+            $this->testTools->getApplicationPath('test/phpunit/_fixtures/regression_calculate_daemon.xml')
         );
 
-        return str_replace('{repoUrl}', $repositoryUrl, $referenceXml);
+        return $referenceXml;
     }
 }

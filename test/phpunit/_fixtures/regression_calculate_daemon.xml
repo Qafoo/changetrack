@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stats repository="{repoUrl}">
+  <package name="QafooLabs\Daemon">
+    <class name="Daemon">
+      <method name="doStart">
+        <stats>
+          <count label="implement">2</count>
+          <count label="misc">3</count>
+        </stats>
+      </method>
+      <method name="start">
+        <stats>
+          <count label="implement">1</count>
+          <count label="misc">3</count>
+          <count label="fix">1</count>
+        </stats>
+      </method>
+      <method name="setOutputLog">
+        <stats>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="setErrorLog">
+        <stats>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="__construct">
+        <stats>
+          <count label="implement">1</count>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="run">
+        <stats>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="setDefaultScript">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="setArguments">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="setDefaultDaemonId">
+        <stats>
+          <count label="misc">2</count>
+        </stats>
+      </method>
+      <method name="setQuietPeriod">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="setDefaultQuietPeriod">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="setDefaultArguments">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="setScript">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+      <method name="initialize">
+        <stats>
+          <count label="misc">3</count>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="setDaemonId">
+        <stats>
+          <count label="misc">2</count>
+        </stats>
+      </method>
+      <method name="waitRampUpTime">
+        <stats>
+          <count label="implement">1</count>
+          <count label="fix">1</count>
+        </stats>
+      </method>
+      <method name="setDefaultRampUpTime">
+        <stats>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="setRampUpTime">
+        <stats>
+          <count label="implement">1</count>
+        </stats>
+      </method>
+      <method name="setDebug">
+        <stats>
+          <count label="misc">1</count>
+        </stats>
+      </method>
+    </class>
+  </package>
+</stats>
