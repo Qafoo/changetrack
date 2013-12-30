@@ -38,8 +38,7 @@ class Calculate extends BaseCommand
 
     protected function configure()
     {
-        // TODO: Use getCommandName()
-        $this->setName('calculate')
+        $this->setName($this->getCommandName())
             ->setDescription('Calculate stats on a given analysis result.');
 
         $this->inputFileParameterFactory->registerParameters($this);
