@@ -6,6 +6,7 @@ use Qafoo\ChangeTrack\FISCalculator\MethodItem;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
+use Qafoo\ChangeTrack\FISCalculator\FrequentItemSetCollection;
 use Qafoo\ChangeTrack\FISCalculator\TransactionDatabase;
 use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
 use Qafoo\ChangeTrack\FISCalculator\AprioriGenerator;
@@ -31,7 +32,7 @@ class FISCalculator
      *
      * @param \Qafoo\ChangeTrack\Analyzer\Result $analysisResult
      * @param float $minSupport
-     * @return \Qafoo\ChangeTrack\FISCalculator\FrequentItemSet[]
+     * @return \Qafoo\ChangeTrack\FISCalculator\FrequentItemSetCollection
      */
     public function calculateFrequentItemSets(Result $analysisResult, $minSupport)
     {
@@ -52,7 +53,7 @@ class FISCalculator
             }
             $currentItemSets = $this->aprioriGen->aprioriGen($setsForCandidates->getImmutable());
         }
-        return $frequentItemSets->getArrayCopy();
+        return new FrequentItemSetCollection($frequentItemSets->getArrayCopy());
     }
 
     /**

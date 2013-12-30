@@ -103,7 +103,7 @@ class FeatureContext extends BehatContext
      */
     public function iHaveTheFollowingFrequentItemSets(TableNode $table)
     {
-        $actualSets = $this->frequentItemSets;
+        $actualSets = $this->frequentItemSets->getFrequentItemSets();
 
         foreach ($table->getHash() as $row) {
             $expectedSet = new FrequentItemSet(
