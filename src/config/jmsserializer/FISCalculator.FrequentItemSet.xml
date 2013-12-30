@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\FrequentItemSet" exclusion-policy="NONE" access-type="property">
+        <property name="support" xml-attribute="true" serialized-name="support" type="double" />
+        <property name="itemSet" inline="true">
+            <type><![CDATA[Qafoo\ChangeTrack\FISCalculator\Set]]></type>
+        </property>
+    </class>
+</serializer>

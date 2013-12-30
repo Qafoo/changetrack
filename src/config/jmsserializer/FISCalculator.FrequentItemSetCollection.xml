@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\FrequentItemSetCollection" xml-root-name="frequentItemSets" exclusion-policy="NONE" access-type="property">
+        <property name="frequentItemSets">
+            <type><![CDATA[array<Qafoo\ChangeTrack\FISCalculator\FrequentItemSet>]]></type>
+            <xml-list inline="true" entry-name="itemSet" />
+        </property>
+    </class>
+</serializer>

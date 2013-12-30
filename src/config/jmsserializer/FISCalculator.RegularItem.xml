@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\RegularItem"
+        exclusion-policy="NONE"
+        access-type="property"
+        discriminator-field-name="itemType"
+        accessor-order="custom"
+        custom-accessor-order="itemType">
+        <discriminator-class value="method">Qafoo\ChangeTrack\FISCalculator\MethodItem</discriminator-class>
+    </class>
+</serializer>

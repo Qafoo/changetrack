@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\MethodItem" exclusion-policy="NONE" access-type="property">
+        <property name="itemType" xml-attribute="true" />
+        <property name="package" type="string" />
+        <property name="class" type="string" />
+        <property name="method" type="string" />
+    </class>
+</serializer>

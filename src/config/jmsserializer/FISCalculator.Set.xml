@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\Set" exclusion-policy="NONE" access-type="property">
+        <property name="items" inline="true" accessor-getter="getArrayCopy">
+            <type><![CDATA[array<Qafoo\ChangeTrack\FISCalculator\Item>]]></type>
+            <xml-list inline="true" entry-name="item" />
+        </property>
+    </class>
+</serializer>
