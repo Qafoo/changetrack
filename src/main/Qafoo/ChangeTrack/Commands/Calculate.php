@@ -10,9 +10,24 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Calculate extends BaseCommand
 {
+    /**
+     * @var \Qafoo\ChangeTrack\Commands\InputFileParameterFactory
+     */
+    private $inputFileParameterFactory;
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    public function __construct(ContainerBuilder $container)
+    {
+        $this->inputFileParameterFactory = new InputFileParameterFactory();
+        parent::__construct($container);
+    }
+
     /**
      * @return string
      */
@@ -23,13 +38,11 @@ class Calculate extends BaseCommand
 
     protected function configure()
     {
+        // TODO: Use getCommandName()
         $this->setName('calculate')
-            ->setDescription('Calculate stats on a given analysis result.')
-            ->addArgument(
-                'file',
-                InputArgument::OPTIONAL,
-                'File to read analysis result from. If not given, STDIN is used.'
-            );
+            ->setDescription('Calculate stats on a given analysis result.');
+
+        $this->inputFileParameterFactory->registerParameters($this);
     }
 
     /**
@@ -43,19 +56,12 @@ class Calculate extends BaseCommand
 
     protected function executeCommand(InputInterface $input, OutputInterface $output)
     {
-        $inputFile = 'php://stdin';
-        if ($input->hasArgument('file')) {
-            $inputFile = $input->getArgument('file');
-
-            if (!file_exists($inputFile)) {
-                throw new \RuntimeException('File not found: "' . $inputFile . '"');
-            }
-        }
-        $inputXml = file_get_contents($inputFile);
 
         $parser = $this->getContainer()->get('Qafoo.ChangeTrack.Parser');
         $calculator = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator');
         $renderer = $this->getContainer()->get('Qafoo.ChangeTrack.Calculator.Renderer');
+
+        $inputXml = $this->inputFileParameterFactory->getInputFromParameters($input);
 
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
