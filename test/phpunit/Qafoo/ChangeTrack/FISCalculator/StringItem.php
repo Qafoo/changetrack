@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-class StringItem extends Item
+class StringItem extends RegularItem
 {
     /**
      * @var string

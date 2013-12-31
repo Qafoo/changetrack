@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-class FrequentItemSet extends Item
+class FrequentItemSet implements Item
 {
     /**
      * @var \Qafoo\ChangeTrack\FISCalculator\Set
@@ -46,5 +46,13 @@ class FrequentItemSet extends Item
     public function getHash()
     {
         return sprintf('%s (%01.2f)', (string) $this->itemSet, $this->support);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getHash();
     }
 }

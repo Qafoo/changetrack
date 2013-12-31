@@ -6,7 +6,7 @@ use IteratorAggregate;
 use Countable;
 use ArrayIterator;
 
-class Set extends Item implements IteratorAggregate, Countable
+class Set implements Item, IteratorAggregate, Countable
 {
     /**
      * @var array
@@ -167,5 +167,13 @@ class Set extends Item implements IteratorAggregate, Countable
     public function getArrayCopy()
     {
         return $this->items;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getHash();
     }
 }

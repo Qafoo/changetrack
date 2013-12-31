@@ -2,17 +2,20 @@
 
 namespace Qafoo\ChangeTrack\FISCalculator;
 
-interface Item
+abstract class RegularItem implements Item
 {
     /**
      * Returns a hash that uniquely identifies the item.
      *
      * @return string
      */
-    public function getHash();
+    abstract public function getHash();
 
     /**
      * @return string
      */
-    public function __toString();
+    final public function __toString()
+    {
+        return $this->getHash();
+    }
 }
