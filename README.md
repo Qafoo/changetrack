@@ -35,8 +35,10 @@ Will provide you with a list of sub-commands to perform actual analysis.
 Installation
 ------------
 
-To install the tool obtain a copy from Github, get
-[Composer](http://getcomposer.org/doc/00-intro.md) and execute:
+To install the tool, download a [PHAR
+release](https://github.com/Qafoo/changetrack/releases) or obtain a checkout
+from Github, get [Composer](http://getcomposer.org/doc/00-intro.md) and
+execute:
 
     $ composer install
 
