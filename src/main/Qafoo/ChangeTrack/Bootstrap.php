@@ -54,6 +54,7 @@ class Bootstrap
         $application = new Application('Qafoo ChangeTrack', Version::VERSION);
         $application->add(new Commands\Analyze($container));
         $application->add(new Commands\Calculate($container));
+        $application->add(new Commands\FrequentItemSets($container));
 
         return $application;
     }
