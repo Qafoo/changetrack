@@ -43,7 +43,8 @@ class FrequentItemSets extends BaseCommand
             ->addOption(
                 'min-support',
                 's',
-                InputArgument::OPTIONAL,
+                InputOption::VALUE_REQUIRED,
+                'Minimum support for an item set to be considered frequent.',
                 0.5
             );
 
