@@ -39,7 +39,13 @@ class FrequentItemSets extends BaseCommand
     protected function configure()
     {
         $this->setName($this->getCommandName())
-            ->setDescription('Calculate frequent item sets on a given analysis result.');
+            ->setDescription('Calculate frequent item sets on a given analysis result.')
+            ->addOption(
+                'min-support',
+                'm',
+                InputArgument::OPTIONAL,
+                0.5
+            );
 
         $this->inputFileParameterFactory->registerParameters($this);
     }
@@ -50,7 +56,23 @@ class FrequentItemSets extends BaseCommand
      */
     protected function configureContainer(InputInterface $input, OutputInterface $output)
     {
-        // TODO: Implement
+        $this->validateOptions($input);
+    }
+
+    private function validateOptions(InputInterface $input)
+    {
+        if (!is_numeric($input->getOption('min-support'))) {
+            throw new \InvalidArgumentException(
+                'Option "min-support" must be numeric'
+            );
+        }
+
+        $minSupport = (float) $input->getOption('min-support');
+        if ($minSupport < 0 || $minSupport > 1) {
+            throw new \InvalidArgumentException(
+                'Option "min-support" must not be between 0 and 1'
+            );
+        }
     }
 
     protected function executeCommand(InputInterface $input, OutputInterface $output)
@@ -63,7 +85,10 @@ class FrequentItemSets extends BaseCommand
 
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
-        $itemSets = $calculator->calculateFrequentItemSets($analysisResult, 0.5);
+        $itemSets = $calculator->calculateFrequentItemSets(
+            $analysisResult,
+            (float) $input->getOption('min-support')
+        );
 
         $output->write($renderer->renderOutput($itemSets));
     }
