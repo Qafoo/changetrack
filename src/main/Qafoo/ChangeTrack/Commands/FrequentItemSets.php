@@ -42,7 +42,7 @@ class FrequentItemSets extends BaseCommand
             ->setDescription('Calculate frequent item sets on a given analysis result.')
             ->addOption(
                 'min-support',
-                'm',
+                's',
                 InputArgument::OPTIONAL,
                 0.5
             );
