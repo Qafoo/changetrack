@@ -212,15 +212,15 @@ could be found in `your_analysis_result.xml`, for example:
         <!-- ... -->
         <itemSet support="0.011070110701107">
             <item>
-                <package><![CDATA[]]></package>
-                <class><![CDATA[Twig_Node_Module]]></class>
-                <method><![CDATA[__construct]]></method>
+                <packageName><![CDATA[]]></package>
+                <className><![CDATA[Twig_Node_Module]]></class>
+                <methodName><![CDATA[__construct]]></method>
                 <itemType><![CDATA[method]]></itemType>
             </item>
             <item>
-                <package><![CDATA[]]></package>
-                <class><![CDATA[Twig_Parser]]></class>
-                <method><![CDATA[parse]]></method>
+                <packageName><![CDATA[]]></package>
+                <className><![CDATA[Twig_Parser]]></class>
+                <methodName><![CDATA[parse]]></method>
                 <itemType><![CDATA[method]]></itemType>
             </item>
         </itemSet>
