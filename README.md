@@ -12,6 +12,40 @@ methods throughout the history of a PHP project. One application for
 this analysis is to detect artifacts that are changed most frequently
 and especially most frequently due to bugs.
 
+Quick Start
+-----------
+
+To get started, download a [recent release
+PHAR](https://github.com/Qafoo/changetrack/releases).
+
+To create the base analysis file (changes by methods) try:
+
+    $ php changetrack.phar analyze -o analysis.xml -p https://github.com/Qafoo/changetrack.git
+
+This will analyze the history of ChangeTrack itself, store the resulting XML in
+`analysis.xml` and display its progress to you.
+
+On that basis, you can analyze bugfix/feature frequencies per method using:
+
+    $ php changetrack.phar calculate analysis.xml > label-frequency.xml
+
+This will use the standard regex label-provider to assign change labels and
+calculate the frequency for each method.
+
+Also on basis of the `analysis.xml` you can calculate frequent item sets among
+method changes, using:
+
+    $ php changetrack.phar frequent-item-sets -s 0.05 analysis.xml > fis.xml
+
+That yields you a `fis.xml` with methods that are commonly changed together in
+5% or more commits.
+
+Please refer to the following sections for a deeper insight and to the
+commandline help commands.
+
+Introduction
+------------
+
 The analysis is performed in multiples steps. Currently supported are:
 
 1.  Analyze which classes/methods are affected by a revision.
