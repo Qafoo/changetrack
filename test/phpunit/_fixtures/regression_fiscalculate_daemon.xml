@@ -2,607 +2,607 @@
 <frequentItemSets>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[__construct]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[__construct]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.625">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.5">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.625">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[waitRampUpTime]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[waitRampUpTime]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[__construct]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[__construct]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[__construct]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[__construct]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.375">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.5">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[__construct]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[__construct]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-  </itemSet>
-  <itemSet support="0.25">
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
-      <itemType><![CDATA[method]]></itemType>
-    </item>
-    <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>
   <itemSet support="0.25">
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[doStart]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[initialize]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[setDefaultDaemonId]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
     <item>
-      <package><![CDATA[QafooLabs\Daemon]]></package>
-      <class><![CDATA[Daemon]]></class>
-      <method><![CDATA[start]]></method>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+  </itemSet>
+  <itemSet support="0.25">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[doStart]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[initialize]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[setDefaultDaemonId]]></methodName>
+      <itemType><![CDATA[method]]></itemType>
+    </item>
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <methodName><![CDATA[start]]></methodName>
       <itemType><![CDATA[method]]></itemType>
     </item>
   </itemSet>

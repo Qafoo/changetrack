@@ -2,8 +2,8 @@
 <serializer>
     <class name="Qafoo\ChangeTrack\FISCalculator\MethodItem" exclusion-policy="NONE" access-type="property"
         accessor-order="custom" custom-accessor-order="package,class,method">
-        <property name="package" type="string" />
-        <property name="class" type="string" />
-        <property name="method" type="string" />
+        <property name="package" type="string" serialized-name="packageName" />
+        <property name="class" type="string" serialized-name="className" />
+        <property name="method" type="string" serialized-name="methodName" />
     </class>
 </serializer>
