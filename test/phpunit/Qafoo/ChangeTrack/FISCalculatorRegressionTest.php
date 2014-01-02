@@ -19,7 +19,7 @@ class FISCalculatorRegressionTest extends \PHPUnit_Framework_TestCase
 
     public function tearDown()
     {
-        // unlink($this->resultFile);
+        unlink($this->resultFile);
     }
 
     public function testCalculatorRegression()
