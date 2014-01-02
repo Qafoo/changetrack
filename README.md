@@ -17,6 +17,7 @@ The analysis is performed in multiples steps. Currently supported are:
 1.  Analyze which classes/methods are affected by a revision.
 2.  Analyze which classes/methods are most frequently affected by
     changes.
+3.  Analyze which methods are commonly edited together.
 
 The split into multiple steps allows you to
 
@@ -90,7 +91,7 @@ should apply the `calculate` command to it.
 
 ### calculate
 
-The `calculate` analyzes, how often an artifact (i.e. method) is
+The `calculate` command analyzes, how often an artifact (i.e. method) is
 affected by what kind of change (e.g. *bug* or *feature*). To do so, it
 attempts to assign a *label* to each commit in the project history and
 counts per method, how often a specifically labeled commit touched it.
@@ -190,6 +191,57 @@ here).
 If that provider does not find a label, 3 regexes are tried after each
 other. Finally, if none of the previous providers found a label, the
 default provider sets the *misc* label.
+
+### frequent-item-sets
+
+The `frequent-item-sets` command performs a [Frequent Item Set
+Analysis](https://en.wikipedia.org/wiki/Association_rule_learning), taking
+method changes as items and commits as transactions. That means, it
+calculates  which methods are frequently edited together in your project.
+
+The calculation is performed on basis of the results of the `analysis`
+command using:
+
+    $ track frequent-item-sets your_analysis_result.xml
+
+The output of this command is an XML presenting all frequent item sets that
+could be found in `your_analysis_result.xml`, for example:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <frequentItemSets>
+        <!-- ... -->
+        <itemSet support="0.011070110701107">
+            <item>
+                <package><![CDATA[]]></package>
+                <class><![CDATA[Twig_Node_Module]]></class>
+                <method><![CDATA[__construct]]></method>
+                <itemType><![CDATA[method]]></itemType>
+            </item>
+            <item>
+                <package><![CDATA[]]></package>
+                <class><![CDATA[Twig_Parser]]></class>
+                <method><![CDATA[parse]]></method>
+                <itemType><![CDATA[method]]></itemType>
+            </item>
+        </itemSet>
+        <!-- ... -->
+    </frequentItemSets>
+
+The example shows an extract with a single item set that consists of two
+items: The methods `Twig_Node_Module::__construct()` and `Twig_Parser::parse()`
+were edited together in more that 1% of the commits in the
+[Twig](https://github.com/fabpot/Twig) repository.
+
+Note that frequent item set analysis is typically applied to databases where
+the items do not change, which does not apply to software projects (e.g. new
+classes are created). Therefore, the typical setting of a high support value
+cannot hold here. Instead, in case of Twig 1% (0.01) is a sensible first
+support value to retrieve initial results.
+
+The support value should be identified for each project individually. 0.5 is a
+good starting point, but most likely you need to go down to 0.1 or even 0.01.
+It can also make sense to only analyze a fraction of the changes (e.g. of the
+past year), if your project underwent a major refactoring.
 
 Roadmap
 -------
