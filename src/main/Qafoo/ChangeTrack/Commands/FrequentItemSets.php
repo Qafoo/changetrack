@@ -7,7 +7,7 @@ use Qafoo\ChangeTrack\Calculator\Parser;
 use Qafoo\ChangeTrack\Calculator\Renderer;
 
 use Qafoo\ChangeTrack\FISCalculator\TransactionDatabase;
-use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
+use Qafoo\ChangeTrack\FISCalculator\MethodTransactionDatabaseFactory;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -89,7 +89,7 @@ class FrequentItemSets extends BaseCommand
 
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
-        $databaseFactory = new TransactionDataBaseFactory();
+        $databaseFactory = new MethodTransactionDataBaseFactory();
         $transactionBase = $databaseFactory->createDatabase($analysisResult);
 
         $itemSets = $calculator->calculateFrequentItemSets(

@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack\FISCalculator;
 
 use Qafoo\ChangeTrack\Analyzer\ResultBuilder;
 
-class TransactionDatabaseFactoryTest extends \PHPUnit_Framework_TestCase
+class MethodTransactionDatabaseFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateDatabase()
     {
@@ -23,7 +23,7 @@ class TransactionDatabaseFactoryTest extends \PHPUnit_Framework_TestCase
 
         $result = $resultBuilder->buildResult();
 
-        $databaseFactory = new TransactionDatabaseFactory();
+        $databaseFactory = new MethodTransactionDatabaseFactory();
         $database = $databaseFactory->createDatabase($result);
 
         $this->assertEquals(
