@@ -49,6 +49,12 @@ class FrequentItemSets extends BaseCommand
                 InputOption::VALUE_REQUIRED,
                 'Minimum support for an item set to be considered frequent.',
                 0.5
+            )->addOption(
+                'item-type',
+                'i',
+                InputOption::VALUE_REQUIRED,
+                'Artifact type which should be used as items (method/class).',
+                'method'
             );
 
         $this->inputFileParameterFactory->registerParameters($this);
@@ -91,7 +97,9 @@ class FrequentItemSets extends BaseCommand
 
         $databaseFactory = $this->getContainer()->get(
             'Qafoo.ChangeTrack.FISCalculator.TransactionDatabaseFactoryLocator'
-        )->getFactoryByType('method');
+        )->getFactoryByType(
+            $input->getOption('item-type')
+        );
         $transactionBase = $databaseFactory->createDatabase($analysisResult);
 
         $itemSets = $calculator->calculateFrequentItemSets(

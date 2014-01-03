@@ -36,21 +36,19 @@ class FISCalculatorRegressionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    /*
     public function testCalculatorRegressionWithClasses()
     {
         $command = $this->testTools->getApplicationPath('src/bin/track');
         $inputFile = $this->testTools->getApplicationPath('test/phpunit/_fixtures/regression_analysis_daemon.xml');
         $resultFile = $this->resultFile;
 
-        `$command frequent-item-sets -s '0.2 -i class' $inputFile > $resultFile`;
+        `$command frequent-item-sets -s '0.9' -i 'class' $inputFile > $resultFile`;
 
         $this->assertXmlStringEqualsXmlString(
-            $this->loadExpectedXml(),
+            $this->loadExpectedXml('class'),
             file_get_contents($resultFile)
         );
     }
-    */
 
     /**
      * @param string $repositoryUrl

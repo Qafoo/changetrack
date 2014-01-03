@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<frequentItemSets>
+  <itemSet support="1">
+    <item>
+      <packageName><![CDATA[QafooLabs\Daemon]]></packageName>
+      <className><![CDATA[Daemon]]></className>
+      <itemType><![CDATA[class]]></itemType>
+    </item>
+  </itemSet>
+</frequentItemSets>
