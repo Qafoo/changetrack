@@ -12,6 +12,7 @@ use Qafoo\ChangeTrack\FISCalculator;
 use Qafoo\ChangeTrack\FISCalculator\MethodItem;
 use Qafoo\ChangeTrack\FISCalculator\Set;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
@@ -95,7 +96,11 @@ class FeatureContext extends BehatContext
     {
         $minSupport = (float) $minSupport;
         $calculator = $this->container->get('Qafoo.ChangeTrack.FISCalculator');
-        $this->frequentItemSets = $calculator->calculateFrequentItemSets($this->analyzedChanges, $minSupport);
+
+        $databaseFactory = new TransactionDataBaseFactory();
+        $transactionBase = $databaseFactory->createDatabase($this->analyzedChanges);
+
+        $this->frequentItemSets = $calculator->calculateFrequentItemSets($transactionBase, $minSupport);
     }
 
     /**

@@ -8,7 +8,6 @@ use Qafoo\ChangeTrack\FISCalculator\MutableSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSet;
 use Qafoo\ChangeTrack\FISCalculator\FrequentItemSetCollection;
 use Qafoo\ChangeTrack\FISCalculator\TransactionDatabase;
-use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
 use Qafoo\ChangeTrack\FISCalculator\AprioriGenerator;
 use Qafoo\ChangeTrack\Analyzer\Result;
 
@@ -30,15 +29,12 @@ class FISCalculator
     /**
      * Calculates item sets with $minSupport on method changes in $analysisResult
      *
-     * @param \Qafoo\ChangeTrack\Analyzer\Result $analysisResult
+     * @param \Qafoo\ChangeTrack\FISCalculator\TransactionDatabase $analysisResult
      * @param float $minSupport
      * @return \Qafoo\ChangeTrack\FISCalculator\FrequentItemSetCollection
      */
-    public function calculateFrequentItemSets(Result $analysisResult, $minSupport)
+    public function calculateFrequentItemSets(TransactionDatabase $transactionBase, $minSupport)
     {
-        $databaseFactory = new TransactionDataBaseFactory();
-        $transactionBase = $databaseFactory->createDatabase($analysisResult);
-
         $frequentItemSets = new MutableSet();
 
         $currentItemSets = $this->calculateOneItemSets($transactionBase, $minSupport);

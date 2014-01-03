@@ -6,6 +6,9 @@ use Qafoo\ChangeTrack\Calculator;
 use Qafoo\ChangeTrack\Calculator\Parser;
 use Qafoo\ChangeTrack\Calculator\Renderer;
 
+use Qafoo\ChangeTrack\FISCalculator\TransactionDatabase;
+use Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactory;
+
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -86,8 +89,11 @@ class FrequentItemSets extends BaseCommand
 
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
+        $databaseFactory = new TransactionDataBaseFactory();
+        $transactionBase = $databaseFactory->createDatabase($analysisResult);
+
         $itemSets = $calculator->calculateFrequentItemSets(
-            $analysisResult,
+            $transactionBase,
             (float) $input->getOption('min-support')
         );
 
