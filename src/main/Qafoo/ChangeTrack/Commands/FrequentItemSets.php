@@ -90,8 +90,8 @@ class FrequentItemSets extends BaseCommand
         $analysisResult = $parser->parseAnalysisResult($inputXml);
 
         $databaseFactory = $this->getContainer()->get(
-            'Qafoo.ChangeTrack.FISCalculator.MethodTransactionDatabaseFactory'
-        );
+            'Qafoo.ChangeTrack.FISCalculator.TransactionDatabaseFactoryLocator'
+        )->getFactoryByType('method');
         $transactionBase = $databaseFactory->createDatabase($analysisResult);
 
         $itemSets = $calculator->calculateFrequentItemSets(

@@ -100,7 +100,15 @@
             <argument type="service" id="Qafoo.ChangeTrack.JmsSerializer" />
         </service>
 
-        <service id="Qafoo.ChangeTrack.FISCalculator.MethodTransactionDatabaseFactory" class="Qafoo\ChangeTrack\FISCalculator\MethodTransactionDatabaseFactory">
+        <service id="Qafoo.ChangeTrack.FISCalculator.TransactionDatabaseFactoryLocator" class="Qafoo\ChangeTrack\FISCalculator\TransactionDatabaseFactoryLocator">
+            <argument type="collection">
+                <argument type="service" key="method">
+                    <service class="Qafoo\ChangeTrack\FISCalculator\MethodTransactionDatabaseFactory" />
+                </argument>
+                <argument type="service" key="class">
+                    <service class="Qafoo\ChangeTrack\FISCalculator\ClassTransactionDatabaseFactory" />
+                </argument>
+            </argument>
         </service>
 
         <!--
