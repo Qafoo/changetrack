@@ -7,5 +7,6 @@
         accessor-order="custom"
         custom-accessor-order="itemType">
         <discriminator-class value="method">Qafoo\ChangeTrack\FISCalculator\MethodItem</discriminator-class>
+        <discriminator-class value="class">Qafoo\ChangeTrack\FISCalculator\ClassItem</discriminator-class>
     </class>
 </serializer>

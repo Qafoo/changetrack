@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer>
+    <class name="Qafoo\ChangeTrack\FISCalculator\ClassItem" exclusion-policy="NONE" access-type="property"
+        accessor-order="custom" custom-accessor-order="package,class">
+        <property name="package" type="string" serialized-name="packageName" />
+        <property name="class" type="string" serialized-name="className" />
+    </class>
+</serializer>
