@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer\Change;
 
 use Arbit\VCSWrapper\Diff;
 
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 
 abstract class LineChange
@@ -25,13 +25,13 @@ abstract class LineChange
     /**
      * Returns a ReflectionMethod, if a method is affected by the change
      *
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ReflectionLookup $reflectionLookup
      * @param string $revision
      * @param \Qafoo\ChangeTrack\Analyzer\Change\FileChange
      */
     abstract public function determineAffectedArtifact(
-        GitCheckout $checkout,
+        Checkout $checkout,
         ReflectionLookup $reflectionLookup,
         $revision,
         FileChange $fileChange

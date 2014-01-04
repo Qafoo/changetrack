@@ -64,12 +64,11 @@ class ChangeRecorderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
+     * @return \Qafoo\ChangeTrack\Analyzer\Checkout
      */
     private function getCheckoutMock()
     {
-        return $this->getMockBuilder('Qafoo\\ChangeTrack\\Analyzer\\Vcs\\GitCheckout')
-            ->disableOriginalConstructor()
+        return $this->getMockBuilder('Qafoo\\ChangeTrack\\Analyzer\\Checkout')
             ->getMock();
     }
 }

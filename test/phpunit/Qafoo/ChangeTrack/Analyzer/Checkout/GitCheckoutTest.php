@@ -1,15 +1,14 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\Vcs;
+namespace Qafoo\ChangeTrack\Analyzer\Checkout;
 
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\CheckoutAwareTestBase;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
 
 class GitCheckoutTest extends CheckoutAwareTestBase
 {
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
+     * @var \Qafoo\ChangeTrack\Analyzer\Checkout\GitCheckout
      */
     private $checkout;
 

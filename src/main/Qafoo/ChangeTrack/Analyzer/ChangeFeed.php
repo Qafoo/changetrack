@@ -6,7 +6,7 @@ use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\InitialChangeSet;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 
 class ChangeFeed implements \Iterator
 {
@@ -16,7 +16,7 @@ class ChangeFeed implements \Iterator
     private $changeSetFactory;
 
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout
+     * @var \Qafoo\ChangeTrack\Analyzer\Checkout
      */
     private $checkout;
 
@@ -36,13 +36,13 @@ class ChangeFeed implements \Iterator
     private $revisionIndex;
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory $changeSetFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
      * @param \Qafoo\ChangeTrack\Analyzer\RevisionBoundaries $revisionBoundaries
      */
     public function __construct(
-        GitCheckout $checkout,
+        Checkout $checkout,
         ChangeSetFactory $changeSetFactory,
         ChangeFeedObserver $observer,
         RevisionBoundaries $revisionBoundaries

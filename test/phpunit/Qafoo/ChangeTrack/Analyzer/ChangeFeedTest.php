@@ -4,7 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\DiffIteratorFactory;

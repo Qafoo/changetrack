@@ -6,7 +6,7 @@ use Qafoo\ChangeTrack\Analyzer\ChangeSet;
 use Qafoo\ChangeTrack\Analyzer\Change;
 use Qafoo\ChangeTrack\Analyzer\PathFilter;
 use Qafoo\ChangeTrack\Analyzer\ChangeRecorder;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 
 class DiffChangeSet extends ChangeSet
 {
@@ -21,7 +21,7 @@ class DiffChangeSet extends ChangeSet
 
     private $message;
 
-    public function __construct(GitCheckout $checkout, DiffIteratorFactory $diffIteratorFactory, $revision, $message)
+    public function __construct(Checkout $checkout, DiffIteratorFactory $diffIteratorFactory, $revision, $message)
     {
         $this->checkout = $checkout;
         $this->diffIteratorFactory = $diffIteratorFactory;

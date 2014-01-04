@@ -5,7 +5,7 @@ namespace Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 
 class ChangeFeedFactory
 {
@@ -29,11 +29,11 @@ class ChangeFeedFactory
     }
 
     /**
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\RevisionBoundaries $boundaries
      * @return \Qafoo\Analyzer\ChangeFeed
      */
-    public function createChangeFeed(GitCheckout $checkout, RevisionBoundaries $boundaries)
+    public function createChangeFeed(Checkout $checkout, RevisionBoundaries $boundaries)
     {
         return new ChangeFeed(
             $checkout,

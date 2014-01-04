@@ -1,8 +1,11 @@
 <?php
 
-namespace Qafoo\ChangeTrack\Analyzer\Vcs;
+namespace Qafoo\ChangeTrack\Analyzer\Checkout;
 
-class GitCheckout extends \Arbit\VCSWrapper\GitCli\Checkout
+use Qafoo\ChangeTrack\Analyzer\Checkout;
+use Arbit\VCSWrapper\GitCli\Checkout as ArbitCheckout;
+
+class GitCheckout extends ArbitCheckout implements Checkout
 {
     /**
      * @var string

@@ -8,7 +8,7 @@ use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 use Qafoo\ChangeTrack\Analyzer\Reflection\ReflectionException;
 
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 
 class ChangeRecorder
 {
@@ -27,7 +27,7 @@ class ChangeRecorder
         $this->reflectionLookup = $reflectionLookup;
     }
 
-    public function recordChange(Change $change, GitCheckout $checkout)
+    public function recordChange(Change $change, Checkout $checkout)
     {
         $affectedMethod = null;
         try {

@@ -3,7 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout\GitCheckout;
 
 class CheckoutFactory
 {

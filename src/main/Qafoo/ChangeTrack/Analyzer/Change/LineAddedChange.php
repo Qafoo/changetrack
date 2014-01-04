@@ -3,20 +3,20 @@
 namespace Qafoo\ChangeTrack\Analyzer\Change;
 
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
-use Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout;
 
 class LineAddedChange extends LineChange
 {
     /**
      * Returns a ReflectionMethod, if a method is affected by the change
      *
-     * @param \Qafoo\ChangeTrack\Analyzer\Vcs\GitCheckout $checkout
+     * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ReflectionLookup $reflectionLookup
      * @param string $revision
      * @param \Qafoo\ChangeTrack\Analyzer\Change\FileChange
      */
     public function determineAffectedArtifact(
-        GitCheckout $checkout,
+        Checkout $checkout,
         ReflectionLookup $reflectionLookup,
         $revision,
         FileChange $fileChange
