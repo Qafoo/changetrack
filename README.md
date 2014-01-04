@@ -266,6 +266,11 @@ items: The methods `Twig_Node_Module::__construct()` and `Twig_Parser::parse()`
 were edited together in more that 1% of the commits in the
 [Twig](https://github.com/fabpot/Twig) repository.
 
+You can apply the option `-i` to get a frequent item analysis on basis of
+classes instead of methods:
+
+    $ track frequent-item-sets -i class your_analysis_result.xml
+
 Note that frequent item set analysis is typically applied to databases where
 the items do not change, which does not apply to software projects (e.g. new
 classes are created). Therefore, the typical setting of a high support value
