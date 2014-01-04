@@ -18,4 +18,13 @@ class TransactionDatabaseFactoryLocatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($factoryB, $locator->getFactoryByType('B'));
     }
+
+    public function testMapFailure()
+    {
+        $locator = new TransactionDatabaseFactoryLocator(array());
+
+        $this->setExpectedException('\\RuntimeException');
+
+        $locator->getFactoryByType('A');
+    }
 }
