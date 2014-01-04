@@ -293,7 +293,6 @@ would make sense in the future:
 -   Support different version control systems (e.g. SVN)
 -   Performance improvements
 -   Further label providers (e.g. by Jira issue labels)
--   Additional analysis, e.g. frequent item sets to determine coupling
 
 Please add your ideas for additional features to the Github issue
 tracker and possibly provide a pull request.
