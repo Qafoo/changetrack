@@ -33,5 +33,4 @@ class ClassTransactionDatabaseFactory
 
         return $transactionBase;
     }
-    
 }
