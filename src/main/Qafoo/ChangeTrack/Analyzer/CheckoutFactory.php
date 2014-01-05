@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\Checkout\GitCheckout;
+use Qafoo\ChangeTrack\Analyzer\Checkout\VcsWrapperDiffMapper;
 
 class CheckoutFactory
 {
@@ -16,7 +17,9 @@ class CheckoutFactory
     {
         VCSWrapper\Cache\Manager::initialize($cachePath);
 
-        $checkout = new GitCheckout($checkoutPath);
+        $diffMapper = new VcsWrapperDiffMapper();
+
+        $checkout = new GitCheckout($checkoutPath, $diffMapper);
         $checkout->initialize($repositoryUrl);
 
         return $checkout;

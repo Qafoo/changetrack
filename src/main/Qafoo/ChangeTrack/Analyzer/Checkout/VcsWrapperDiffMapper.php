@@ -24,10 +24,23 @@ class VcsWrapperDiffMapper
     /**
      * Maps a VCSWrapper Diff to the ChangeTrack diff representation.
      *
-     * @param \Arbit\VCSWrapper\Diff\Collection $vcsDiff
+     * @param \Arbit\VCSWrapper\Diff\Collection[] $vcsDiffs
+     * @return \Qafoo\ChangeTrack\Analyzer\Diff\Diff[]
+     */
+    public function mapDiffs(array $vcsDiffs)
+    {
+        $mappedDiffs = array();
+        foreach ($vcsDiffs as $vcsDiff) {
+            $mappedDiffs[] = $this->mapDiff($vcsDiff);
+        }
+        return $mappedDiffs;
+    }
+
+    /**
+     * @param \Arbit\VCSWrapper\Diff\Collection $vcsDiff;
      * @return \Qafoo\ChangeTrack\Analyzer\Diff\Diff
      */
-    public function mapDiff(VcsDiffCollection $vcsDiff)
+    private function mapDiff(VcsDiffCollection $vcsDiff)
     {
         return new Diff(
             $vcsDiff->from,

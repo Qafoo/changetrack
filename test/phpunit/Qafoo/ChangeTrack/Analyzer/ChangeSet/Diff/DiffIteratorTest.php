@@ -3,6 +3,7 @@
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff;
 
 use Arbit\VCSWrapper\Diff;
+use Qafoo\ChangeTrack\Analyzer\Checkout\VcsWrapperDiffMapper;
 
 class DiffIteratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,8 +15,10 @@ class DiffIteratorTest extends \PHPUnit_Framework_TestCase
                 __DIR__ . '/../../../../../_fixtures/diff_with_different_file_types.diff'
             )
         );
+        $diffMapper = new VcsWrapperDiffMapper();
+        $diffs = $diffMapper->mapDiffs($diffCollection);
 
-        $diffIterator = new DiffIterator($diffCollection);
+        $diffIterator = new DiffIterator($diffs);
 
         $containedFiles = array();
         foreach ($diffIterator as $change) {

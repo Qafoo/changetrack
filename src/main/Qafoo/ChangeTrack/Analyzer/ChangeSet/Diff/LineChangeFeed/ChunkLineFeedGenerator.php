@@ -2,17 +2,18 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
 
+// TODO: Cleanup namespaces
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed;
 use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
-
-use Arbit\VCSWrapper\Diff;
+use Qafoo\ChangeTrack\Analyzer\Diff\Chunk;
+use Qafoo\ChangeTrack\Analyzer\Diff\Line;
 
 class ChunkLineFeedGenerator extends LineChangeFeed
 {
     /**
-     * @var \Arbit\VCSWrapper\Diff\Chunk
+     * @var \Qafoo\ChangeTrack\Analyzer\Diff\Chunk
      */
     private $diffChunk;
 
@@ -27,9 +28,9 @@ class ChunkLineFeedGenerator extends LineChangeFeed
     private $afterLineIndex;
 
     /**
-     * @param \Arbit\VCSWrapper\Diff\Chunk $diffChunk
+     * @param \Qafoo\ChangeTrack\Analyzer\Diff\Chunk $diffChunk
      */
-    public function __construct(Diff\Chunk $diffChunk)
+    public function __construct(Chunk $diffChunk)
     {
         $this->diffChunk = $diffChunk;
     }
@@ -44,15 +45,15 @@ class ChunkLineFeedGenerator extends LineChangeFeed
 
         foreach ($this->diffChunk->lines as $line) {
             switch ($line->type) {
-                case Diff\Line::ADDED:
+                case Line::ADDED:
                     yield new LineAddedChange($this->afterLineIndex);
                     $this->afterLineIndex++;
                     break;
-                case Diff\Line::REMOVED:
+                case Line::REMOVED:
                     yield new LineRemovedChange($this->beforeLineIndex);
                     $this->beforeLineIndex++;
                     break;
-                case Diff\Line::UNCHANGED:
+                case Line::UNCHANGED:
                     $this->beforeLineIndex++;
                     $this->afterLineIndex++;
                     break;

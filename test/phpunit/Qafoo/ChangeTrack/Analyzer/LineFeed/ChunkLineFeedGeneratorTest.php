@@ -2,6 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\LineFeed;
 
+use Qafoo\ChangeTrack\Analyzer\Checkout\VcsWrapperDiffMapper;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\Diff\LineChangeFeed\ChunkLineFeedGenerator;
 use Qafoo\ChangeTrack\Analyzer\Change\LineAddedChange;
 use Qafoo\ChangeTrack\Analyzer\Change\LineRemovedChange;
@@ -33,6 +34,9 @@ class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $parser = new Diff\Unified();
         $diff = $parser->parseString(file_get_contents(__DIR__ . '/_fixtures/diff_add_only.diff'));
+
+        $diffMapper = new VcsWrapperDiffMapper();
+        $diff = $diffMapper->mapDiffs($diff);
 
         $lineFeedGenerator = $this->createLineFeedGenerator($diff[0]->chunks[0]);
 
@@ -183,6 +187,10 @@ class ChunkLineFeedGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $parser = new Diff\Unified();
         $diff = $parser->parseString(file_get_contents(__DIR__ . '/_fixtures/' . $fileName));
+
+        $diffMapper = new VcsWrapperDiffMapper();
+        $diff = $diffMapper->mapDiffs($diff);
+
         return $diff;
     }
 }

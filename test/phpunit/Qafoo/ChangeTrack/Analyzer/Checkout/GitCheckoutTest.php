@@ -2,7 +2,7 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Checkout;
 
-use Arbit\VCSWrapper;
+use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\CheckoutAwareTestBase;
 
 class GitCheckoutTest extends CheckoutAwareTestBase
@@ -16,9 +16,12 @@ class GitCheckoutTest extends CheckoutAwareTestBase
     {
         parent::setup();
 
-        VCSWrapper\Cache\Manager::initialize($this->getCachePath());
-        $this->checkout = new GitCheckout($this->getCheckoutPath());
-        $this->checkout->initialize($this->getRepositoryUrl());
+        $checkoutFactory = new CheckoutFactory();
+        $this->checkout = $checkoutFactory->createCheckout(
+            $this->getRepositoryUrl(),
+            $this->getCheckoutPath(),
+            $this->getCachePath()
+        );
     }
 
     /**

@@ -12,6 +12,21 @@ class GitCheckout extends ArbitCheckout implements Checkout
      */
     private $currentRevision;
 
+    /**
+     * @var \Qafoo\ChangeTrack\Analyzer\Checkout\VcsWrapperDiffMapper
+     */
+    private $diffMapper;
+
+    /**
+     * @param string $root
+     * @param \Qafoo\ChangeTrack\Analyzer\Checkout\VcsWrapperDiffMapper $diffMapper
+     */
+    public function __construct($root, VcsWrapperDiffMapper $diffMapper)
+    {
+        parent::__construct($root);
+        $this->diffMapper = $diffMapper;
+    }
+
     public function update($version = null)
     {
         if ($this->currentRevision === null || $this->currentRevision !== $version) {
@@ -35,7 +50,9 @@ class GitCheckout extends ArbitCheckout implements Checkout
             ->argument($revision)->execute();
 
         $parser = new \Arbit\VCSWrapper\Diff\Unified();
-        return $parser->parseString($process->stdoutOutput);
+        return $this->diffMapper->mapDiffs(
+            $parser->parseString($process->stdoutOutput)
+        );
     }
 
     /**

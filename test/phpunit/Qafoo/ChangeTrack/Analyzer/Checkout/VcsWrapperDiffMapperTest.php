@@ -14,40 +14,44 @@ class VcsWrapperDiffMapperTest extends \PHPUnit_Framework_TestCase
 {
     public function testMapDiff()
     {
-        $input = new VcsDiffCollection(
-            'foo.txt',
-            'bar.txt',
-            array(
-                new VcsDiffChunk(
-                    1,
-                    11,
-                    2,
-                    22,
-                    array(
-                        new VcsDiffLine(VcsDiffLine::ADDED, 'content'),
+        $input = array(
+            new VcsDiffCollection(
+                'foo.txt',
+                'bar.txt',
+                array(
+                    new VcsDiffChunk(
+                        1,
+                        11,
+                        2,
+                        22,
+                        array(
+                            new VcsDiffLine(VcsDiffLine::ADDED, 'content'),
+                        )
                     )
                 )
             )
         );
 
-        $expectedOutput = new Diff(
-            'foo.txt',
-            'bar.txt',
-            array(
-                new Chunk(
-                    1,
-                    11,
-                    2,
-                    22,
-                    array(
-                        new Line(Line::ADDED, 'content'),
+        $expectedOutput = array(
+            new Diff(
+                'foo.txt',
+                'bar.txt',
+                array(
+                    new Chunk(
+                        1,
+                        11,
+                        2,
+                        22,
+                        array(
+                            new Line(Line::ADDED, 'content'),
+                        )
                     )
                 )
             )
         );
 
         $mapper = new VcsWrapperDiffMapper();
-        $actualOutput = $mapper->mapDiff($input);
+        $actualOutput = $mapper->mapDiffs($input);
 
         $this->assertEquals($expectedOutput, $actualOutput);
     }

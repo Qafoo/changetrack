@@ -2,8 +2,6 @@
 
 namespace Qafoo\ChangeTrack\Analyzer\Change;
 
-use Arbit\VCSWrapper\Diff;
-
 use Qafoo\ChangeTrack\Analyzer\Checkout;
 use Qafoo\ChangeTrack\Analyzer\ReflectionLookup;
 

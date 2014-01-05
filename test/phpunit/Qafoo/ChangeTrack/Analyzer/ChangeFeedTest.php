@@ -4,6 +4,7 @@ namespace Qafoo\ChangeTrack\Analyzer;
 
 use Arbit\VCSWrapper;
 use Qafoo\ChangeTrack\Analyzer\RevisionBoundaries;
+use Qafoo\ChangeTrack\Analyzer\CheckoutFactory;
 use Qafoo\ChangeTrack\Analyzer\Checkout\GitCheckout;
 use Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver\NullObserver;
 use Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory;
@@ -32,9 +33,12 @@ class ChangeFeedTest extends CheckoutAwareTestBase
     {
         parent::setup();
 
-        VCSWrapper\Cache\Manager::initialize($this->getCachePath());
-        $this->checkout = new GitCheckout($this->getCheckoutPath());
-        $this->checkout->initialize($this->getRepositoryUrl());
+        $checkoutFactory = new CheckoutFactory();
+        $this->checkout = $checkoutFactory->createCheckout(
+            $this->getRepositoryUrl(),
+            $this->getCheckoutPath(),
+            $this->getCachePath()
+        );
 
         $this->changeSetFactory = new ChangeSetFactory(
             new DiffIteratorFactory()
