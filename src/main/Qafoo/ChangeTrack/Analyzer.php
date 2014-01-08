@@ -37,7 +37,7 @@ class Analyzer
 
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\CheckoutFactory $checkoutFactory
-     * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedFactory $changeFeedFactory
+     * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedFactory $changeFeedFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeRecorderFactory $changeRecorderFactory
      * @param \Qafoo\ChangeTrack\WorkingDirectory $workingDir
      */
