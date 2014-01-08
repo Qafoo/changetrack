@@ -36,6 +36,16 @@ class ChangeFeed implements \Iterator
     private $revisionIndex;
 
     /**
+     * @var int
+     */
+    private $startIndex;
+
+    /**
+     * @var int
+     */
+    private $endIndex;
+
+    /**
      * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory $changeSetFactory
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
