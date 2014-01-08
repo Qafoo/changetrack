@@ -50,14 +50,6 @@ class Change
     }
 
     /**
-     * @return int
-     */
-    public function getAffectedLine()
-    {
-        return $this->localChange->getAffectedLine();
-    }
-
-    /**
      * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      */
     public function determineAffectedArtifact(Checkout $checkout, ReflectionLookup $reflectionLookup)
