@@ -109,7 +109,7 @@ class PharCompiler
      * Adds $file to $phar, optionally stripping whitespaces
      *
      * @param \Phar $phar
-     * @param string $file
+     * @param \SplFileInfo $file
      * @param bool $strip
      */
     private function addFile($phar, $file, $strip = true)

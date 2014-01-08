@@ -31,7 +31,7 @@ class Analyzer
     private $changeRecorderFactory;
 
     /**
-     * @var string
+     * @var \Qafoo\ChangeTrack\WorkingDirectory
      */
     private $workingDir;
 
