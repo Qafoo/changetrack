@@ -21,7 +21,7 @@ class ChangeFeed implements \Iterator
     private $checkout;
 
     /**
-     * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver
+     * @var \Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver
      */
     private $observer;
 
@@ -48,7 +48,7 @@ class ChangeFeed implements \Iterator
     /**
      * @param \Qafoo\ChangeTrack\Analyzer\Checkout $checkout
      * @param \Qafoo\ChangeTrack\Analyzer\ChangeSet\ChangeSetFactory $changeSetFactory
-     * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeedObserver $observer
+     * @param \Qafoo\ChangeTrack\Analyzer\ChangeFeed\ChangeFeedObserver $observer
      * @param \Qafoo\ChangeTrack\Analyzer\RevisionBoundaries $revisionBoundaries
      */
     public function __construct(
