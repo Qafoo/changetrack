@@ -14,7 +14,19 @@ class VcsWrapperDiffMapperTest extends \PHPUnit_Framework_TestCase
 {
     public function testMapDiff()
     {
-        $input = array(
+        $input = $this->createInput();
+
+        $expectedOutput = $this->createExpectedOutput();
+
+        $mapper = new VcsWrapperDiffMapper();
+        $actualOutput = $mapper->mapDiffs($input);
+
+        $this->assertEquals($expectedOutput, $actualOutput);
+    }
+
+    private function createInput()
+    {
+        return array(
             new VcsDiffCollection(
                 'foo.txt',
                 'bar.txt',
@@ -31,8 +43,11 @@ class VcsWrapperDiffMapperTest extends \PHPUnit_Framework_TestCase
                 )
             )
         );
+    }
 
-        $expectedOutput = array(
+    private function createExpectedOutput()
+    {
+        return array(
             new Diff(
                 'foo.txt',
                 'bar.txt',
@@ -49,10 +64,5 @@ class VcsWrapperDiffMapperTest extends \PHPUnit_Framework_TestCase
                 )
             )
         );
-
-        $mapper = new VcsWrapperDiffMapper();
-        $actualOutput = $mapper->mapDiffs($input);
-
-        $this->assertEquals($expectedOutput, $actualOutput);
     }
 }
